@@ -1,0 +1,70 @@
+:root {
+  --bg: #FFFFFF;
+  --panel: #FFFFFF;
+  --panel2: #F4F4F4;
+  --soft: #F7F7F7;
+  --soft2: #F2F2F2;
+  --track: #F0F0F0;
+  --track2: #E7E7E7;
+  --chip: #EEEEEE;
+  --hover: #EAEAEA;
+  --line: #D9D9D9;
+  --line2: #D0D0D0;
+  --text: #2B2B2B;
+  --ink2: #3A3A3A;
+  --muted: #686868;
+  --hint: #5d6784;
+  --accent: #E66A32;
+  --accent2: #FF8C42;
+  --ember: #C24C30;
+  --ox: #8C2F2B;
+  --peach: #FFD9A0;
+  --tint: #FFF1E7;
+  --warn-bg: #FFF4E9;
+  --danger-bg: #F8ECEB;
+  --glass: rgba(255, 255, 255, 0.96);
+  --glass-tint: rgba(255, 241, 231, 0.96);
+  --shadow: rgba(43, 43, 43, 0.14);
+  --fig-skin: #D9BD8D;
+  --warn: #FF8C42;
+  --danger: #8C2F2B;
+  --ok: #C24C30;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  color: var(--text);
+  background: var(--bg);
+  font-size: 14px;
+  color-scheme: light;
+}
+
+/* Dark mode, derived from Eason's palette: warm charcoal grounds, the same orange/ember accents, lifted reds for contrast. */
+:root[data-theme='dark'] {
+  --bg: #1a1817;
+  --panel: #211f1d;
+  --panel2: #2a2725;
+  --soft: #262321;
+  --soft2: #2d2a27;
+  --track: #2f2b28;
+  --track2: #3a3531;
+  --chip: #34302c;
+  --hover: #34302c;
+  --line: #3a3531;
+  --line2: #4a443e;
+  --text: #F2EDE8;
+  --ink2: #DAD2CA;
+  --muted: #A89F96;
+  --hint: #8f877f;
+  --ember: #D2593A;
+  --ox: #E0705C;
+  --tint: rgba(230, 106, 50, 0.14);
+  --warn-bg: rgba(255, 140, 66, 0.1);
+  --danger-bg: rgba(224, 112, 92, 0.13);
+  --glass: rgba(33, 31, 29, 0.94);
+  --glass-tint: rgba(64, 40, 28, 0.94);
+  --shadow: rgba(0, 0, 0, 0.5);
+  --fig-skin: #5e4e3e;
+  --danger: #E0705C;
+  --ok: #E66A32;
+  color-scheme: dark;
+}
+
+html, body { background: var(--bg); }

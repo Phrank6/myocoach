@@ -1,13 +1,20 @@
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from 'react';
 import { EXERCISES } from '../domain/exercises';
 import { N_MUSCLES } from '../domain/muscles';
-import { MuscleMap2D } from './MuscleMap2D';
+import { useTheme } from '../theme';
+import { ThemeToggle } from '../ui/ThemeToggle';
+import { toggleElectrodes, useElectrodes } from '../overlay';
+import { AnatomyMap } from './AnatomyMap';
 import { wsUrl, type HostState, type PhoneMsg, type ServerMsg } from './protocol';
-import '../styles/base.css';
+import '../styles/tokens.css';
 import './phone.css';
 
 type Conn = 'idle' | 'connecting' | 'waiting' | 'live' | 'lost';
 const HOLD_MS = 320;
+
+function fmtRest(s: number) {
+  return `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')}`;
+}
 
 function deviceName() {
   const ua = navigator.userAgent;
@@ -68,8 +75,11 @@ function Join({ onJoin }: { onJoin: (c: string) => void }) {
   const [v, setV] = useState('');
   return (
     <div className="p-join">
-      <div className="p-brand"><span className="brand-mark" /> <span className="serif">MyoCoach</span></div>
-      <h1 className="serif">Join your<br /><em>session.</em></h1>
+      <div className="p-join-head">
+        <div className="p-brand"><span className="brand-mark" /> <span>MyoCoach</span></div>
+        <ThemeToggle />
+      </div>
+      <h1>Join your<br /><em>session.</em></h1>
       <p className="muted">Enter the four-character code shown on the desktop under <b>Connect phone</b>.</p>
       <input
         className="p-code-input mono"
@@ -87,6 +97,8 @@ function Join({ onJoin }: { onJoin: (c: string) => void }) {
 }
 
 export default function PhoneApp() {
+  useTheme();
+  const electrodes = useElectrodes();
   const [code, setCode] = useState<string | null>(() => new URLSearchParams(location.search).get('s')?.toUpperCase() ?? null);
   const { conn, state, send } = usePhoneSession(code);
   const [pressed, setPressed] = useState(false);
@@ -131,19 +143,22 @@ export default function PhoneApp() {
   return (
     <div className="p-app">
       <header className="p-head">
-        <div className="p-brand"><span className="brand-mark" /> <span className="serif">MyoCoach</span></div>
-        <div className={`p-status ${conn}`}>
-          <span className={`dot ${conn === 'live' ? 'ok' : conn === 'lost' ? 'danger' : ''}`} />
-          {statusText}
-          <span className="mono faint">{code}</span>
+        <div className="p-brand"><span className="brand-mark" /> <span>MyoCoach</span></div>
+        <div className="p-head-right">
+          <div className={`p-status ${conn}`}>
+            <span className={`dot ${conn === 'live' ? 'ok' : conn === 'lost' ? 'danger' : ''}`} />
+            {statusText}
+            <span className="mono faint">{code}</span>
+          </div>
+          <ThemeToggle />
         </div>
       </header>
 
       <section className="p-ex">
         <button className="p-arrow" aria-label="Previous exercise" onClick={() => send({ type: 'selectExercise', index: ((state?.exerciseIndex ?? 0) - 1 + EXERCISES.length) % EXERCISES.length })}>‹</button>
         <div className="p-ex-name">
-          <div className="eyebrow">{ex.equipment} · load {Math.round((state?.intensity ?? 0.75) * 100)}%</div>
-          <h2 className="serif">{ex.name}</h2>
+          <div className="eyebrow">{ex.equipment} · {state?.externalLoadLb ?? 0} lb</div>
+          <h2>{ex.name}</h2>
         </div>
         <button className="p-arrow" aria-label="Next exercise" onClick={() => send({ type: 'selectExercise', index: ((state?.exerciseIndex ?? 0) + 1) % EXERCISES.length })}>›</button>
       </section>
@@ -153,14 +168,25 @@ export default function PhoneApp() {
         ))}
       </div>
 
-      <MuscleMap2D values={live} />
+      <section className="p-map">
+        <div className="p-map-head">
+          <span className="eyebrow">Live activation</span>
+          <button className={`p-el-toggle ${electrodes ? 'on' : ''}`} aria-pressed={electrodes} onClick={toggleElectrodes}>
+            Electrodes
+          </button>
+        </div>
+        <AnatomyMap values={live} electrodes={electrodes} />
+      </section>
 
       <section className="p-set">
         <div>
-          <div className="eyebrow">{state?.inSet ? `Set ${state.setNo}` : `Set ${(state?.setNo ?? 0) + 1} · ready`}</div>
+          <div className="eyebrow">Session {state?.sessionIndex ?? 1} · {state?.inSet ? `Set ${state.setNo}` : `Set ${(state?.setNo ?? 0) + 1} · ready`}</div>
           <div className="p-reps"><span className="mono">{String(state?.inSet ? state.reps : 0).padStart(2, '0')}</span> <span className="faint">reps</span></div>
         </div>
-        <div className="p-total faint"><b className="mono">{state?.totalReps ?? 0}</b> reps today</div>
+        <div className="p-side">
+          {state && !state.inSet && state.restS > 0 && <div className="p-rest">Rest <b className="mono">{fmtRest(state.restS)}</b></div>}
+          <div className="p-total faint"><b className="mono">{state?.totalReps ?? 0}</b> reps today</div>
+        </div>
       </section>
 
       {state?.alerts?.[0] && (
@@ -183,9 +209,9 @@ export default function PhoneApp() {
           <span className="p-rep-sub">tap · hold to grind</span>
         </button>
         <div className="p-row">
-          <button className="btn" onClick={() => send({ type: 'intensity', value: (state?.intensity ?? 0.75) - 0.05 })} aria-label="Less load">−</button>
+          <button className="btn" onClick={() => send({ type: 'load', value: (state?.externalLoadLb ?? 0) - 5 })} aria-label="Less weight">−</button>
           <button className="btn p-end" disabled={!state?.inSet} onClick={() => send({ type: 'endSet' })}>End set</button>
-          <button className="btn" onClick={() => send({ type: 'intensity', value: (state?.intensity ?? 0.75) + 0.05 })} aria-label="More load">+</button>
+          <button className="btn" onClick={() => send({ type: 'load', value: (state?.externalLoadLb ?? 0) + 5 })} aria-label="More weight">+</button>
         </div>
       </div>
 
@@ -194,7 +220,7 @@ export default function PhoneApp() {
           <span className="eyebrow">Coach</span>
           {state?.coachSource && <span className={`tag ${state.coachSource === 'rule-based' ? '' : 'accent'}`}>{state.coachSource}</span>}
         </div>
-        <p className="serif">{state?.coachLine ?? 'Finish a session on the desktop and the coach’s latest note shows up here.'}</p>
+        <p>{state?.coachLine ?? 'Finish a session on the desktop and the coach’s latest note shows up here.'}</p>
       </section>
     </div>
   );

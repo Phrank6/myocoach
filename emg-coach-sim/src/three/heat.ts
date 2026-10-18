@@ -1,42 +1,52 @@
-import type { Color } from 'three';
+import { Color } from 'three';
 
-/** Magma-like ramp: graphite (untrained) → indigo → plum → rose → ember → amber → pale gold. */
-const STOPS: [number, string][] = [
-  [0, '#2c2e37'],
-  [0.15, '#3b3168'],
-  [0.35, '#7a3183'],
-  [0.55, '#c9406a'],
-  [0.72, '#f06a42'],
-  [0.88, '#fb9f45'],
-  [1, '#ffd27a'],
+type Stops = [number, string][];
+
+/** Eason's warm scale on white: rest is pale peach, the most-worked muscle reads as near-black ink. */
+const LIGHT: Stops = [
+  [0, '#FFD9A0'],
+  [0.16, '#FF8C42'],
+  [0.4, '#E66A32'],
+  [0.66, '#C24C30'],
+  [0.84, '#8C2F2B'],
+  [1, '#2B2B2B'],
 ];
 
-const hex = (h: string) => [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16) / 255);
-const RGB = STOPS.map(([t, c]) => [t, hex(c)] as const);
+/** The same palette run the other way for dark mode, so the most-worked muscle is the brightest thing on screen. */
+const DARK: Stops = [
+  [0, '#4a3f37'],
+  [0.16, '#8C2F2B'],
+  [0.4, '#C24C30'],
+  [0.66, '#E66A32'],
+  [0.84, '#FF8C42'],
+  [1, '#FFD9A0'],
+];
 
-export function heatRgb(v: number): [number, number, number] {
-  const x = Math.min(1, Math.max(0, Number.isFinite(v) ? v : 0));
-  for (let i = 1; i < RGB.length; i++) {
-    const [t1, c1] = RGB[i];
-    if (x <= t1) {
-      const [t0, c0] = RGB[i - 1];
-      const k = (x - t0) / (t1 - t0);
-      return [c0[0] + (c1[0] - c0[0]) * k, c0[1] + (c1[1] - c0[1]) * k, c0[2] + (c1[2] - c0[2]) * k];
-    }
-  }
-  const last = RGB[RGB.length - 1][1];
-  return [last[0], last[1], last[2]];
+const toColors = (s: Stops) => s.map(([t, c]) => [t, new Color(c)] as const);
+const RAMPS = { light: { stops: LIGHT, colors: toColors(LIGHT) }, dark: { stops: DARK, colors: toColors(DARK) } };
+let ramp = RAMPS.light;
+
+export function setHeatTheme(t: 'light' | 'dark') {
+  ramp = RAMPS[t];
 }
 
-/** Writes the ramp colour into a three.js Color (sRGB input). */
-export function heatColor(v: number, out: Color): Color {
-  const [r, g, b] = heatRgb(v);
-  return out.setRGB(r, g, b, 'srgb');
+export function heatColor(v: number, out = new Color()): Color {
+  const COLORS = ramp.colors;
+  const x = Math.min(1, Math.max(0, Number.isFinite(v) ? v : 0));
+  for (let i = 1; i < COLORS.length; i++) {
+    const [t1, c1] = COLORS[i];
+    if (x <= t1) {
+      const [t0, c0] = COLORS[i - 1];
+      return out.copy(c0).lerp(c1, (x - t0) / (t1 - t0));
+    }
+  }
+  return out.copy(COLORS[COLORS.length - 1][1]);
 }
 
 export function heatCss(v: number): string {
-  const [r, g, b] = heatRgb(v);
-  return `rgb(${Math.round(r * 255)} ${Math.round(g * 255)} ${Math.round(b * 255)})`;
+  return `#${heatColor(v).getHexString()}`;
 }
 
-export const HEAT_GRADIENT_CSS = `linear-gradient(90deg, ${STOPS.map(([t, c]) => `${c} ${t * 100}%`).join(', ')})`;
+export function heatGradientCss(): string {
+  return `linear-gradient(90deg, ${ramp.stops.map(([t, c]) => `${c} ${t * 100}%`).join(', ')})`;
+}

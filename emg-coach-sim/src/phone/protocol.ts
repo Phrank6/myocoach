@@ -8,6 +8,9 @@ export interface HostState {
   setNo: number;
   totalReps: number;
   intensity: number;
+  sessionIndex: number;
+  externalLoadLb: number;
+  restS: number;
   effort: number;
   live: number[];
   alerts: { level: 'elevated' | 'high'; title: string }[];
@@ -22,7 +25,8 @@ export type PhoneMsg =
   | { type: 'effort'; value: number }
   | { type: 'endSet' }
   | { type: 'selectExercise'; index: number }
-  | { type: 'intensity'; value: number };
+  | { type: 'intensity'; value: number }
+  | { type: 'load'; value: number };
 
 export type ServerMsg = { type: 'presence'; phones: number } | { type: 'hostStatus'; online: boolean };
 

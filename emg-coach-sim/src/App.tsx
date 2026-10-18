@@ -2,30 +2,28 @@ import { useEffect, useState } from 'react';
 import { DEFAULT_PROFILE, loadProfile, saveProfile, type BodyProfile } from './domain/profile';
 import { WorkoutEngine, type WorkoutResult } from './engine/WorkoutEngine';
 import { PhoneLink } from './phone/PhoneLink';
+import { useTheme } from './theme';
 import { usePhone } from './ui/common';
 import { ConnectPhone } from './ui/ConnectPhone';
 import { Onboarding } from './ui/Onboarding';
 import { SummaryView } from './ui/SummaryView';
+import { ThemeToggle } from './ui/ThemeToggle';
 import { WorkoutView } from './ui/WorkoutView';
-import './styles/base.css';
+import './styles/tokens.css';
 import './App.css';
 
 type Screen = 'onboarding' | 'workout' | 'summary';
-const STEPS: [Screen, string][] = [
-  ['onboarding', 'Body'],
-  ['workout', 'Train'],
-  ['summary', 'Review'],
-];
 
 export default function App() {
+  useTheme();
   const [engine] = useState(() => new WorkoutEngine());
   const [link] = useState(() => new PhoneLink(engine));
+  const phone = usePhone(link);
   const [profile, setProfile] = useState<BodyProfile>(() => loadProfile() ?? DEFAULT_PROFILE);
   const [screen, setScreen] = useState<Screen>('onboarding');
   const [result, setResult] = useState<WorkoutResult | null>(null);
   const [started, setStarted] = useState(false);
   const [showPair, setShowPair] = useState(false);
-  const phone = usePhone(link);
 
   useEffect(() => {
     if (import.meta.env.DEV) Object.assign(window, { __engine: engine, __link: link });
@@ -45,13 +43,15 @@ export default function App() {
     link.screen = screen;
   }, [engine, link, screen]);
 
+  const phones = phone.phones;
   useEffect(() => {
-    if (phone.phones > 0) setShowPair(false);
-  }, [phone.phones]);
+    if (phones > 0) setShowPair(false);
+  }, [phones]);
 
   const startWorkout = (p: BodyProfile) => {
     saveProfile(p);
     setProfile(p);
+    engine.setExperience(p.experience);
     engine.resetWorkout();
     engine.setCoachLine(null, null);
     if (!started) {
@@ -61,32 +61,27 @@ export default function App() {
     setScreen('workout');
   };
 
-  const stepIndex = STEPS.findIndex(([s]) => s === screen);
-
   return (
     <div className="app">
-      <header className="topbar">
+      <nav className="topbar">
         <div className="brand">
-          <span className="brand-mark" />
-          <span className="serif brand-name">MyoCoach</span>
-          <span className="brand-sub">EMG simulation</span>
+          <span className="logo">◢◤</span> MyoCoach <span className="sim-badge">EMG · simulation</span>
         </div>
-        <nav className="steps">
-          {STEPS.map(([s, label], i) => (
-            <span key={s} className={`step ${i === stepIndex ? 'on' : i < stepIndex ? 'done' : ''}`}>
-              <span className="mono">{String(i + 1).padStart(2, '0')}</span> {label}
-            </span>
-          ))}
-        </nav>
+        <div className="steps">
+          <span className={screen === 'onboarding' ? 'on' : ''}>1 · Body model</span>
+          <span className={screen === 'workout' ? 'on' : ''}>2 · Train</span>
+          <span className={screen === 'summary' ? 'on' : ''}>3 · Summary & coach</span>
+        </div>
         <div className="top-right">
+          <div className="who">{profile.name || 'Athlete'} · {profile.heightCm} cm · {profile.weightKg} kg</div>
           <button className={`phone-chip ${phone.phones ? 'on' : ''}`} onClick={() => setShowPair((v) => !v)}>
             <span className={`dot ${phone.phones ? 'ok' : ''}`} />
             {phone.phones ? 'Phone connected' : 'Connect phone'}
             <span className="mono faint">{phone.code}</span>
           </button>
-          <span className="who">{profile.name || 'Athlete'}</span>
+          <ThemeToggle />
         </div>
-      </header>
+      </nav>
       {showPair && (
         <>
           <div className="scrim" onClick={() => setShowPair(false)} />
@@ -95,13 +90,17 @@ export default function App() {
           </div>
         </>
       )}
-      <main className="screen" key={screen}>
-        {screen === 'onboarding' && <Onboarding initial={profile} onDone={startWorkout} />}
-        {screen === 'workout' && <WorkoutView engine={engine} link={link} profile={profile} onEditBody={() => setScreen('onboarding')} onPair={() => setShowPair(true)} />}
-        {screen === 'summary' && result && (
-          <SummaryView engine={engine} result={result} profile={profile} onNewWorkout={() => startWorkout(profile)} onEditBody={() => setScreen('onboarding')} />
-        )}
-      </main>
+      {screen === 'onboarding' && <Onboarding initial={profile} onDone={startWorkout} />}
+      {screen === 'workout' && <WorkoutView engine={engine} link={link} profile={profile} onEditBody={() => setScreen('onboarding')} onPair={() => setShowPair(true)} />}
+      {screen === 'summary' && result && (
+        <SummaryView
+          result={result}
+          profile={profile}
+          onCoach={(line, source) => engine.setCoachLine(line, source)}
+          onEndWorkout={() => { setResult(null); setScreen('onboarding'); }}
+          onEditBody={() => setScreen('onboarding')}
+        />
+      )}
     </div>
   );
 }

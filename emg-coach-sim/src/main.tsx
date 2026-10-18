@@ -1,4 +1,5 @@
 import { createRoot } from 'react-dom/client';
+import './theme';
 
 const root = createRoot(document.getElementById('root')!);
 

@@ -27,7 +27,7 @@ export function ConnectPhone({ link, compact, onClose }: { link: PhoneLink; comp
   const { url, alts } = usePhoneUrl(st.code);
   const [qr, setQr] = useState<string | null>(null);
   useEffect(() => {
-    QRCode.toDataURL(url, { margin: 1, width: 320, color: { dark: '#0b0c0f', light: '#f4f1ec' } }).then(setQr).catch(() => setQr(null));
+    QRCode.toDataURL(url, { margin: 1, width: 320, color: { dark: '#2B2B2B', light: '#FFFFFF' } }).then(setQr).catch(() => setQr(null));
   }, [url]);
   const connected = st.phones > 0;
 
@@ -36,7 +36,7 @@ export function ConnectPhone({ link, compact, onClose }: { link: PhoneLink; comp
       <div className="connect-head">
         <div>
           <div className="eyebrow">Phone remote</div>
-          <h3 className="serif">{connected ? 'Phone connected' : 'Connect your phone'}</h3>
+          <h3>{connected ? 'Phone connected' : 'Connect your phone'}</h3>
         </div>
         {onClose && <button className="x" aria-label="Close" onClick={onClose}>×</button>}
       </div>

@@ -8,47 +8,67 @@ There are no real sensors yet: a simulated Arduino streams EMG, and a gamepad or
 ## Run
 
 ```bash
-npm install
-npm run dev            # http://localhost:5173 (binds 0.0.0.0 via --host so a phone on the same Wi-Fi can join)
-# optional LLM coach (server-side proxy, key never reaches the browser). Priority: StepFun > OpenAI > Anthropic
-STEPFUN_API_KEY=... npm run dev           # StepFun step-5-preview (optional STEPFUN_MODEL, STEPFUN_BASE_URL)
-OPENAI_API_KEY=sk-... npm run dev          # optional OPENAI_MODEL (default gpt-4o-mini), OPENAI_BASE_URL
-ANTHROPIC_API_KEY=... npm run dev          # optional ANTHROPIC_MODEL
-npm run build && npm run preview            # production build (proxy also works in preview)
+npm i
+npm run dev                  # http://localhost:5173 (also on your LAN IP, for the phone)
+npm run build                # type-check + production build
+npm run preview              # serve the build; the coach proxy and phone relay work here too
 ```
 
-Without a key the coach is fully rule-based and offline. With `STEPFUN_API_KEY` set, the coach panel shows `step-5-preview` as its source.
-If that model id is rejected, the proxy looks up StepFun's `/models` list and retries once with the documented step-5 preview id.
-If the call fails, the panel says so and shows the rule-based coach instead. Keys created on the international StepFun platform only work with `STEPFUN_BASE_URL=https://api.stepfun.ai/v1`; `api.stepfun.com` rejects them with a 401. Put keys in your shell env or an untracked `.env.local`; never commit them. The LLM proxy only exists in `vite dev` / `vite preview`.
-A static host has no proxy, so the app falls back to rules there.
+Without an API key everything works offline, and the AI coach is rule-based.
 
-### Android companion (`/phone`)
+### StepFun coach (step-5-preview)
 
-The phone is a second controller and live display. It runs in the phone's browser, so there's no APK to install.
+1. Create `.env.local` next to `package.json`. It is gitignored (`*.local`); never commit it.
 
-1. Run `npm run dev` (it binds to the LAN because of `--host`). The phone and the computer must be on the same Wi-Fi.
-2. On the desktop, click **Connect phone** in the top bar. The popover shows a QR code and a 4-character session code.
-   When the desktop is opened via `localhost`, the QR code uses the LAN address from `GET /api/session/info`.
-3. Scan the QR code with the phone camera (it opens `http://<lan-ip>:5173/phone?s=CODE`). Or open `/phone` and type the code.
-4. The desktop chip turns into **Phone connected** and the Inputs list shows the device. If the phone drops, it reconnects automatically and the chip changes back.
+   ```bash
+   STEPFUN_API_KEY=your-key-here
+   # International keys (platform.stepfun.ai) need this; api.stepfun.com rejects them with a 401:
+   STEPFUN_BASE_URL=https://api.stepfun.ai/v1
+   # Optional, defaults to step-5-preview:
+   # STEPFUN_MODEL=step-5-preview
+   ```
 
-On the phone you can pick the exercise (arrows or chips), raise or lower the load (− / +), and **tap Rep** to run one scripted rep. **Hold Rep** to grind a long effort, which can trigger strain warnings. **End set** saves the set as a slice.
-The phone also shows a live 2D front/back muscle map, the rep count, the top strain alert, and the coach's last headline.
-Keyboard and gamepad keep working at the same time.
+2. Run `npm i && npm run dev`. Vite reads `.env.local` on startup, so restart it after editing the file.
+3. Check the proxy: `curl http://localhost:5173/api/coach/status` should print
+   `{"llm":true,"provider":"stepfun","model":"step-5-preview"}`. `"llm":false` means no key was loaded.
+4. Finish a workout and open **Risk & coach**. The coach badge shows `step-5-preview` when the note came from the model.
+   If the call fails, the panel shows the error and falls back to the rule-based coach.
 
-**Transport.** A Vite plugin (`server/sessionRelay.ts`) adds a WebSocket relay at `/ws/session?code=CODE&role=host|phone` to the same dev/preview server.
-Each session code is a room with one desktop host and any number of phones. The desktop (`src/phone/PhoneLink.ts`) stays authoritative:
-- the desktop broadcasts a compact `HostState` 10× per second while a phone is connected;
-- phones send `rep`, `effort`, `endSet`, `selectExercise` and `intensity` messages;
-- the server sends `presence` to the desktop and `hostStatus` to phones.
+The key stays on the server. The browser only calls `/api/coach`, a proxy defined in `vite.config.ts`.
+That proxy only exists under `vite dev` / `vite preview`; a static host falls back to rules.
+OpenAI (`OPENAI_API_KEY`, optional `OPENAI_MODEL` / `OPENAI_BASE_URL`) and Anthropic (`ANTHROPIC_API_KEY`, optional `ANTHROPIC_MODEL`) work the same way.
+Priority is StepFun, then OpenAI, then Anthropic.
 
-Message types live in `src/phone/protocol.ts`. The relay only exists in `vite dev` / `vite preview`; a static host would need its own WebSocket server.
+### Connect an Android phone (`/phone`)
 
-### Design
+The phone is a remote and a live display. It runs in the phone browser; there is no APK.
 
-Dark and calm, with one accent colour (`#ff7a45`). The cumulative heatmap is the hero of every screen.
-Typography is Instrument Serif for display, Inter for UI and JetBrains Mono for numbers. Tokens live in `src/styles/base.css`.
-Empty and loading states are intentional: a slices strip placeholder, and a skeleton labelled "step-5-preview is reading your session…".
+1. Run `npm run dev`. It listens on your LAN because of `--host`. The phone must be on the same Wi-Fi as the computer.
+2. On the desktop, click **Connect phone** in the top bar. It shows a QR code and a 4-character session code.
+3. Scan the QR code with the phone camera; it opens `http://<computer-lan-ip>:5173/phone?s=CODE`. Or open `/phone` on the phone and type the code.
+4. The chip turns into **Phone connected** and the workout's left panel lists the device.
+
+On the phone:
+- pick the exercise (arrows or chips) and change the external weight (− / +, 5 lb steps);
+- **tap Rep** for one scripted rep, or **hold Rep** to grind a long effort;
+- tap **End set**.
+
+It also shows the session and set number, the rest timer, a live front/back muscle map, the top strain alert, and the coach's latest headline.
+Keyboard and gamepad keep working alongside the phone.
+Transport: a Vite plugin (`server/sessionRelay.ts`) relays WebSocket messages on `/ws/session?code=CODE&role=host|phone`. Message types live in `src/phone/protocol.ts`.
+
+### Light / dark theme
+
+The sun/moon button in the top bar (desktop and phone) switches themes, and the choice is saved in `localStorage` (`myocoach.theme`).
+Light is Eason's white design and is the default. Dark is derived from the same palette: warm charcoal panels, the same orange and ember accents, a darker tan mannequin, and the heat scale reversed so the most-worked muscle is the brightest.
+
+### Sessions and rest
+
+- Each set records `restBeforeS`: the time since the previous set in the same session ended. The first set of a session has 0.
+- While you're between sets, the workout screen shows **Rest since last set**, and the phone shows a **Rest** pill.
+- Switching exercise, or pressing **End session N**, starts a new session and resets the rest clock.
+- The review shows **Rest logged** in the stats, and each set row shows its rest.
+- Rest is sent to the AI coach with each set and stored in local history (`restS`, `averageRestS`).
 
 ### Controls
 
@@ -58,24 +78,35 @@ Empty and loading states are intentional: a slices strip placeholder, and a skel
 | Start / end set | **Enter** | **A** |
 | Previous / next exercise | ← → or Q / E | LB / RB, D-pad ← → |
 | Load (intensity) | ↑ ↓ or − / = | D-pad ↑ ↓ |
+| External weight | slider in the left panel, or − / + on the phone | |
 | Auto-rep (hands-free demo) | **A** | **Y** |
 | Finish workout | **F** | **Start** |
 
 A set starts automatically when you first apply effort. It ends on Enter/A, or after 6 s idle. Click any muscle on the 3D model for details.
 
 ### Demo recording
-`scripts/record-demo.mjs` drives a desktop window and an emulated Pixel 7 phone side by side with Playwright and records the X display. The script:
-- pairs the phone by code;
-- does phone reps, an exercise change, keyboard reps and a held heavy rep that triggers a strain warning;
-- finishes with the coach review.
+`scripts/record-demo.mjs` drives the app with Playwright and records it: keyboard input, a scripted *virtual* Gamepad-API controller, and on-screen captions.
+Run it with `DISPLAY=:1 node scripts/record-demo.mjs out.mp4 summary.png`, with the dev server running. It needs `ffmpeg` and Chrome.
 
-The wait for the LLM is trimmed out of the video. Run it with `DISPLAY=:1 node scripts/record-demo.mjs out.mp4 desktop.png phone.png`, with the dev server running. It needs `ffmpeg` and Chrome.
+## Anatomy and electrode overlay
+
+- Desktop 3D: muscles are sculpted surface patches (`src/three/anatomy.ts`) laid onto the torso and arms. They have deltoid caps, fan-shaped pecs, lats and traps, segmented abs, serratus slips and fibre striation. Heat is tinted over a neutral muscle tone.
+- Phone: `src/phone/AnatomyMap.tsx` draws front and back anatomy plates with thin outlines, fibre hatching and heat tint.
+- Electrodes: the **Electrodes** button (on the workout stage, the review page and the phone map) shows the vest placement. Pads 01–14 appear on both sides, with REF at C7. The overlay is off by default. The mapping lives in `src/domain/electrodes.ts`.
+
+The reference numbering does not match the app's 14 channels one to one:
+- Reference regions 07, 08 and 09 (upper, middle and lower trapezius) all read the single `traps` channel.
+- The `forearms` and `rhomboids` channels have no electrode on the reference vest.
+- The reference is bilateral (28 contacts); the app uses one channel per muscle for both sides.
+- Reference 06 is the clavicular pec only; the app's `pecs` channel is the whole muscle.
+- REF at C7 is a ground contact, not a data channel.
+- The app's channel index order differs from the 01–14 numbering.
 
 ## Architecture
 
 ```
 src/
-  domain/      muscles.ts (10 muscle groups = 10 EMG channels), exercises.ts (activation profiles + arm poses), profile.ts
+  domain/      muscles.ts (14 muscle groups = 14 EMG channels, incl. abs / obliques / serratus / erectors), exercises.ts (activation profiles + arm poses), profile.ts
   emg/         types.ts        EmgSource interface, EmgFrame, CSV line parser (shared wire format)
                SimulatedEmgSource.ts   mock Arduino @100 Hz: baseline, noise, bursts, fatigue drift, artifacts
                WebSerialEmgSource.ts   real Arduino over Web Serial (Chrome/Edge)
@@ -88,10 +119,11 @@ src/
   coach/       rules.ts                offline rule-based coach (under/over-trained, push:pull balance, next-session plan)
                llm.ts                  calls /api/coach (vite.config.ts proxy) and falls back to rules
   three/       BodyCanvas.tsx          procedural 3D upper body (react-three-fiber); clickable heat-coloured muscles, posed arms
-  ui/          Onboarding, WorkoutView (live), EmgScope (oscilloscope), SummaryView (overlay heatmap, risk, coach, history), ConnectPhone (QR)
-  phone/       protocol.ts (wire types), PhoneLink.ts (desktop host client), PhoneApp.tsx + MuscleMap2D.tsx (/phone UI)
-  styles/      base.css (design tokens)
-server/        sessionRelay.ts         Vite plugin: WebSocket room relay for the phone companion
+  ui/          Onboarding, WorkoutView (live), EmgScope (oscilloscope), SummaryView (overlay heatmap, risk, coach, history),
+               ConnectPhone (QR pairing), ThemeToggle
+  phone/       protocol.ts, PhoneLink.ts (desktop side), PhoneApp.tsx + AnatomyMap.tsx (the /phone page)
+  styles/      tokens.css (light + dark colour tokens)   theme.ts  light/dark store (localStorage)
+server/        sessionRelay.ts         Vite plugin: WebSocket relay for the phone
 ```
 
 **Data flow.**
@@ -133,5 +165,5 @@ With real sensors, the gamepad only drives the avatar pose and rep counting. Mus
 
 ## Status
 
-- **Works:** onboarding scaling, 3D model with 10 clickable muscle groups, 9 exercises with poses, simulated 100 Hz EMG with fatigue, gamepad and keyboard input, sets as slices, live / per-set / cumulative heatmaps, slice overlay toggles, live and summary strain warnings, localStorage history with multi-session escalation, rule-based coach, StepFun / OpenAI / Anthropic LLM coach, Android companion over WebSocket.
+- **Works:** onboarding scaling, 3D model with 14 clickable muscle groups (incl. core), 9 exercises with poses, simulated 100 Hz EMG with fatigue, gamepad and keyboard input, sets as slices, live / per-set / cumulative heatmaps, slice overlay toggles, live and summary strain warnings, localStorage history with multi-session escalation, sessions with rest tracking, rule-based coach, StepFun / OpenAI / Anthropic LLM coach, Android phone companion, light/dark theme.
 - **Stubbed / simplified:** the Web Serial adapter is implemented but untested on hardware, with no calibration UI. Muscles are procedural ellipsoids, not anatomical meshes. Risk thresholds are demo-tuned, not validated. Left and right sides share one channel per group.

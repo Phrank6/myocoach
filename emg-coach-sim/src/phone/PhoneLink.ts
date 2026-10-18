@@ -104,6 +104,9 @@ export class PhoneLink {
       case 'intensity':
         e.setIntensity(msg.value);
         break;
+      case 'load':
+        if (Number.isFinite(msg.value)) e.setExternalLoadLb(msg.value);
+        break;
     }
   }
 
@@ -115,9 +118,12 @@ export class PhoneLink {
       exerciseIndex: s.exerciseIndex,
       inSet: s.inSet,
       reps: s.reps,
-      setNo: s.slices.length + (s.inSet ? 1 : 0),
+      setNo: s.slices.filter((x) => x.sessionIndex === s.sessionIndex).length + (s.inSet ? 1 : 0),
       totalReps: s.slices.reduce((a, x) => a + x.reps, 0) + s.reps,
       intensity: s.intensity,
+      sessionIndex: s.sessionIndex,
+      externalLoadLb: s.externalLoadLb,
+      restS: s.inSet ? 0 : Math.round(s.restSinceSetS),
       effort: +this.engine.effort.toFixed(3),
       live: this.engine.live.map((v) => +Math.min(1, v).toFixed(3)),
       alerts: s.alerts.slice(0, 2).map((a) => ({ level: a.level, title: a.title })),

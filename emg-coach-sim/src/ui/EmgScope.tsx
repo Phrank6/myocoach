@@ -1,8 +1,8 @@
 import { useEffect, useRef } from 'react';
+import { getTheme } from '../theme';
 import { MUSCLE_IDS, N_MUSCLES, muscleShort } from '../domain/muscles';
 import type { WorkoutEngine } from '../engine/WorkoutEngine';
 import { HIGH_ACT } from '../engine/risk';
-import { heatCss } from '../three/heat';
 
 /** Scrolling per-channel trace of processed EMG activation (last 5 s). */
 export function EmgScope({ engine }: { engine: WorkoutEngine }) {
@@ -24,23 +24,22 @@ export function EmgScope({ engine }: { engine: WorkoutEngine }) {
         g.clearRect(0, 0, W, H);
         const len = engine.scope.length / N_MUSCLES;
         const rowH = H / N_MUSCLES;
-        const labelW = 46;
-        g.font = '500 10px "JetBrains Mono Variable", ui-monospace, monospace';
+        const labelW = 44;
+        g.font = '10px ui-monospace, monospace';
         for (let ch = 0; ch < N_MUSCLES; ch++) {
           const y0 = ch * rowH;
-          g.fillStyle = 'rgba(255,255,255,0.05)';
-          g.fillRect(labelW, y0 + rowH - 1, W - labelW, 1);
-          g.strokeStyle = 'rgba(255,255,255,0.09)';
-          g.setLineDash([1, 4]);
+          g.fillStyle = ch % 2 ? 'rgba(255,255,255,0.02)' : 'rgba(255,255,255,0.045)';
+          g.fillRect(0, y0, W, rowH);
+          g.strokeStyle = 'rgba(230,106,50,0.42)';
+          g.setLineDash([2, 3]);
           g.beginPath();
           const yHigh = y0 + rowH - HIGH_ACT * (rowH - 2);
           g.moveTo(labelW, yHigh);
           g.lineTo(W, yHigh);
           g.stroke();
           g.setLineDash([]);
-          const latest = engine.scope[((engine.scopeHead - 1 + len) % len) * N_MUSCLES + ch];
-          g.strokeStyle = heatCss(0.3 + Math.min(0.7, latest));
-          g.lineWidth = 1.25;
+          g.strokeStyle = '#FF8C42';
+          g.lineWidth = 1.2;
           g.beginPath();
           for (let k = 0; k < len; k++) {
             const idx = ((engine.scopeHead + k) % len) * N_MUSCLES + ch;
@@ -51,7 +50,7 @@ export function EmgScope({ engine }: { engine: WorkoutEngine }) {
             else g.moveTo(x, y);
           }
           g.stroke();
-          g.fillStyle = '#6c707a';
+          g.fillStyle = getTheme() === 'dark' ? '#A89F96' : '#8b95ad';
           g.fillText(muscleShort(MUSCLE_IDS[ch]), 4, y0 + rowH / 2 + 3);
         }
       }
