@@ -51,8 +51,11 @@ export async function generateCoachReport(input: CoachInput, useLlm: boolean): P
       headers: { 'content-type': 'application/json' },
       body: JSON.stringify({ workout: coachPayload(input), muscleIds: MUSCLE_IDS }),
     });
-    if (!r.ok) throw new Error(`LLM proxy returned ${r.status}`);
-    const data = (await r.json()) as Partial<CoachReport> & { model?: string };
+    if (!r.ok) {
+      const body = (await r.json().catch(() => ({}))) as { error?: string };
+      throw new Error(body.error || `LLM proxy returned ${r.status}`);
+    }
+    const data = (await r.json()) as Partial<CoachReport> & { model?: string; provider?: string };
     const valid = (m: unknown): m is MuscleId => typeof m === 'string' && (MUSCLE_IDS as string[]).includes(m);
     return {
       source: 'llm',

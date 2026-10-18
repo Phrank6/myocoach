@@ -10,13 +10,16 @@ There are no real sensors yet: a simulated Arduino streams EMG, and a gamepad or
 ```bash
 npm install
 npm run dev            # http://localhost:5173
-# optional LLM coach (server-side proxy, key never reaches the browser):
+# optional LLM coach (server-side proxy, key never reaches the browser). Priority: StepFun > OpenAI > Anthropic
+STEPFUN_API_KEY=... npm run dev           # StepFun step-5-preview (optional STEPFUN_MODEL, STEPFUN_BASE_URL)
 OPENAI_API_KEY=sk-... npm run dev          # optional OPENAI_MODEL (default gpt-4o-mini), OPENAI_BASE_URL
 ANTHROPIC_API_KEY=... npm run dev          # optional ANTHROPIC_MODEL
 npm run build && npm run preview            # production build (proxy also works in preview)
 ```
 
-Without a key the coach is fully rule-based and offline. The LLM proxy only exists in `vite dev` / `vite preview`.
+Without a key the coach is fully rule-based and offline. With `STEPFUN_API_KEY` set, the coach panel shows `step-5-preview` as its source.
+If that model id is rejected, the proxy looks up StepFun's `/models` list and retries once with the documented step-5 preview id.
+If the call fails, the panel says so and shows the rule-based coach instead. Keys created on the international StepFun platform only work with `STEPFUN_BASE_URL=https://api.stepfun.ai/v1`; `api.stepfun.com` rejects them with a 401. Put keys in your shell env or an untracked `.env.local`; never commit them. The LLM proxy only exists in `vite dev` / `vite preview`.
 A static host has no proxy, so the app falls back to rules there.
 
 ### Controls

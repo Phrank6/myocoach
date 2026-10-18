@@ -24,7 +24,7 @@ export function SummaryView({ result, profile, onNewWorkout, onEditBody }: {
   const [selected, setSelected] = useState<MuscleId | null>(null);
   const [status, setStatus] = useState<CoachStatus | null>(null);
   const [report, setReport] = useState<(CoachReport & { error?: string }) | null>(null);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [history, setHistory] = useState<SessionRecord[]>(() => loadHistory());
   const [spin, setSpin] = useState(true);
   const [facing, setFacing] = useState<{ side: 'front' | 'back'; n: number }>({ side: 'front', n: 0 });
@@ -161,13 +161,19 @@ export function SummaryView({ result, profile, onNewWorkout, onEditBody }: {
             <div className="panel-title">
               AI coach
               <span className={`pill ${report?.source === 'llm' ? 'llm' : 'rules'}`}>
-                {loading ? 'thinking…' : report?.source === 'llm' ? `LLM · ${report.model ?? ''}` : status?.llm ? 'rules (LLM failed)' : 'rule-based (offline)'}
+                {loading
+                  ? `thinking…${status?.llm ? ` (${status.model})` : ''}`
+                  : report?.source === 'llm'
+                    ? report.model ?? status?.model ?? 'LLM'
+                    : status?.llm
+                      ? `rule-based · fallback (${status.model} failed)`
+                      : 'rule-based (offline)'}
               </span>
             </div>
             {report && (
               <>
                 <p className="headline">{report.headline}</p>
-                {report.error && <div className="err">LLM unavailable: {report.error.slice(0, 120)}</div>}
+                {report.error && <div className="err">{status?.model ?? 'LLM'} call failed — showing rule-based coach instead. ({report.error.slice(0, 140)})</div>}
                 {report.overloaded.length > 0 && (
                   <div className="coach-sec">
                     <h4>Overloaded</h4>
