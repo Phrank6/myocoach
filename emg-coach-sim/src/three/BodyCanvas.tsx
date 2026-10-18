@@ -43,8 +43,8 @@ const MUSCLES = [0, 1, 2].map((longAxis) => {
   return geometry;
 });
 const DEG = Math.PI / 180;
-const skinMat = new MeshStandardMaterial({ color: '#45413D', roughness: 0.96, metalness: 0 });
-const skinDark = new MeshStandardMaterial({ color: '#302C29', roughness: 0.96, metalness: 0 });
+const skinMat = new MeshStandardMaterial({ color: '#D9BD8D', roughness: 0.96, metalness: 0 });
+const skinDark = new MeshStandardMaterial({ color: '#B99B6F', roughness: 0.96, metalness: 0 });
 const ironMat = new MeshStandardMaterial({ color: '#9aa3b5', roughness: 0.35, metalness: 0.8 });
 
 interface MuscleProps {
