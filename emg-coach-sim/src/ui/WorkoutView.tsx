@@ -5,18 +5,27 @@ import type { BodyProfile } from '../domain/profile';
 import { WebSerialEmgSource, webSerialSupported } from '../emg/WebSerialEmgSource';
 import type { WorkoutEngine } from '../engine/WorkoutEngine';
 import { normalize } from '../engine/slices';
+import type { PhoneLink } from '../phone/PhoneLink';
 import { BodyCanvas } from '../three/BodyCanvas';
 import { EmgScope } from './EmgScope';
-import { fmtTime, HeatLegend, MuscleBars, useEngine } from './common';
+import { fmtTime, HeatLegend, MiniHeat, MuscleBars, Range, useEngine, usePhone } from './common';
 
 type ViewMode = 'live' | 'set' | 'workout';
+type Facing = { side: 'front' | 'back'; n: number };
 
-export function WorkoutView({ engine, profile, onEditBody }: { engine: WorkoutEngine; profile: BodyProfile; onEditBody: () => void }) {
+export function WorkoutView({ engine, link, profile, onEditBody, onPair }: {
+  engine: WorkoutEngine;
+  link: PhoneLink;
+  profile: BodyProfile;
+  onEditBody: () => void;
+  onPair: () => void;
+}) {
   const s = useEngine(engine);
+  const phone = usePhone(link);
   const [mode, setMode] = useState<ViewMode>('live');
   const [selected, setSelected] = useState<MuscleId | null>(null);
   const [serialErr, setSerialErr] = useState<string | null>(null);
-  const [facing, setFacing] = useState<{ side: 'front' | 'back'; n: number }>({ side: 'front', n: 0 });
+  const [facing, setFacing] = useState<Facing>({ side: 'front', n: 0 });
   const ex = EXERCISES[s.exerciseIndex];
 
   const getValues = useCallback(() => {
@@ -28,6 +37,7 @@ export function WorkoutView({ engine, profile, onEditBody }: { engine: WorkoutEn
 
   const flagged = Object.fromEntries(s.alerts.map((a) => [a.muscle, a.level])) as Partial<Record<MuscleId, 'elevated' | 'high'>>;
   const sel = selected ? MUSCLE_INDEX[selected] : -1;
+  const totalReps = s.slices.reduce((a, x) => a + x.reps, 0) + s.reps;
 
   const connectSerial = async () => {
     setSerialErr(null);
@@ -40,136 +50,178 @@ export function WorkoutView({ engine, profile, onEditBody }: { engine: WorkoutEn
 
   return (
     <div className="workout">
-      <aside className="panel left">
-        <div className="panel-title">Exercise <span className="kbd-hint">← → / LB RB</span></div>
-        <div className="ex-list">
-          {EXERCISES.map((e, i) => (
-            <button key={e.id} className={`ex ${i === s.exerciseIndex ? 'on' : ''}`} onClick={() => engine.selectExercise(i)}>
-              <span className="ex-name">{e.name}</span>
-              <span className="ex-muscles">
-                {MUSCLE_IDS.filter((m) => (e.profile[m] ?? 0) >= 0.6).map((m) => muscleShort(m)).join(' · ')}
-              </span>
-            </button>
-          ))}
+      <aside className="rail left">
+        <div className="rail-section">
+          <div className="eyebrow">Exercise</div>
+          <div className="ex-list">
+            {EXERCISES.map((e, i) => (
+              <button key={e.id} className={`ex ${i === s.exerciseIndex ? 'on' : ''}`} onClick={() => engine.selectExercise(i)}>
+                <span className="ex-name">{e.name}</span>
+                <span className="ex-muscles">
+                  {MUSCLE_IDS.filter((m) => (e.profile[m] ?? 0) >= 0.6).map((m) => muscleShort(m)).join(' · ')}
+                </span>
+              </button>
+            ))}
+          </div>
         </div>
-        <div className="panel-title">External load <span className="kbd-hint">weight used</span></div>
-        <div className="intensity">
-          <input aria-label="External load in pounds" type="range" min={0} max={300} step={2.5} value={s.externalLoadLb} onChange={(e) => engine.setExternalLoadLb(Number(e.target.value))} />
-          <b>{s.externalLoadLb} lb</b>
+        <div className="rail-section">
+          <div className="row-between">
+            <span className="eyebrow">Load</span>
+            <span className="mono">{Math.round(s.intensity * 100)}%</span>
+          </div>
+          <Range label="Load" value={s.intensity} min={0.3} max={1.1} step={0.05} onChange={(v) => engine.setIntensity(v)} />
         </div>
-        <div className="controls-card">
-          <div className="panel-title">Controls</div>
-          <div className="ctrl"><kbd>Space</kbd><span>hold = lift (rep)</span><em>RT / stick ↑</em></div>
-          <div className="ctrl"><kbd>Enter</kbd><span>start / end set</span><em>A</em></div>
-          <div className="ctrl"><kbd>A</kbd><span>auto-rep demo</span><em>Y</em></div>
-          <div className="ctrl"><kbd>F</kbd><span>end workout</span><em>Start</em></div>
-          <div className={`pad ${s.gamepadName ? 'ok' : ''}`}>{s.gamepadName ? `🎮 ${s.gamepadName.slice(0, 38)}` : 'No gamepad — press any button on a controller to connect'}</div>
-        </div>
-        <div className="source-card">
-          <div className="panel-title">EMG source</div>
-          <div className={`source ${s.sourceKind}`}>{s.sourceLabel}</div>
-          {s.sourceKind === 'simulated' ? (
-            <button className="btn small" disabled={!webSerialSupported()} onClick={connectSerial} title={webSerialSupported() ? '' : 'Web Serial needs Chrome/Edge'}>
-              Connect Arduino (Web Serial)
-            </button>
-          ) : (
-            <button className="btn small" onClick={() => void engine.useSimulated()}>Back to simulator</button>
-          )}
+
+        <div className="rail-section devices">
+          <div className="eyebrow">Inputs</div>
+          <button className={`device ${phone.phones ? 'on' : ''}`} onClick={onPair}>
+            <span className={`dot ${phone.phones ? 'ok' : ''}`} />
+            <span className="device-name">{phone.phones ? phone.device ?? 'Phone' : 'Phone remote'}</span>
+            <span className="device-meta faint">{phone.phones ? 'connected' : `pair · ${phone.code}`}</span>
+          </button>
+          <div className={`device ${s.gamepadName ? 'on' : ''}`}>
+            <span className={`dot ${s.gamepadName ? 'ok' : ''}`} />
+            <span className="device-name">{s.gamepadName ? s.gamepadName.replace(/\(.*\)/, '').slice(0, 26) : 'Gamepad'}</span>
+            <span className="device-meta faint">{s.gamepadName ? 'connected' : 'press any button'}</span>
+          </div>
+          <div className="device on">
+            <span className={`dot ${s.sourceKind === 'webserial' ? 'ok' : 'warn'}`} />
+            <span className="device-name">{s.sourceKind === 'simulated' ? 'Simulated EMG' : 'Arduino EMG'}</span>
+            {s.sourceKind === 'simulated' ? (
+              <button className="link device-meta" disabled={!webSerialSupported()} onClick={connectSerial}>Use Arduino</button>
+            ) : (
+              <button className="link device-meta" onClick={() => void engine.useSimulated()}>Use sim</button>
+            )}
+          </div>
           {serialErr && <div className="err">{serialErr}</div>}
+        </div>
+
+        <div className="keys faint">
+          <span><kbd>Space</kbd> lift</span>
+          <span><kbd>Enter</kbd> set</span>
+          <span><kbd>←</kbd><kbd>→</kbd> exercise</span>
+          <span><kbd>A</kbd> auto</span>
+          <span><kbd>F</kbd> finish</span>
         </div>
         <button className="link" onClick={onEditBody}>Edit body model</button>
       </aside>
 
-      <main className="stage">
-        <BodyCanvas profile={profile} getValues={getValues} getPose={getPose} selected={selected} onSelect={setSelected} dumbbells smoothing={mode === 'live' ? 0.25 : 0.1} valueLabel={mode === 'live' ? 'activation' : 'relative load'} facing={facing} />
-        <div className="view-btns stage-views">
-          <button onClick={() => setFacing({ side: 'front', n: facing.n + 1 })}>Front</button>
-          <button onClick={() => setFacing({ side: 'back', n: facing.n + 1 })}>Back</button>
-        </div>
-        <div className="hud-top">
-          <div className="hud-ex">
-            <div className="eyebrow">{ex.equipment}</div>
-            <h2>{ex.name}</h2>
-            <div className="muted">{ex.cue}</div>
-          </div>
-          <div className={`set-status ${s.inSet ? 'live' : ''}`}>
-            {s.inSet ? (
-              <>
-                <span className="rec" /> SET {s.slices.filter((sl) => sl.sessionIndex === s.sessionIndex).length + 1}
-                <b>{s.reps}</b> reps <span className="muted">{fmtTime(s.setDuration)}</span>
-                <span className="muted">· {s.externalLoadLb} lb</span>
-                {s.autoRep && <span className="tag">AUTO</span>}
-              </>
-            ) : (
-              <>Ready · hold <kbd>Space</kbd> or pull <kbd>RT</kbd> to start set {s.slices.filter((sl) => sl.sessionIndex === s.sessionIndex).length + 1}</>
-            )}
-          </div>
-        </div>
-        <div className="mode-toggle">
-          {(['live', 'set', 'workout'] as const).map((m) => (
-            <button key={m} className={mode === m ? 'on' : ''} onClick={() => setMode(m)}>
-              {m === 'live' ? 'Live EMG' : m === 'set' ? 'This set' : 'Workout so far'}
-            </button>
-          ))}
-        </div>
-        <div className="effort">
-          <div className="effort-fill" style={{ height: `${s.effort * 100}%` }} />
-          <span>effort</span>
-        </div>
-        <div className="legend-wrap"><HeatLegend left="rest" right={mode === 'live' ? '100% MVC' : 'most worked'} /></div>
-        <div className="alerts">
-          {s.alerts.slice(0, 3).map((a) => (
-            <div key={a.id} className={`alert ${a.level}`} onClick={() => engine.dismissAlert(a.id)}>
-              <b>⚠ {a.title}</b>
-              <span>{a.message}</span>
-            </div>
-          ))}
-        </div>
-        <div className="slices-strip">
-          {s.slices.length === 0 && <span className="muted">Completed sets appear here as slices.</span>}
-          {s.slices.map((sl) => (
-            <div key={sl.id} className="slice-chip">
-              <div><b>Session {sl.sessionIndex} · Set {sl.index}</b> {exerciseById(sl.exerciseId).name}</div>
-              <div className="muted">{sl.reps} reps · {sl.durationS.toFixed(0)} s · {sl.externalLoadLb} lb</div>
-            </div>
-          ))}
-        </div>
-      </main>
+      <section className="stage stage-surface">
+        <BodyCanvas profile={profile} getValues={getValues} getPose={getPose} selected={selected} onSelect={setSelected} dumbbells smoothing={mode === 'live' ? 0.25 : 0.1} valueLabel={mode === 'live' ? 'activation' : 'of top load'} facing={facing} hint={false} />
 
-      <aside className="panel right">
-        <div className="panel-title">Live EMG · {s.sourceKind === 'simulated' ? '100 Hz sim' : 'serial'}</div>
-        <EmgScope engine={engine} />
-        <div className="panel-title">{s.inSet ? 'Current set load' : 'Live activation'}</div>
-        {s.inSet ? (
-          <MuscleBars values={normalize(s.setLoad, 1)} selected={selected} onSelect={setSelected} flagged={flagged} />
-        ) : (
-          <MuscleBars values={s.live} selected={selected} onSelect={setSelected} flagged={flagged} />
-        )}
-        {selected && sel >= 0 && (
-          <div className="muscle-info">
-            <b>{muscleLabel(selected)}</b>
-            <div className="mi-grid">
-              <span>Live</span><b>{Math.round(s.live[sel] * 100)}% MVC</b>
-              <span>Workout load</span><b>{s.workoutLoad[sel].toFixed(1)} a·s</b>
-              <span>Fatigue (sim)</span><b>{Math.round(s.fatigue[sel] * 100)}%</b>
-              <span>In this exercise</span><b>{Math.round((ex.profile[selected] ?? 0) * 100)}%</b>
-            </div>
+        <div className="hud-title">
+          <div className="eyebrow">{ex.equipment}</div>
+          <h2 className="serif">{ex.name}</h2>
+          <div className="muted">{ex.cue}</div>
+        </div>
+
+        <div className={`hud-set ${s.inSet ? 'live' : ''}`}>
+          {s.inSet ? (
+            <>
+              <div className="hud-set-top">
+                <span className="rec" /> Set {s.slices.length + 1}
+                {s.autoRep && <span className="tag">auto</span>}
+                <span className="mono faint">{fmtTime(s.setDuration)}</span>
+              </div>
+              <div className="hud-reps">
+                <span className="mono">{String(s.reps).padStart(2, '0')}</span>
+                <span className="faint">reps</span>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="hud-set-top faint">Set {s.slices.length + 1} · ready</div>
+              <div className="hud-ready">
+                Hold <kbd>Space</kbd>, pull <kbd>RT</kbd>{phone.phones ? <> or tap <b>Rep</b> on your phone</> : null}
+              </div>
+            </>
+          )}
+        </div>
+
+        {s.alerts.length > 0 && (
+          <div className="alerts">
+            {s.alerts.slice(0, 2).map((a) => (
+              <button key={a.id} className={`alert ${a.level}`} onClick={() => engine.dismissAlert(a.id)}>
+                <span className="alert-title"><i className={`dot ${a.level}`} />{a.title}</span>
+                <span className="alert-msg">{a.message}</span>
+              </button>
+            ))}
           </div>
         )}
-        <div className="spacer" />
-        <div className="workout-stats">
-          <div><b>{s.slices.length}</b><span>sets</span></div>
-          <div><b>{s.slices.reduce((a, x) => a + x.reps, 0) + s.reps}</b><span>reps</span></div>
-          <div><b>{fmtTime(s.elapsedS)}</b><span>elapsed</span></div>
+
+        <div className="effort" aria-label="effort">
+          <div className="effort-fill" style={{ height: `${Math.min(1, s.effort) * 100}%` }} />
         </div>
-        <button className="btn primary" disabled={!s.slices.length && !s.inSet} onClick={() => engine.finish()}>
-          Review workout (F)
-        </button>
-        <button className="btn" disabled={!s.slices.length && !s.inSet} onClick={() => engine.endSession()}>
-          End session {s.sessionIndex}
-        </button>
-        {s.inSet && <button className="btn" onClick={() => engine.endSet()}>Stop set</button>}
-        {!s.inSet && s.restSinceSetS > 0 && <div className="muted rest-clock">Rest since last set · {fmtTime(s.restSinceSetS)}</div>}
+
+        <div className="stage-foot">
+          <div className="seg small">
+            {(['live', 'set', 'workout'] as const).map((m) => (
+              <button key={m} className={mode === m ? 'on' : ''} onClick={() => setMode(m)}>
+                {m === 'live' ? 'Live' : m === 'set' ? 'This set' : 'Session'}
+              </button>
+            ))}
+          </div>
+          <div className="seg small">
+            <button className={facing.side === 'front' ? 'on' : ''} onClick={() => setFacing({ side: 'front', n: facing.n + 1 })}>Front</button>
+            <button className={facing.side === 'back' ? 'on' : ''} onClick={() => setFacing({ side: 'back', n: facing.n + 1 })}>Back</button>
+          </div>
+          <HeatLegend left="rest" right={mode === 'live' ? 'max effort' : 'most worked'} />
+        </div>
+
+        <div className="slices-strip">
+          {s.slices.length === 0 ? (
+            <span className="empty faint">Finished sets land here as slices — each one is overlaid on your session map.</span>
+          ) : (
+            s.slices.map((sl) => (
+              <div key={sl.id} className="slice-chip">
+                <div className="slice-chip-top">
+                  <span className="mono faint">{String(sl.index).padStart(2, '0')}</span>
+                  <span>{exerciseById(sl.exerciseId).name}</span>
+                  <span className="mono faint">{sl.reps}×</span>
+                </div>
+                <MiniHeat values={sl.load} />
+              </div>
+            ))
+          )}
+        </div>
+      </section>
+
+      <aside className="rail right">
+        <div className="rail-section">
+          <div className="row-between">
+            <span className="eyebrow">Signal</span>
+            <span className="faint small">{s.sourceKind === 'simulated' ? '10 ch · 100 Hz' : 'serial'}</span>
+          </div>
+          <EmgScope engine={engine} />
+        </div>
+        <div className="rail-section grow">
+          <div className="row-between">
+            <span className="eyebrow">{s.inSet ? 'This set' : 'Activation'}</span>
+            <span className="faint small">{s.inSet ? 'relative load' : '% max effort'}</span>
+          </div>
+          <MuscleBars values={s.inSet ? normalize(s.setLoad, 1) : s.live} selected={selected} onSelect={setSelected} flagged={flagged} />
+          {selected && sel >= 0 && (
+            <div className="muscle-info">
+              <div className="row-between"><b>{muscleLabel(selected)}</b><button className="link" onClick={() => setSelected(null)}>close</button></div>
+              <dl>
+                <dt>Live</dt><dd className="mono">{Math.round(s.live[sel] * 100)}%</dd>
+                <dt>Session load</dt><dd className="mono">{s.workoutLoad[sel].toFixed(1)} a·s</dd>
+                <dt>Fatigue (sim)</dt><dd className="mono">{Math.round(s.fatigue[sel] * 100)}%</dd>
+                <dt>In {ex.name.toLowerCase()}</dt><dd className="mono">{Math.round((ex.profile[selected] ?? 0) * 100)}%</dd>
+              </dl>
+            </div>
+          )}
+        </div>
+        <div className="finish">
+          <div className="finish-stats faint">
+            <span><b className="mono">{s.slices.length}</b> sets</span>
+            <span><b className="mono">{totalReps}</b> reps</span>
+            <span><b className="mono">{fmtTime(s.elapsedS)}</b></span>
+          </div>
+          <button className="btn accent block" disabled={!s.slices.length && !s.inSet} onClick={() => engine.finish()}>
+            Finish & review
+          </button>
+        </div>
       </aside>
     </div>
   );

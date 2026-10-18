@@ -9,10 +9,6 @@ export const MUSCLES = [
   { id: 'lats', label: 'Latissimus dorsi', short: 'Lats', region: 'Back' },
   { id: 'traps', label: 'Trapezius', short: 'Traps', region: 'Back' },
   { id: 'rhomboids', label: 'Rhomboids / upper back', short: 'Rhomb', region: 'Back' },
-  { id: 'abs', label: 'Abdominals', short: 'Abs', region: 'Core' },
-  { id: 'obliques', label: 'Obliques', short: 'Obliques', region: 'Core' },
-  { id: 'serratus', label: 'Serratus anterior', short: 'Serratus', region: 'Core' },
-  { id: 'erectors', label: 'Spinal erectors', short: 'Erectors', region: 'Back' },
 ] as const;
 
 export type MuscleId = (typeof MUSCLES)[number]['id'];

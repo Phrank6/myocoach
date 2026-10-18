@@ -35,9 +35,8 @@ export interface EngineSnapshot {
   slices: Slice[];
   alerts: LiveAlert[];
   elapsedS: number;
-  sessionIndex: number;
-  externalLoadLb: number;
-  restSinceSetS: number;
+  coachLine: string | null;
+  coachSource: string | null;
 }
 
 export interface WorkoutResult {
@@ -69,9 +68,6 @@ export class WorkoutEngine {
   private lastEmit = 0;
   private lastRiskCheck = 0;
   private startedAt = Date.now();
-  private lastSetEndedAt: number | null = null;
-  private sessionIndex = 1;
-  private externalLoadLb = 0;
 
   exerciseIndex = 0;
   intensity = 0.75;
@@ -86,6 +82,12 @@ export class WorkoutEngine {
   private alerted = new Map<MuscleId, RiskLevel>();
   private history: SessionRecord[] = loadHistory();
   private gamepadName: string | null = null;
+  private pulseT = -1;
+  private pulseQueue = 0;
+  private remoteAnalog = 0;
+  private remoteAnalogAt = 0;
+  private coachLine: string | null = null;
+  private coachSource: string | null = null;
   onFinish: ((r: WorkoutResult) => void) | null = null;
 
   constructor() {
@@ -123,9 +125,6 @@ export class WorkoutEngine {
     this.recorder = null;
     this.history = loadHistory();
     this.startedAt = Date.now();
-    this.lastSetEndedAt = null;
-    this.sessionIndex = 1;
-    this.externalLoadLb = 0;
     this.sim.resetFatigue();
     this.emit(true);
   }
@@ -167,9 +166,8 @@ export class WorkoutEngine {
     const dt = this.processor.process(f);
     const act = this.processor.activation;
     for (let i = 0; i < N_MUSCLES; i++) {
-      const value = act[i] ?? 0;
-      this.live[i] = value;
-      this.scope[this.scopeHead * N_MUSCLES + i] = value;
+      this.live[i] = act[i];
+      this.scope[this.scopeHead * N_MUSCLES + i] = act[i];
     }
     this.scopeHead = (this.scopeHead + 1) % SCOPE_LEN;
     this.recorder?.add(act, dt);
@@ -193,6 +191,19 @@ export class WorkoutEngine {
     } else {
       target = inp.analogEffort ?? (inp.pushHeld ? 1 : 0);
     }
+    // Phone companion: a tap plays one scripted rep (up 0.45 s, squeeze, down 0.45 s); a hold streams effort.
+    if (this.pulseT < 0 && this.pulseQueue > 0) {
+      this.pulseQueue--;
+      this.pulseT = 0;
+    }
+    if (this.pulseT >= 0) {
+      this.pulseT += dt;
+      const t = this.pulseT;
+      const p = t < 0.45 ? t / 0.45 : t < 0.65 ? 1 : t < 1.1 ? 1 - (t - 0.65) / 0.45 : 0;
+      target = Math.max(target, p);
+      if (t > 1.35) this.pulseT = -1;
+    }
+    if (now - this.remoteAnalogAt < 600) target = Math.max(target, this.remoteAnalog);
     const tau = target > this.effort ? 0.16 : 0.22;
     this.effort += (target - this.effort) * (1 - Math.exp(-dt / tau));
 
@@ -245,9 +256,24 @@ export class WorkoutEngine {
     }
   }
 
+  remoteRep() {
+    this.pulseQueue = Math.min(3, this.pulseQueue + 1);
+  }
+
+  remoteEffort(v: number) {
+    this.remoteAnalog = Math.min(1, Math.max(0, v));
+    this.remoteAnalogAt = performance.now();
+  }
+
+  setCoachLine(line: string | null, source: string | null) {
+    this.coachLine = line;
+    this.coachSource = source;
+    this.emit(true);
+  }
+
   selectExercise(i: number) {
+    if (!Number.isInteger(i) || i < 0 || i >= EXERCISES.length) return;
     if (this.recorder) this.endSet();
-    if (i !== this.exerciseIndex && this.slices.some((slice) => slice.sessionIndex === this.sessionIndex)) this.endSession();
     this.exerciseIndex = i;
     this.emit(true);
   }
@@ -267,8 +293,7 @@ export class WorkoutEngine {
 
   startSet() {
     if (this.recorder) return;
-    const restBeforeS = this.lastSetEndedAt === null ? 0 : Math.max(0, (Date.now() - this.lastSetEndedAt) / 1000);
-    this.recorder = new SliceRecorder(this.exercise.id, this.intensity, this.sessionIndex, this.externalLoadLb, restBeforeS);
+    this.recorder = new SliceRecorder(this.exercise.id, this.intensity);
     this.repUp = false;
     this.idle = 0;
     this.emit(true);
@@ -279,29 +304,7 @@ export class WorkoutEngine {
     if (!rec) return;
     this.recorder = null;
     this.autoRep = false;
-    this.lastSetEndedAt = Date.now();
-    if (rec.reps > 0 || rec.durationS > 2) {
-      const sessionSetIndex = this.slices.filter((slice) => slice.sessionIndex === rec.sessionIndex).length + 1;
-      this.slices.push(rec.finish(sessionSetIndex));
-    }
-    this.emit(true);
-  }
-
-  setExternalLoadLb(value: number) {
-    this.externalLoadLb = Math.max(0, Math.round(value / 2.5) * 2.5);
-    this.emit(true);
-  }
-
-  setExperience(experience: 'beginner' | 'intermediate' | 'advanced') {
-    this.sim.setExperience(experience);
-    this.emit(true);
-  }
-
-  endSession() {
-    if (this.recorder) this.endSet();
-    if (!this.slices.some((slice) => slice.sessionIndex === this.sessionIndex)) return;
-    this.sessionIndex += 1;
-    this.lastSetEndedAt = null;
+    if (rec.reps > 0 || rec.durationS > 2) this.slices.push(rec.finish(this.slices.length + 1));
     this.emit(true);
   }
 
@@ -315,8 +318,6 @@ export class WorkoutEngine {
       id: `s-${this.startedAt}`,
       date: new Date().toISOString(),
       durationS: (Date.now() - this.startedAt) / 1000,
-      restS: this.slices.reduce((sum, slice) => sum + slice.restBeforeS, 0),
-      averageRestS: this.slices.length ? this.slices.reduce((sum, slice) => sum + slice.restBeforeS, 0) / this.slices.length : 0,
       sets: this.slices.length,
       exercises: [...new Set(this.slices.map((s) => s.exerciseId))],
       load: sumVectors(this.slices.map((s) => s.load)),
@@ -393,9 +394,8 @@ export class WorkoutEngine {
       slices: this.slices,
       alerts: this.alerts,
       elapsedS: (Date.now() - this.startedAt) / 1000,
-      sessionIndex: this.sessionIndex,
-      externalLoadLb: this.externalLoadLb,
-      restSinceSetS: this.lastSetEndedAt === null ? 0 : Math.max(0, (Date.now() - this.lastSetEndedAt) / 1000),
+      coachLine: this.coachLine,
+      coachSource: this.coachSource,
     };
   }
 }

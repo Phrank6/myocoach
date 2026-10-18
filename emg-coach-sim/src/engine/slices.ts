@@ -10,9 +10,6 @@ export interface Slice {
   startedAt: number;
   durationS: number;
   reps: number;
-  sessionIndex: number;
-  externalLoadLb: number;
-  restBeforeS: number;
   /** Activation per muscle sampled every SERIES_DT seconds. */
   series: MuscleVector[];
   /** ∫ activation dt  (activation-seconds) */
@@ -39,23 +36,17 @@ export class SliceRecorder {
   private bucket = zeroVector();
   private bucketT = 0;
   readonly exerciseId: string;
-  readonly sessionIndex: number;
-  readonly externalLoadLb: number;
-  readonly restBeforeS: number;
   intensity: number;
 
-  constructor(exerciseId: string, intensity: number, sessionIndex = 1, externalLoadLb = 0, restBeforeS = 0) {
+  constructor(exerciseId: string, intensity: number) {
     this.exerciseId = exerciseId;
     this.intensity = intensity;
-    this.sessionIndex = sessionIndex;
-    this.externalLoadLb = externalLoadLb;
-    this.restBeforeS = restBeforeS;
   }
 
   add(act: number[], dt: number) {
     this.durationS += dt;
     for (let i = 0; i < N_MUSCLES; i++) {
-      const a = act[i] ?? 0;
+      const a = act[i];
       this.load[i] += a * dt;
       if (a > this.peak[i]) this.peak[i] = a;
       if (a > HIGH_ACT) this.highTime[i] += dt;
@@ -84,9 +75,6 @@ export class SliceRecorder {
       startedAt: this.startedAt,
       durationS: this.durationS,
       reps: this.reps,
-      sessionIndex: this.sessionIndex,
-      externalLoadLb: this.externalLoadLb,
-      restBeforeS: this.restBeforeS,
       series: this.series,
       load: [...this.load],
       peak: [...this.peak],

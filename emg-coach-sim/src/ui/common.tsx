@@ -1,10 +1,15 @@
-import { useSyncExternalStore } from 'react';
-import { MUSCLE_IDS, muscleShort, type MuscleId } from '../domain/muscles';
+import { useSyncExternalStore, type CSSProperties } from 'react';
+import { MUSCLE_IDS, muscleShort, muscleLabel, type MuscleId } from '../domain/muscles';
 import type { WorkoutEngine } from '../engine/WorkoutEngine';
+import type { PhoneLink } from '../phone/PhoneLink';
 import { HEAT_GRADIENT_CSS, heatCss } from '../three/heat';
 
 export function useEngine(engine: WorkoutEngine) {
   return useSyncExternalStore(engine.subscribe, engine.getSnapshot);
+}
+
+export function usePhone(link: PhoneLink) {
+  return useSyncExternalStore(link.subscribe, link.getStatus);
 }
 
 export function fmtTime(s: number) {
@@ -13,13 +18,38 @@ export function fmtTime(s: number) {
   return `${m}:${ss.toString().padStart(2, '0')}`;
 }
 
-export function MuscleBars({ values, scaleMax = 1, selected, onSelect, unit = '%', flagged }: {
+export function Range({ value, min, max, step, onChange, label }: {
+  value: number;
+  min: number;
+  max: number;
+  step: number;
+  onChange: (v: number) => void;
+  label?: string;
+}) {
+  const p = ((value - min) / (max - min)) * 100;
+  return (
+    <input
+      aria-label={label}
+      className="range"
+      type="range"
+      min={min}
+      max={max}
+      step={step}
+      value={value}
+      style={{ '--p': `${p}%` } as CSSProperties}
+      onChange={(e) => onChange(Number(e.target.value))}
+    />
+  );
+}
+
+export function MuscleBars({ values, scaleMax = 1, selected, onSelect, unit = '%', flagged, long }: {
   values: number[];
   scaleMax?: number;
   selected?: MuscleId | null;
   onSelect?: (m: MuscleId) => void;
   unit?: '%' | 's';
   flagged?: Partial<Record<MuscleId, 'elevated' | 'high'>>;
+  long?: boolean;
 }) {
   return (
     <div className="bars">
@@ -29,13 +59,13 @@ export function MuscleBars({ values, scaleMax = 1, selected, onSelect, unit = '%
         return (
           <button key={m} className={`bar-row ${selected === m ? 'sel' : ''}`} onClick={() => onSelect?.(m)}>
             <span className="bar-label">
+              {long ? muscleLabel(m) : muscleShort(m)}
               {f && <i className={`dot ${f}`} />}
-              {muscleShort(m)}
             </span>
             <span className="bar-track">
-              <span className="bar-fill" style={{ width: `${Math.min(100, v * 100)}%`, background: heatCss(v) }} />
+              <span className="bar-fill" style={{ width: `${Math.min(100, v * 100)}%`, background: heatCss(Math.max(0.2, v)) }} />
             </span>
-            <span className="bar-val">{unit === '%' ? `${Math.round(values[i] * 100)}%` : `${values[i].toFixed(0)}`}</span>
+            <span className="bar-val mono">{unit === '%' ? Math.round(values[i] * 100) : values[i].toFixed(0)}</span>
           </button>
         );
       })}

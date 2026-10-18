@@ -1,7 +1,7 @@
 import { Canvas, useFrame, useThree, type ThreeEvent } from '@react-three/fiber';
-import { OrbitControls } from '@react-three/drei';
+import { Html, OrbitControls } from '@react-three/drei';
 import { useEffect, useMemo, useRef, useState, type MutableRefObject } from 'react';
-import { CapsuleGeometry, Color, CylinderGeometry, Group, LatheGeometry, MeshStandardMaterial, SphereGeometry, Spherical, Vector2, Vector3, BoxGeometry } from 'three';
+import { CanvasTexture, CapsuleGeometry, Color, CylinderGeometry, Group, LatheGeometry, MeshStandardMaterial, SphereGeometry, Spherical, Vector2, Vector3, BoxGeometry } from 'three';
 import { NEUTRAL_POSE, type Pose } from '../domain/exercises';
 import { MUSCLE_IDS, MUSCLE_INDEX, muscleLabel, type MuscleId } from '../domain/muscles';
 import { bodyDims, type BodyDims, type BodyProfile } from '../domain/profile';
@@ -19,6 +19,9 @@ export interface BodyCanvasProps {
   smoothing?: number;
   valueLabel?: string;
   facing?: { side: 'front' | 'back'; n: number };
+  /** Floating labels pinned to muscles (used on the summary). */
+  labels?: { muscle: MuscleId; text: string }[];
+  hint?: boolean;
 }
 
 type Mats = Record<MuscleId, MeshStandardMaterial>;
@@ -29,23 +32,43 @@ interface ArmRefs {
 }
 
 const SPHERE = new SphereGeometry(1, 28, 18);
-const MUSCLES = [0, 1, 2].map((longAxis) => {
-  const geometry = new SphereGeometry(1, 32, 24);
-  const positions = geometry.attributes.position;
-  const crossAxes = [0, 1, 2].filter((axis) => axis !== longAxis);
-  for (let i = 0; i < positions.count; i++) {
-    const along = positions.getComponent(i, longAxis);
-    const taper = 0.42 + 0.58 * Math.pow(Math.max(0, 1 - along * along), 0.35);
-    for (const axis of crossAxes) positions.setComponent(i, axis, positions.getComponent(i, axis) * taper);
-  }
-  positions.needsUpdate = true;
-  geometry.computeVertexNormals();
-  return geometry;
-});
 const DEG = Math.PI / 180;
-const skinMat = new MeshStandardMaterial({ color: '#D9BD8D', roughness: 0.96, metalness: 0 });
-const skinDark = new MeshStandardMaterial({ color: '#B99B6F', roughness: 0.96, metalness: 0 });
-const ironMat = new MeshStandardMaterial({ color: '#9aa3b5', roughness: 0.35, metalness: 0.8 });
+const skinMat = new MeshStandardMaterial({ color: '#2a2c33', roughness: 0.8, metalness: 0.05 });
+const skinDark = new MeshStandardMaterial({ color: '#1f2026', roughness: 0.85 });
+const ironMat = new MeshStandardMaterial({ color: '#8d8f96', roughness: 0.3, metalness: 0.85 });
+const SELECT = new Color('#ff7a45');
+
+function floorTexture() {
+  const c = document.createElement('canvas');
+  c.width = c.height = 256;
+  const g = c.getContext('2d')!;
+  const grad = g.createRadialGradient(128, 128, 0, 128, 128, 128);
+  grad.addColorStop(0, 'rgba(255,255,255,0.10)');
+  grad.addColorStop(0.55, 'rgba(255,255,255,0.03)');
+  grad.addColorStop(1, 'rgba(255,255,255,0)');
+  g.fillStyle = grad;
+  g.fillRect(0, 0, 256, 256);
+  return new CanvasTexture(c);
+}
+
+/** Label anchor per muscle on the +x side, in body units, for the neutral pose. */
+function labelAnchor(m: MuscleId, d: BodyDims): [number, number, number] {
+  const w = d.width;
+  const sx = 0.2 * w + 0.012;
+  const L1 = 0.29 * d.arm;
+  switch (m) {
+    case 'pecs': return [0.085 * w, 1.36, 0.14 * w];
+    case 'delt_front': return [sx + 0.01, 1.4, 0.08];
+    case 'delt_side': return [sx + 0.075, 1.39, 0];
+    case 'delt_rear': return [sx + 0.01, 1.39, -0.08];
+    case 'biceps': return [sx + 0.03, 1.43 - L1 * 0.55, 0.06];
+    case 'triceps': return [sx + 0.03, 1.43 - L1 * 0.45, -0.07];
+    case 'forearms': return [sx + 0.06, 1.43 - L1 - 0.08, 0.04];
+    case 'lats': return [0.17 * w + 0.03, 1.24, -0.04];
+    case 'traps': return [0.08 * w, 1.51, -0.03];
+    case 'rhomboids': return [0.06 * w, 1.29, -0.14 * w];
+  }
+}
 
 interface MuscleProps {
   id: MuscleId;
@@ -58,10 +81,9 @@ interface MuscleProps {
 }
 
 function Muscle({ id, mats, position, scale, rotation, onSelect, onHover }: MuscleProps) {
-  const longAxis = scale.indexOf(Math.max(...scale));
   return (
     <mesh
-      geometry={MUSCLES[longAxis]}
+      geometry={SPHERE}
       material={mats[id]}
       position={position}
       scale={scale}
@@ -135,12 +157,12 @@ function Arm({ side, d, mats, refs, onSelect, onHover, dumbbells }: {
   );
 }
 
-function Body({ profile, getValues, getPose, selected, onSelect, onHover, dumbbells, smoothing }: BodyCanvasProps & { onHover: (m: MuscleId | null) => void }) {
+function Body({ profile, getValues, getPose, selected, onSelect, onHover, dumbbells, smoothing, labels }: BodyCanvasProps & { onHover: (m: MuscleId | null) => void }) {
   const d = bodyDims(profile);
   const w = d.width;
   const mf = d.muscle;
   const mats = useMemo(
-    () => Object.fromEntries(MUSCLE_IDS.map((m) => [m, new MeshStandardMaterial({ color: '#2B2B2B', roughness: 0.9, metalness: 0, emissive: new Color('#000000') })])) as Mats,
+    () => Object.fromEntries(MUSCLE_IDS.map((m) => [m, new MeshStandardMaterial({ color: '#2c2e37', roughness: 0.42, metalness: 0.08, emissive: new Color('#000000') })])) as Mats,
     [],
   );
   const torso = useMemo(() => {
@@ -154,6 +176,7 @@ function Body({ profile, getValues, getPose, selected, onSelect, onHover, dumbbe
   const right = useRef<ArmRefs>({ yaw: null, joint: null, elbow: null });
   const shown = useRef<number[]>(MUSCLE_IDS.map(() => 0));
   const tmp = useMemo(() => new Color(), []);
+  const floor = useMemo(() => floorTexture(), []);
 
   useFrame(({ clock }) => {
     const vals = getValues();
@@ -163,8 +186,8 @@ function Body({ profile, getValues, getPose, selected, onSelect, onHover, dumbbe
       const v = (shown.current[i] += ((vals[MUSCLE_INDEX[m]] ?? 0) - shown.current[i]) * k);
       const mat = mats[m];
       heatColor(v, mat.color);
-      mat.emissive.copy(heatColor(v, tmp)).multiplyScalar(0.12 + 0.42 * Math.min(1, v));
-      if (selected === m) mat.emissive.lerp(new Color('#FFD9A0'), 0.12 + 0.08 * pulse);
+      mat.emissive.copy(heatColor(v, tmp)).multiplyScalar(0.04 + 0.5 * Math.min(1, v) ** 1.4);
+      if (selected === m) mat.emissive.lerp(SELECT, 0.35 + 0.25 * pulse);
     });
     const p = getPose?.() ?? NEUTRAL_POSE;
     for (const [side, r] of [[1, left.current], [-1, right.current]] as const) {
@@ -188,29 +211,33 @@ function Body({ profile, getValues, getPose, selected, onSelect, onHover, dumbbe
           <Muscle id="lats" {...mp} position={[s * 0.148 * w, 1.24, -0.035 * w]} scale={[0.045 * mf, 0.145, 0.085 * w]} rotation={[0, 0, s * 0.22]} />
           <Muscle id="traps" {...mp} position={[s * 0.075 * w, 1.487, -0.02]} scale={[0.088 * w, 0.034 * mf, 0.055]} rotation={[0, 0, s * -0.42]} />
           <Muscle id="rhomboids" {...mp} position={[s * 0.058 * w, 1.29, -0.108 * w]} scale={[0.046 * w, 0.06, 0.028 * mf]} rotation={[-0.1, 0, s * 0.3]} />
-          <Muscle id="obliques" {...mp} position={[s * 0.105 * w, 1.08, 0.058 * w]} scale={[0.035 * w, 0.14, 0.012]} rotation={[0, 0, s * -0.12]} />
-          <Muscle id="serratus" {...mp} position={[s * 0.128 * w, 1.28, 0.063 * w]} scale={[0.026 * w, 0.074, 0.012]} rotation={[0, 0, s * -0.45]} />
-          <Muscle id="erectors" {...mp} position={[s * 0.035 * w, 1.16, -0.098 * w]} scale={[0.023 * w, 0.19, 0.018]} rotation={[0, 0, s * -0.05]} />
         </group>
       ))}
       <Muscle id="traps" {...mp} position={[0, 1.4, -0.104 * w]} scale={[0.07 * w, 0.095, 0.03 * mf]} rotation={[-0.15, 0, 0]} />
-      {[-1, 1].flatMap((side) => [0, 1, 2].map((row) => (
-        <Muscle key={`abs-${side}-${row}`} id="abs" {...mp}
-          position={[side * 0.035 * w, 1.16 - row * 0.063, 0.088 * w]}
-          scale={[0.031 * w, 0.026, 0.009]} rotation={[0, 0, side * -0.025]} />
-      )))}
 
       <Arm side={1} d={d} mats={mats} refs={left} onSelect={onSelect} onHover={onHover} dumbbells={!!dumbbells} />
       <Arm side={-1} d={d} mats={mats} refs={right} onSelect={onSelect} onHover={onHover} dumbbells={!!dumbbells} />
 
       <mesh position={[0, 0.885, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <circleGeometry args={[0.5, 48]} />
-        <meshStandardMaterial color="#F4F4F4" roughness={1} />
+        <circleGeometry args={[0.62, 64]} />
+        <meshBasicMaterial map={floor} transparent depthWrite={false} />
       </mesh>
-      <mesh position={[0, 0.887, 0]} rotation={[-Math.PI / 2, 0, 0]}>
-        <ringGeometry args={[0.48, 0.5, 64]} />
-        <meshBasicMaterial color="#C24C30" transparent opacity={0.55} />
+      <mesh position={[0, 0.886, 0]} rotation={[-Math.PI / 2, 0, 0]}>
+        <ringGeometry args={[0.455, 0.46, 96]} />
+        <meshBasicMaterial color="#ffffff" transparent opacity={0.08} />
       </mesh>
+      {labels && MUSCLE_IDS.map((m) => {
+        // drei <Html> nodes throw on unmount under React 19, so they stay mounted and only toggle visibility.
+        const l = labels.find((x) => x.muscle === m);
+        return (
+          <Html key={m} position={labelAnchor(m, d)} zIndexRange={[20, 0]} style={{ pointerEvents: 'none' }}>
+            <div className={`mlabel ${l ? '' : 'off'}`}>
+              <i />
+              <span>{l?.text ?? ''}</span>
+            </div>
+          </Html>
+        );
+      })}
     </group>
   );
 }
@@ -241,14 +268,13 @@ export function BodyCanvas(props: BodyCanvasProps) {
         dpr={[1, 1.5]}
         camera={{ position: [0.9, 0.55 * h, 2.1], fov: 34 }}
         onPointerMissed={() => props.onSelect?.(null)}
-        gl={{ preserveDrawingBuffer: true, antialias: true }}
+        gl={{ preserveDrawingBuffer: true, antialias: true, alpha: true }}
       >
-        <color attach="background" args={['#FFFFFF']} />
-        <fog attach="fog" args={['#FFFFFF', 3.5, 7]} />
-        <hemisphereLight args={['#FFD9A0', '#1b1715', 0.9]} />
-        <directionalLight position={[2, 3, 2.5]} intensity={1.6} color="#FFD9A0" />
-        <directionalLight position={[-2.5, 1.5, -2]} intensity={0.7} color="#FF8C42" />
-        <pointLight position={[0, 0.6, 1.5]} intensity={0.48} color="#FFD9A0" />
+        <hemisphereLight args={['#d9dcff', '#0b0c0f', 0.55]} />
+        <directionalLight position={[1.8, 2.6, 2.4]} intensity={1.7} color="#fff1e6" />
+        <directionalLight position={[-2.4, 1.6, -2.2]} intensity={1.5} color="#8fa6ff" />
+        <directionalLight position={[2.4, 0.8, -1.8]} intensity={0.6} color="#ffb48a" />
+        <pointLight position={[0, 0.5, 1.6]} intensity={0.35} color="#ffffff" />
         <Body {...props} onHover={setHover} />
         <ViewSnap facing={props.facing} />
         <OrbitControls
@@ -265,13 +291,13 @@ export function BodyCanvas(props: BodyCanvasProps) {
       </Canvas>
       {hover && (
         <div className="hover-tip">
-          {muscleLabel(hover)}
+          <b>{muscleLabel(hover)}</b>
           <span>
-            {props.valueLabel ?? 'activation'} {Math.round((valueRef.current()[MUSCLE_INDEX[hover]] ?? 0) * 100)}%
+            {Math.round((valueRef.current()[MUSCLE_INDEX[hover]] ?? 0) * 100)}% {props.valueLabel ?? 'activation'}
           </span>
         </div>
       )}
-      <div className="canvas-hint">drag to orbit · scroll to zoom · click a muscle</div>
+      {props.hint !== false && <div className="canvas-hint">Drag to orbit · click a muscle</div>}
     </div>
   );
 }
