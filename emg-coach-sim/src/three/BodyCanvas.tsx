@@ -197,7 +197,7 @@ function Body({ profile, getValues, getPose, selected, onSelect, onHover, dumbbe
 
       <mesh position={[0, 0.885, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <circleGeometry args={[0.5, 48]} />
-        <meshStandardMaterial color="#080808" roughness={1} />
+        <meshStandardMaterial color="#F4F4F4" roughness={1} />
       </mesh>
       <mesh position={[0, 0.887, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <ringGeometry args={[0.48, 0.5, 64]} />
@@ -235,8 +235,8 @@ export function BodyCanvas(props: BodyCanvasProps) {
         onPointerMissed={() => props.onSelect?.(null)}
         gl={{ preserveDrawingBuffer: true, antialias: true }}
       >
-        <color attach="background" args={['#000000']} />
-        <fog attach="fog" args={['#000000', 3.5, 7]} />
+        <color attach="background" args={['#FFFFFF']} />
+        <fog attach="fog" args={['#FFFFFF', 3.5, 7]} />
         <hemisphereLight args={['#FFD9A0', '#1b1715', 0.9]} />
         <directionalLight position={[2, 3, 2.5]} intensity={1.6} color="#FFD9A0" />
         <directionalLight position={[-2.5, 1.5, -2]} intensity={0.7} color="#FF8C42" />
