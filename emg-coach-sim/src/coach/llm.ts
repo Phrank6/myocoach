@@ -29,6 +29,8 @@ export function coachPayload(input: CoachInput) {
       reps: s.reps,
       durationS: +s.durationS.toFixed(1),
       intensity: s.intensity,
+      externalLoadLb: s.externalLoadLb,
+      restBeforeS: +s.restBeforeS.toFixed(1),
       peakActivation: Object.fromEntries(MUSCLE_IDS.map((m, i) => [m, +s.peak[i].toFixed(2)])),
     })),
     muscleLoad: Object.fromEntries(MUSCLE_IDS.map((m, i) => [m, { activationSeconds: +load[i].toFixed(1), relative: +norm[i].toFixed(2) }])),

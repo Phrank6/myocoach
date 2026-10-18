@@ -43,8 +43,8 @@ const MUSCLES = [0, 1, 2].map((longAxis) => {
   return geometry;
 });
 const DEG = Math.PI / 180;
-const skinMat = new MeshStandardMaterial({ color: '#45413D', roughness: 0.96, metalness: 0 });
-const skinDark = new MeshStandardMaterial({ color: '#302C29', roughness: 0.96, metalness: 0 });
+const skinMat = new MeshStandardMaterial({ color: '#D9BD8D', roughness: 0.96, metalness: 0 });
+const skinDark = new MeshStandardMaterial({ color: '#B99B6F', roughness: 0.96, metalness: 0 });
 const ironMat = new MeshStandardMaterial({ color: '#9aa3b5', roughness: 0.35, metalness: 0.8 });
 
 interface MuscleProps {
@@ -188,9 +188,17 @@ function Body({ profile, getValues, getPose, selected, onSelect, onHover, dumbbe
           <Muscle id="lats" {...mp} position={[s * 0.148 * w, 1.24, -0.035 * w]} scale={[0.045 * mf, 0.145, 0.085 * w]} rotation={[0, 0, s * 0.22]} />
           <Muscle id="traps" {...mp} position={[s * 0.075 * w, 1.487, -0.02]} scale={[0.088 * w, 0.034 * mf, 0.055]} rotation={[0, 0, s * -0.42]} />
           <Muscle id="rhomboids" {...mp} position={[s * 0.058 * w, 1.29, -0.108 * w]} scale={[0.046 * w, 0.06, 0.028 * mf]} rotation={[-0.1, 0, s * 0.3]} />
+          <Muscle id="obliques" {...mp} position={[s * 0.105 * w, 1.08, 0.058 * w]} scale={[0.035 * w, 0.14, 0.012]} rotation={[0, 0, s * -0.12]} />
+          <Muscle id="serratus" {...mp} position={[s * 0.128 * w, 1.28, 0.063 * w]} scale={[0.026 * w, 0.074, 0.012]} rotation={[0, 0, s * -0.45]} />
+          <Muscle id="erectors" {...mp} position={[s * 0.035 * w, 1.16, -0.098 * w]} scale={[0.023 * w, 0.19, 0.018]} rotation={[0, 0, s * -0.05]} />
         </group>
       ))}
       <Muscle id="traps" {...mp} position={[0, 1.4, -0.104 * w]} scale={[0.07 * w, 0.095, 0.03 * mf]} rotation={[-0.15, 0, 0]} />
+      {[-1, 1].flatMap((side) => [0, 1, 2].map((row) => (
+        <Muscle key={`abs-${side}-${row}`} id="abs" {...mp}
+          position={[side * 0.035 * w, 1.16 - row * 0.063, 0.088 * w]}
+          scale={[0.031 * w, 0.026, 0.009]} rotation={[0, 0, side * -0.025]} />
+      )))}
 
       <Arm side={1} d={d} mats={mats} refs={left} onSelect={onSelect} onHover={onHover} dumbbells={!!dumbbells} />
       <Arm side={-1} d={d} mats={mats} refs={right} onSelect={onSelect} onHover={onHover} dumbbells={!!dumbbells} />

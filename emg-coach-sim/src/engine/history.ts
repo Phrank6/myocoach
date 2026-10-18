@@ -5,6 +5,8 @@ export interface SessionRecord {
   id: string;
   date: string; // ISO
   durationS: number;
+  restS?: number;
+  averageRestS?: number;
   sets: number;
   exercises: string[];
   load: MuscleVector;
@@ -19,7 +21,12 @@ export function loadHistory(): SessionRecord[] {
   try {
     const raw = localStorage.getItem(KEY);
     const list = raw ? (JSON.parse(raw) as SessionRecord[]) : [];
-    return list.filter((s) => Array.isArray(s.load) && s.load.length === MUSCLE_IDS.length);
+    return list.filter((s) => Array.isArray(s.load) && s.load.length <= MUSCLE_IDS.length).map((s) => ({
+      ...s,
+      load: [...s.load, ...zeroVector().slice(s.load.length)],
+      highTime: [...(s.highTime ?? []), ...zeroVector().slice(s.highTime?.length ?? 0)],
+      flags: [...(s.flags ?? []), ...Array(MUSCLE_IDS.length - (s.flags?.length ?? 0)).fill(null)],
+    }));
   } catch {
     return [];
   }

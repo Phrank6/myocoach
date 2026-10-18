@@ -1,12 +1,12 @@
 import { Color } from 'three';
 
 const STOPS: [number, string][] = [
-  [0, '#2B2B2B'],
-  [0.16, '#8C2F2B'],
-  [0.4, '#C24C30'],
-  [0.66, '#E66A32'],
-  [0.84, '#FF8C42'],
-  [1, '#FFD9A0'],
+  [0, '#FFD9A0'],
+  [0.16, '#FF8C42'],
+  [0.4, '#E66A32'],
+  [0.66, '#C24C30'],
+  [0.84, '#8C2F2B'],
+  [1, '#2B2B2B'],
 ];
 const COLORS = STOPS.map(([t, c]) => [t, new Color(c)] as const);
 

@@ -35,6 +35,9 @@ export interface EngineSnapshot {
   slices: Slice[];
   alerts: LiveAlert[];
   elapsedS: number;
+  sessionIndex: number;
+  externalLoadLb: number;
+  restSinceSetS: number;
 }
 
 export interface WorkoutResult {
@@ -66,6 +69,9 @@ export class WorkoutEngine {
   private lastEmit = 0;
   private lastRiskCheck = 0;
   private startedAt = Date.now();
+  private lastSetEndedAt: number | null = null;
+  private sessionIndex = 1;
+  private externalLoadLb = 0;
 
   exerciseIndex = 0;
   intensity = 0.75;
@@ -117,6 +123,9 @@ export class WorkoutEngine {
     this.recorder = null;
     this.history = loadHistory();
     this.startedAt = Date.now();
+    this.lastSetEndedAt = null;
+    this.sessionIndex = 1;
+    this.externalLoadLb = 0;
     this.sim.resetFatigue();
     this.emit(true);
   }
@@ -158,8 +167,9 @@ export class WorkoutEngine {
     const dt = this.processor.process(f);
     const act = this.processor.activation;
     for (let i = 0; i < N_MUSCLES; i++) {
-      this.live[i] = act[i];
-      this.scope[this.scopeHead * N_MUSCLES + i] = act[i];
+      const value = act[i] ?? 0;
+      this.live[i] = value;
+      this.scope[this.scopeHead * N_MUSCLES + i] = value;
     }
     this.scopeHead = (this.scopeHead + 1) % SCOPE_LEN;
     this.recorder?.add(act, dt);
@@ -237,6 +247,7 @@ export class WorkoutEngine {
 
   selectExercise(i: number) {
     if (this.recorder) this.endSet();
+    if (i !== this.exerciseIndex && this.slices.some((slice) => slice.sessionIndex === this.sessionIndex)) this.endSession();
     this.exerciseIndex = i;
     this.emit(true);
   }
@@ -256,7 +267,8 @@ export class WorkoutEngine {
 
   startSet() {
     if (this.recorder) return;
-    this.recorder = new SliceRecorder(this.exercise.id, this.intensity);
+    const restBeforeS = this.lastSetEndedAt === null ? 0 : Math.max(0, (Date.now() - this.lastSetEndedAt) / 1000);
+    this.recorder = new SliceRecorder(this.exercise.id, this.intensity, this.sessionIndex, this.externalLoadLb, restBeforeS);
     this.repUp = false;
     this.idle = 0;
     this.emit(true);
@@ -267,7 +279,29 @@ export class WorkoutEngine {
     if (!rec) return;
     this.recorder = null;
     this.autoRep = false;
-    if (rec.reps > 0 || rec.durationS > 2) this.slices.push(rec.finish(this.slices.length + 1));
+    this.lastSetEndedAt = Date.now();
+    if (rec.reps > 0 || rec.durationS > 2) {
+      const sessionSetIndex = this.slices.filter((slice) => slice.sessionIndex === rec.sessionIndex).length + 1;
+      this.slices.push(rec.finish(sessionSetIndex));
+    }
+    this.emit(true);
+  }
+
+  setExternalLoadLb(value: number) {
+    this.externalLoadLb = Math.max(0, Math.round(value / 2.5) * 2.5);
+    this.emit(true);
+  }
+
+  setExperience(experience: 'beginner' | 'intermediate' | 'advanced') {
+    this.sim.setExperience(experience);
+    this.emit(true);
+  }
+
+  endSession() {
+    if (this.recorder) this.endSet();
+    if (!this.slices.some((slice) => slice.sessionIndex === this.sessionIndex)) return;
+    this.sessionIndex += 1;
+    this.lastSetEndedAt = null;
     this.emit(true);
   }
 
@@ -281,6 +315,8 @@ export class WorkoutEngine {
       id: `s-${this.startedAt}`,
       date: new Date().toISOString(),
       durationS: (Date.now() - this.startedAt) / 1000,
+      restS: this.slices.reduce((sum, slice) => sum + slice.restBeforeS, 0),
+      averageRestS: this.slices.length ? this.slices.reduce((sum, slice) => sum + slice.restBeforeS, 0) / this.slices.length : 0,
       sets: this.slices.length,
       exercises: [...new Set(this.slices.map((s) => s.exerciseId))],
       load: sumVectors(this.slices.map((s) => s.load)),
@@ -357,6 +393,9 @@ export class WorkoutEngine {
       slices: this.slices,
       alerts: this.alerts,
       elapsedS: (Date.now() - this.startedAt) / 1000,
+      sessionIndex: this.sessionIndex,
+      externalLoadLb: this.externalLoadLb,
+      restSinceSetS: this.lastSetEndedAt === null ? 0 : Math.max(0, (Date.now() - this.lastSetEndedAt) / 1000),
     };
   }
 }

@@ -57,6 +57,7 @@ export function Onboarding({ initial, onDone }: { initial: BodyProfile; onDone: 
             </button>
           ))}
         </div>
+        <p className="muted">Experience changes fatigue in this demo simulator only; it is not a measured estimate of your muscle tolerance.</p>
         <div className="ob-stats">
           <div><b>{bmi.toFixed(1)}</b><span>BMI</span></div>
           <div><b>{armSpan}</b><span>arm span cm</span></div>

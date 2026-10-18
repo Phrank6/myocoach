@@ -7,7 +7,7 @@ import type { WorkoutEngine } from '../engine/WorkoutEngine';
 import { normalize } from '../engine/slices';
 import { BodyCanvas } from '../three/BodyCanvas';
 import { EmgScope } from './EmgScope';
-import { fmtTime, HeatLegend, MiniHeat, MuscleBars, useEngine } from './common';
+import { fmtTime, HeatLegend, MuscleBars, useEngine } from './common';
 
 type ViewMode = 'live' | 'set' | 'workout';
 
@@ -52,17 +52,17 @@ export function WorkoutView({ engine, profile, onEditBody }: { engine: WorkoutEn
             </button>
           ))}
         </div>
-        <div className="panel-title">Load <span className="kbd-hint">↑ ↓ / D-pad</span></div>
+        <div className="panel-title">External load <span className="kbd-hint">weight used</span></div>
         <div className="intensity">
-          <input type="range" min={0.3} max={1.1} step={0.05} value={s.intensity} onChange={(e) => engine.setIntensity(Number(e.target.value))} />
-          <b>{Math.round(s.intensity * 100)}%</b>
+          <input aria-label="External load in pounds" type="range" min={0} max={300} step={2.5} value={s.externalLoadLb} onChange={(e) => engine.setExternalLoadLb(Number(e.target.value))} />
+          <b>{s.externalLoadLb} lb</b>
         </div>
         <div className="controls-card">
           <div className="panel-title">Controls</div>
           <div className="ctrl"><kbd>Space</kbd><span>hold = lift (rep)</span><em>RT / stick ↑</em></div>
           <div className="ctrl"><kbd>Enter</kbd><span>start / end set</span><em>A</em></div>
           <div className="ctrl"><kbd>A</kbd><span>auto-rep demo</span><em>Y</em></div>
-          <div className="ctrl"><kbd>F</kbd><span>finish workout</span><em>Start</em></div>
+          <div className="ctrl"><kbd>F</kbd><span>end workout</span><em>Start</em></div>
           <div className={`pad ${s.gamepadName ? 'ok' : ''}`}>{s.gamepadName ? `🎮 ${s.gamepadName.slice(0, 38)}` : 'No gamepad — press any button on a controller to connect'}</div>
         </div>
         <div className="source-card">
@@ -95,12 +95,13 @@ export function WorkoutView({ engine, profile, onEditBody }: { engine: WorkoutEn
           <div className={`set-status ${s.inSet ? 'live' : ''}`}>
             {s.inSet ? (
               <>
-                <span className="rec" /> SET {s.slices.length + 1}
+                <span className="rec" /> SET {s.slices.filter((sl) => sl.sessionIndex === s.sessionIndex).length + 1}
                 <b>{s.reps}</b> reps <span className="muted">{fmtTime(s.setDuration)}</span>
+                <span className="muted">· {s.externalLoadLb} lb</span>
                 {s.autoRep && <span className="tag">AUTO</span>}
               </>
             ) : (
-              <>Ready · hold <kbd>Space</kbd> or pull <kbd>RT</kbd> to start set {s.slices.length + 1}</>
+              <>Ready · hold <kbd>Space</kbd> or pull <kbd>RT</kbd> to start set {s.slices.filter((sl) => sl.sessionIndex === s.sessionIndex).length + 1}</>
             )}
           </div>
         </div>
@@ -128,9 +129,8 @@ export function WorkoutView({ engine, profile, onEditBody }: { engine: WorkoutEn
           {s.slices.length === 0 && <span className="muted">Completed sets appear here as slices.</span>}
           {s.slices.map((sl) => (
             <div key={sl.id} className="slice-chip">
-              <div><b>#{sl.index}</b> {exerciseById(sl.exerciseId).name}</div>
-              <div className="muted">{sl.reps} reps · {sl.durationS.toFixed(0)} s · {Math.round(sl.intensity * 100)}%</div>
-              <MiniHeat values={sl.load} />
+              <div><b>Session {sl.sessionIndex} · Set {sl.index}</b> {exerciseById(sl.exerciseId).name}</div>
+              <div className="muted">{sl.reps} reps · {sl.durationS.toFixed(0)} s · {sl.externalLoadLb} lb</div>
             </div>
           ))}
         </div>
@@ -163,8 +163,13 @@ export function WorkoutView({ engine, profile, onEditBody }: { engine: WorkoutEn
           <div><b>{fmtTime(s.elapsedS)}</b><span>elapsed</span></div>
         </div>
         <button className="btn primary" disabled={!s.slices.length && !s.inSet} onClick={() => engine.finish()}>
-          Finish workout (F)
+          Review workout (F)
         </button>
+        <button className="btn" disabled={!s.slices.length && !s.inSet} onClick={() => engine.endSession()}>
+          End session {s.sessionIndex}
+        </button>
+        {s.inSet && <button className="btn" onClick={() => engine.endSet()}>Stop set</button>}
+        {!s.inSet && s.restSinceSetS > 0 && <div className="muted rest-clock">Rest since last set · {fmtTime(s.restSinceSetS)}</div>}
       </aside>
     </div>
   );
