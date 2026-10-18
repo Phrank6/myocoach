@@ -6,10 +6,11 @@
   "scripts": {
     "dev": "vite --host",
     "build": "tsc -b && vite build",
+    "build:g2": "tsc -b && vite build --mode g2 --outDir dist-g2",
     "lint": "oxlint",
     "preview": "vite preview",
     "g2:manifest": "node scripts/g2-manifest.mjs",
-    "g2:pack": "npm run build && evenhub pack app.json dist -o myocoach-g2.ehpk --sdk-ver 0.0.14",
+    "g2:pack": "npm run build:g2 && evenhub pack app.json dist-g2 -o myocoach-g2.ehpk --sdk-ver 0.0.14",
     "demo": "node scripts/record-demo.mjs demo.mp4 summary.png"
   },
   "dependencies": {

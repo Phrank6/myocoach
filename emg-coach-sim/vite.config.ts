@@ -148,14 +148,13 @@ Cover overloaded groups, under-trained groups and the next session. Keep notes s
 
 export default defineConfig(({ mode }) => {
   const env = { ...loadEnv(mode, process.cwd(), ''), ...process.env } as Record<string, string>;
+  const input: Record<string, string> = { g2: resolve(import.meta.dirname, 'g2.html') };
+  if (mode !== 'g2') input.main = resolve(import.meta.dirname, 'index.html');
   return {
     plugins: [react(), coachProxy(env), sessionRelay()],
     build: {
       rollupOptions: {
-        input: {
-          main: resolve(import.meta.dirname, 'index.html'),
-          g2: resolve(import.meta.dirname, 'g2.html'),
-        },
+        input,
       },
     },
   };
