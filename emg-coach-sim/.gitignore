@@ -22,3 +22,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# MyoCoach Link ingest data (health aggregates, pairing token)
+.myocoach-data

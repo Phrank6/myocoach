@@ -1,0 +1,201 @@
+{
+ "note": "Vest channel -> muscle mapping. Matches esp32-p4-eye-emg/channel-map.json (wearer's left/right). 'group' is the training engine's EMG group. Edit freely; the Settings screen shows it.",
+ "channels": [
+  {
+   "index": 0,
+   "id": "CH01",
+   "muscle": "Anterior deltoid",
+   "side": "left",
+   "group": "shoulders"
+  },
+  {
+   "index": 1,
+   "id": "CH02",
+   "muscle": "Anterior deltoid",
+   "side": "right",
+   "group": "shoulders"
+  },
+  {
+   "index": 2,
+   "id": "CH03",
+   "muscle": "Middle deltoid",
+   "side": "left",
+   "group": "shoulders"
+  },
+  {
+   "index": 3,
+   "id": "CH04",
+   "muscle": "Middle deltoid",
+   "side": "right",
+   "group": "shoulders"
+  },
+  {
+   "index": 4,
+   "id": "CH05",
+   "muscle": "Posterior deltoid",
+   "side": "left",
+   "group": "shoulders"
+  },
+  {
+   "index": 5,
+   "id": "CH06",
+   "muscle": "Posterior deltoid",
+   "side": "right",
+   "group": "shoulders"
+  },
+  {
+   "index": 6,
+   "id": "CH07",
+   "muscle": "Biceps brachii",
+   "side": "left",
+   "group": "biceps"
+  },
+  {
+   "index": 7,
+   "id": "CH08",
+   "muscle": "Biceps brachii",
+   "side": "right",
+   "group": "biceps"
+  },
+  {
+   "index": 8,
+   "id": "CH09",
+   "muscle": "Triceps brachii \u2014 long head",
+   "side": "left",
+   "group": "triceps"
+  },
+  {
+   "index": 9,
+   "id": "CH10",
+   "muscle": "Triceps brachii \u2014 long head",
+   "side": "right",
+   "group": "triceps"
+  },
+  {
+   "index": 10,
+   "id": "CH11",
+   "muscle": "Pectoralis major \u2014 clavicular region",
+   "side": "left",
+   "group": "chest"
+  },
+  {
+   "index": 11,
+   "id": "CH12",
+   "muscle": "Pectoralis major \u2014 clavicular region",
+   "side": "right",
+   "group": "chest"
+  },
+  {
+   "index": 12,
+   "id": "CH13",
+   "muscle": "Upper trapezius",
+   "side": "left",
+   "group": "upper_trap"
+  },
+  {
+   "index": 13,
+   "id": "CH14",
+   "muscle": "Upper trapezius",
+   "side": "right",
+   "group": "upper_trap"
+  },
+  {
+   "index": 14,
+   "id": "CH15",
+   "muscle": "Middle trapezius",
+   "side": "left",
+   "group": "back"
+  },
+  {
+   "index": 15,
+   "id": "CH16",
+   "muscle": "Middle trapezius",
+   "side": "right",
+   "group": "back"
+  },
+  {
+   "index": 16,
+   "id": "CH17",
+   "muscle": "Lower trapezius",
+   "side": "left",
+   "group": "back"
+  },
+  {
+   "index": 17,
+   "id": "CH18",
+   "muscle": "Lower trapezius",
+   "side": "right",
+   "group": "back"
+  },
+  {
+   "index": 18,
+   "id": "CH19",
+   "muscle": "Latissimus dorsi",
+   "side": "left",
+   "group": "back"
+  },
+  {
+   "index": 19,
+   "id": "CH20",
+   "muscle": "Latissimus dorsi",
+   "side": "right",
+   "group": "back"
+  },
+  {
+   "index": 20,
+   "id": "CH21",
+   "muscle": "Serratus anterior",
+   "side": "left",
+   "group": "shoulders"
+  },
+  {
+   "index": 21,
+   "id": "CH22",
+   "muscle": "Serratus anterior",
+   "side": "right",
+   "group": "shoulders"
+  },
+  {
+   "index": 22,
+   "id": "CH23",
+   "muscle": "Rectus abdominis",
+   "side": "left",
+   "group": "core"
+  },
+  {
+   "index": 23,
+   "id": "CH24",
+   "muscle": "Rectus abdominis",
+   "side": "right",
+   "group": "core"
+  },
+  {
+   "index": 24,
+   "id": "CH25",
+   "muscle": "External oblique",
+   "side": "left",
+   "group": "core"
+  },
+  {
+   "index": 25,
+   "id": "CH26",
+   "muscle": "External oblique",
+   "side": "right",
+   "group": "core"
+  },
+  {
+   "index": 26,
+   "id": "CH27",
+   "muscle": "Lumbar erector spinae",
+   "side": "left",
+   "group": "back"
+  },
+  {
+   "index": 27,
+   "id": "CH28",
+   "muscle": "Lumbar erector spinae",
+   "side": "right",
+   "group": "back"
+  }
+ ]
+}

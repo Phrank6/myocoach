@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Cleartext HTTP is allowed ONLY for the local MyoCoach site, never globally.
+  Android cannot whitelist IP ranges here, so list the Mac's LAN address(es) explicitly
+  (see android/README.md "Find the Mac's LAN IP"). The app additionally refuses any server URL
+  that is not a private/LAN address (ServerUrl.isLocal), so a mistyped public host can't receive data.
+-->
+<network-security-config>
+    <base-config cleartextTrafficPermitted="false" />
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="false">localhost</domain>
+        <domain includeSubdomains="false">10.0.2.2</domain>       <!-- emulator -> host Mac -->
+        <domain includeSubdomains="true">local</domain>           <!-- e.g. franks-mac.local -->
+        <domain includeSubdomains="false">172.22.137.114</domain> <!-- this Mac's LAN IP on 2026-10-18; edit if it changes -->
+        <domain includeSubdomains="false">192.168.1.2</domain>    <!-- example: add yours -->
+    </domain-config>
+</network-security-config>

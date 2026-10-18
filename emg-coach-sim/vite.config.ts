@@ -2,6 +2,7 @@ import { defineConfig, loadEnv, type Plugin } from 'vite';
 import react from '@vitejs/plugin-react';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { sessionRelay } from './server/sessionRelay.ts';
+import { ingestServer } from './server/ingestServer.ts';
 
 /**
  * Tiny server-side proxy so LLM keys never reach the browser. Priority:
@@ -148,6 +149,6 @@ Cover overloaded groups, under-trained groups and the next session. Keep notes s
 export default defineConfig(({ mode }) => {
   const env = { ...loadEnv(mode, process.cwd(), ''), ...process.env } as Record<string, string>;
   return {
-    plugins: [react(), coachProxy(env), sessionRelay()],
+    plugins: [react(), coachProxy(env), sessionRelay(), ingestServer(env)],
   };
 });

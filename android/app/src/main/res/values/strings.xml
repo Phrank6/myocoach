@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">MyoCoach Link</string>
+    <string name="notif_channel">Collection</string>
+</resources>

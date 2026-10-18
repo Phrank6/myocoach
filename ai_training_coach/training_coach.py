@@ -685,7 +685,8 @@ def feature_row(p: Profile, b: Baseline) -> dict:
 # =============================================================================================
 LABEL_COL_CANDIDATES = ["exercises", "suggested_exercises", "movements", "labels", "label",
                         "recommended_exercises", "exercise_list"]
-ID_COLS = {"sample_id", "user_id", "id", "person_id", "participant_id", "date", "week", "timestamp"}
+ID_COLS = {"sample_id", "user_id", "id", "person_id", "participant_id", "date", "week", "timestamp",
+           "split"}
 _SPLIT = re.compile(r"\s*[;|]\s*")
 
 
@@ -1120,9 +1121,18 @@ def train_model(data_path: str, out: str, label_col: Optional[str] = None, epoch
     ds = load_dataset(data_path, label_col)
     n = len(ds.rows)
     rng = np.random.default_rng(seed)
-    order = rng.permutation(n)
-    n_test, n_val = int(n * test_frac), int(n * val_frac)
-    te, va, tr = order[:n_test], order[n_test:n_test + n_val], order[n_test + n_val:]
+    splits = [str(r.get("split") or "").strip().lower() for r in ds.rows]
+    if all(s in ("train", "val", "test") for s in splits):
+        # Use the dataset's own split (e.g. assigned by person, so one person's rows never
+        # land in both train and test).
+        tr, va, te = (np.array([i for i, s in enumerate(splits) if s == k], dtype=int)
+                      for k in ("train", "val", "test"))
+        split_by = "split column"
+    else:
+        order = rng.permutation(n)
+        n_test, n_val = int(n * test_frac), int(n * val_frac)
+        te, va, tr = order[:n_test], order[n_test:n_test + n_val], order[n_test + n_val:]
+        split_by = "random"
     enc = FeatureEncoder().fit([ds.rows[i] for i in tr])
     X = enc.transform(ds.rows)
     Y = label_matrix(ds.labels, ds.items)
@@ -1130,14 +1140,14 @@ def train_model(data_path: str, out: str, label_col: Optional[str] = None, epoch
     if verbose:
         print(f"Loaded {n} rows, {enc.dim} encoded features, {len(ds.items)} exercises "
               f"({len(ds.unmatched)} new movements added), label column '{ds.label_col}'.")
-        print(f"Split: train {len(tr)}, val {len(va)}, test {len(te)}. Training...")
+        print(f"Split ({split_by}): train {len(tr)}, val {len(va)}, test {len(te)}. Training...")
     rec = ExerciseRecommender(enc.dim, M, hidden, dim, seed)
     rec.fit(X[tr], Y[tr], X[va], Y[va], epochs=epochs, batch_size=batch_size, lr=lr, l2=l2,
             dropout=dropout, seed=seed, verbose=verbose)
     pop = Y[tr].mean(0)
     test = {"model": ranking_metrics(rec.predict_proba(X[te]), Y[te]),
             "popularity_baseline": ranking_metrics(np.tile(pop, (len(te), 1)), Y[te])}
-    info = {"trained_on": str(data_path), "rows": n, "label_col": ds.label_col,
+    info = {"trained_on": str(data_path), "rows": n, "label_col": ds.label_col, "split_by": split_by,
             "unmatched_names": ds.unmatched, "test_metrics": test,
             "hyperparameters": {"hidden": hidden, "dim": dim, "lr": lr, "epochs": epochs,
                                 "batch_size": batch_size, "l2": l2, "dropout": dropout}}

@@ -7,6 +7,7 @@ import { ConnectPhone } from './ui/ConnectPhone';
 import { Onboarding } from './ui/Onboarding';
 import { SummaryView } from './ui/SummaryView';
 import { WorkoutView } from './ui/WorkoutView';
+import { ModelVest } from './vest/ModelVest';
 import './styles/base.css';
 import './App.css';
 
@@ -20,6 +21,7 @@ const STEPS: [Screen, string][] = [
 export default function App() {
   const [engine] = useState(() => new WorkoutEngine());
   const [link] = useState(() => new PhoneLink(engine));
+  const [vest] = useState(() => new ModelVest(engine));
   const [profile, setProfile] = useState<BodyProfile>(() => loadProfile() ?? DEFAULT_PROFILE);
   const [screen, setScreen] = useState<Screen>('onboarding');
   const [result, setResult] = useState<WorkoutResult | null>(null);
@@ -34,11 +36,18 @@ export default function App() {
       setScreen('summary');
     };
     link.start();
+    vest.start();
     return () => {
       engine.stop();
       link.stop();
+      vest.stop();
     };
-  }, [engine, link]);
+  }, [engine, link, vest]);
+
+  // The training engine on the server reads the same body profile (for /api/plan/today).
+  useEffect(() => {
+    void fetch('/api/profile', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(profile) }).catch(() => {});
+  }, [profile]);
 
   useEffect(() => {
     engine.input.enabled = screen === 'workout';
@@ -79,6 +88,7 @@ export default function App() {
           ))}
         </nav>
         <div className="top-right">
+          <a className="phone-chip" href="/you" target="_blank" rel="noreferrer">You &amp; today’s plan ↗</a>
           <button className={`phone-chip ${phone.phones ? 'on' : ''}`} onClick={() => setShowPair((v) => !v)}>
             <span className={`dot ${phone.phones ? 'ok' : ''}`} />
             {phone.phones ? 'Phone connected' : 'Connect phone'}

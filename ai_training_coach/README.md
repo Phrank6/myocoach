@@ -19,6 +19,31 @@ suggestions into a full weekly plan with sets, reps, time cost and expected resu
 | `examples/plan_example.md` | Example output plan |
 | `tests/` | 16 tests: `python -m unittest discover -s tests` |
 
+## The MyoCoach Daily model (`models/phone_garment_model/`)
+
+Used by the phone + web app in `../daily-coach`. It was trained on the PTE synthetic dataset
+(`pte_training_dataset.zip`: 600 simulated people, 24 weeks each), using only signals a phone and the EMG
+clothing can provide. There is no wristband, so resting heart rate and HRV are left out.
+
+`tools/convert_pte.py` turns the dataset's tables into one row per person per 4-week block: the profile, the
+block's phone and clothing averages, and the exercises the person actually did as labels. An exercise done in
+only one session gets 0.6, and one that came with pain is halved. Lifestyle values are blanked on some rows,
+and individually on others, so the model still works when a sensor misses days. The dataset's `split` column
+is kept, so the model is tested on people it never saw.
+
+```bash
+python tools/convert_pte.py <unzipped>/pte/data --out data/pte_phone_garment.csv \
+    --drop resting_hr,hrv_z --blank-lifestyle 0.2 --blank-each 0.15
+python training_coach.py train data/pte_phone_garment.csv --out models/phone_garment_model
+python tools/export_web.py models/phone_garment_model --out ../daily-coach/src/coach/coach-model.json
+```
+
+Held-out test (528 blocks from 90 people): NDCG@10 0.697 vs 0.570 for the popularity baseline,
+precision@5 0.688 vs 0.569, recall@10 0.643 vs 0.523. The data is synthetic, so this shows the pipeline works;
+it says nothing yet about real people.
+
+If a dataset has a `split` column with train/val/test values, `train` uses it instead of a random split.
+
 ## Quick start
 
 ```bash
