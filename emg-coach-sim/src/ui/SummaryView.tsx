@@ -10,12 +10,12 @@ import { normalize, sumVectors } from '../engine/slices';
 import type { WorkoutResult } from '../engine/WorkoutEngine';
 import { BodyCanvas } from '../three/BodyCanvas';
 import { heatCss } from '../three/heat';
-import { fmtTime, HeatLegend, MiniHeat, MuscleBars } from './common';
+import { fmtTime, HeatLegend, MuscleBars } from './common';
 
-export function SummaryView({ result, profile, onNewWorkout, onEditBody }: {
+export function SummaryView({ result, profile, onEndWorkout, onEditBody }: {
   result: WorkoutResult;
   profile: BodyProfile;
-  onNewWorkout: () => void;
+  onEndWorkout: () => void;
   onEditBody: () => void;
 }) {
   const { slices, session } = result;
@@ -28,6 +28,7 @@ export function SummaryView({ result, profile, onNewWorkout, onEditBody }: {
   const [history, setHistory] = useState<SessionRecord[]>(() => loadHistory());
   const [spin, setSpin] = useState(true);
   const [facing, setFacing] = useState<{ side: 'front' | 'back'; n: number }>({ side: 'front', n: 0 });
+  const [page, setPage] = useState<'workout' | 'coach'>('workout');
 
   const flags = useMemo(() => evaluateRisk(slices, historyBefore, Date.parse(session.date)), [slices, historyBefore, session.date]);
   const flaggedMap = Object.fromEntries(flags.map((f) => [f.muscle, f.level])) as Partial<Record<MuscleId, 'elevated' | 'high'>>;
@@ -75,22 +76,26 @@ export function SummaryView({ result, profile, onNewWorkout, onEditBody }: {
     <div className="summary">
       <header className="sum-head">
         <div>
-          <div className="eyebrow">Workout complete · {new Date(session.date).toLocaleString()}</div>
+          <div className="eyebrow">Workout review · {new Date(session.date).toLocaleString()}</div>
           <h1>Cumulative muscle map</h1>
         </div>
         <div className="sum-stats">
           <div><b>{slices.length}</b><span>sets</span></div>
           <div><b>{totalReps}</b><span>reps</span></div>
           <div><b>{fmtTime(tut)}</b><span>time under tension</span></div>
+          <div><b>{fmtTime(slices.reduce((sum, slice) => sum + slice.restBeforeS, 0))}</b><span>rest logged</span></div>
           <div><b>{flags.length}</b><span>risk flags</span></div>
         </div>
         <div className="sum-actions">
+          <button className={`btn ${page === 'workout' ? 'primary' : ''}`} onClick={() => setPage('workout')}>Workout dashboard</button>
+          <button className={`btn ${page === 'coach' ? 'primary' : ''}`} onClick={() => setPage('coach')}>Risk & coach</button>
           <button className="btn" onClick={onEditBody}>Body model</button>
-          <button className="btn primary" onClick={onNewWorkout}>New workout</button>
+          {page === 'coach' && <button className="btn primary" onClick={onEndWorkout}>End workout</button>}
         </div>
       </header>
 
-      <div className="sum-grid">
+      <div className={`sum-grid ${page === 'coach' ? 'detail' : ''}`}>
+        {page === 'workout' ? <>
         <section className="sum-model panel">
           <BodyCanvas profile={profile} getValues={() => normRef.current} selected={selected} onSelect={setSelected} smoothing={0.12} valueLabel="relative load" autoRotate={spin && !selected} facing={facing} />
           <div className="view-btns">
@@ -99,13 +104,13 @@ export function SummaryView({ result, profile, onNewWorkout, onEditBody }: {
             <button className={spin ? 'on' : ''} onClick={() => setSpin(true)}>Spin</button>
           </div>
           <div className="legend-wrap"><HeatLegend left="untrained" right="most worked" /></div>
-          <div className="overlay-title">Overlay of {active.length}/{slices.length} slices</div>
+          <div className="overlay-title">Muscle map · {active.length} of {slices.length} sets included</div>
         </section>
 
         <section className="sum-mid">
           <div className="panel">
             <div className="panel-title">
-              Slices (sets) — toggle to overlay
+              Set records · select rows to include in the map
               <span>
                 <button className="link" onClick={() => setEnabled(new Set(slices.map((s) => s.id)))}>all</button>
                 <button className="link" onClick={() => setEnabled(new Set())}>none</button>
@@ -115,15 +120,14 @@ export function SummaryView({ result, profile, onNewWorkout, onEditBody }: {
               {slices.map((s) => (
                 <label key={s.id} className={`slice-row ${enabled.has(s.id) ? 'on' : ''}`}>
                   <input type="checkbox" checked={enabled.has(s.id)} onChange={() => toggle(s.id)} />
-                  <span className="sr-name"><b>#{s.index}</b> {exerciseById(s.exerciseId).name}</span>
-                  <span className="muted">{s.reps} reps · {s.durationS.toFixed(0)} s</span>
-                  <MiniHeat values={s.load} />
+                  <span className="sr-name"><b>Session {s.sessionIndex} · Set {s.index}</b> {exerciseById(s.exerciseId).name}</span>
+                  <span className="muted">{s.reps} reps · {s.durationS.toFixed(0)} s · {s.externalLoadLb} lb · rest {fmtTime(s.restBeforeS)}</span>
                 </label>
               ))}
             </div>
           </div>
           <div className="panel">
-            <div className="panel-title">Muscle load (activation-seconds)</div>
+            <div className="panel-title">Accumulated EMG workload <span className="muted">activation × time (a·s)</span></div>
             <MuscleBars values={cumulative} scaleMax={Math.max(...cumulative, 1)} unit="s" selected={selected} onSelect={setSelected} flagged={flaggedMap} />
             {selected && sel >= 0 && (
               <div className="muscle-info">
@@ -139,8 +143,7 @@ export function SummaryView({ result, profile, onNewWorkout, onEditBody }: {
             )}
           </div>
         </section>
-
-        <section className="sum-right">
+        </> : <section className="sum-right">
           <div className="panel risk">
             <div className="panel-title">Strain-risk check</div>
             {flags.length === 0 && <div className="ok-box">No sustained high-load patterns detected. Normal recovery applies.</div>}
@@ -224,12 +227,11 @@ export function SummaryView({ result, profile, onNewWorkout, onEditBody }: {
               <div key={h.id} className="hist-row">
                 <span>{new Date(h.date).toLocaleDateString(undefined, { weekday: 'short', month: 'short', day: 'numeric' })}{h.id === session.id ? ' · today' : ''}{h.demo ? ' · demo' : ''}</span>
                 <span className="muted">{h.exercises.map((e) => exerciseById(e).name).join(', ')}</span>
-                <MiniHeat values={h.load} />
               </div>
             ))}
             {history.length === 0 && <div className="muted">No sessions stored yet.</div>}
           </div>
-        </section>
+        </section>}
       </div>
     </div>
   );

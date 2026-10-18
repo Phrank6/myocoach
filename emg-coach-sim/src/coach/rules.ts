@@ -40,6 +40,7 @@ export function workoutSummary(input: CoachInput) {
     totalSets: input.slices.length,
     totalReps: input.slices.reduce((a, s) => a + s.reps, 0),
     durationS: input.slices.reduce((a, s) => a + s.durationS, 0),
+    restS: input.slices.reduce((a, s) => a + s.restBeforeS, 0),
   };
 }
 
@@ -90,6 +91,8 @@ export function ruleBasedCoach(input: CoachInput): CoachReport {
   const best = input.slices.reduce<Slice | null>((b, s) => (!b || s.reps > b.reps ? s : b), null);
   if (best) insights.push(`Most reps in one set: ${best.reps} × ${exerciseById(best.exerciseId).name}.`);
   insights.push(`${totalSets} sets, ${totalReps} reps logged.`);
+  const restTotal = input.slices.reduce((sum, slice) => sum + slice.restBeforeS, 0);
+  if (input.slices.length > 1) insights.push(`Logged ${Math.round(restTotal)} seconds of rest before sets (about ${Math.round(restTotal / input.slices.length)} s per set).`);
 
   // Next-session plan: score each exercise by how much it hits under-trained muscles, penalise flagged ones.
   const need = weekNorm.map((w) => 1 - w);

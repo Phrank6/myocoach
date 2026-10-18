@@ -31,6 +31,7 @@ export default function App() {
   const startWorkout = (p: BodyProfile) => {
     saveProfile(p);
     setProfile(p);
+    engine.setExperience(p.experience);
     engine.resetWorkout();
     if (!started) {
       void engine.start();
@@ -55,7 +56,7 @@ export default function App() {
       {screen === 'onboarding' && <Onboarding initial={profile} onDone={startWorkout} />}
       {screen === 'workout' && <WorkoutView engine={engine} profile={profile} onEditBody={() => setScreen('onboarding')} />}
       {screen === 'summary' && result && (
-        <SummaryView result={result} profile={profile} onNewWorkout={() => startWorkout(profile)} onEditBody={() => setScreen('onboarding')} />
+        <SummaryView result={result} profile={profile} onEndWorkout={() => { setResult(null); setScreen('onboarding'); }} onEditBody={() => setScreen('onboarding')} />
       )}
     </div>
   );

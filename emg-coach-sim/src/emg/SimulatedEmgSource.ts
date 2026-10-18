@@ -33,6 +33,7 @@ export class SimulatedEmgSource implements EmgSource {
   private artifact = new Array(N_MUSCLES).fill(0);
   readonly fatigue = new Array(N_MUSCLES).fill(0);
   private getDrive: () => number[];
+  private fatigueSensitivity = 1;
 
   constructor(getDrive: () => number[], sampleRateHz = 100) {
     this.getDrive = getDrive;
@@ -71,6 +72,11 @@ export class SimulatedEmgSource implements EmgSource {
     this.fatigue.fill(0);
   }
 
+  setExperience(experience: 'beginner' | 'intermediate' | 'advanced') {
+    // Illustrative demo tuning only; this is not a physiological estimate.
+    this.fatigueSensitivity = experience === 'beginner' ? 1.25 : experience === 'advanced' ? 0.82 : 1;
+  }
+
   private pump() {
     const now = performance.now();
     const dtMs = 1000 / this.info.sampleRateHz;
@@ -99,7 +105,7 @@ export class SimulatedEmgSource implements EmgSource {
 
       // fatigue accumulates above ~30% MVC, recovers at rest
       const load = Math.max(0, a - 0.3);
-      this.fatigue[i] += (load * load * 0.09 - (a < 0.15 ? 0.02 : 0.002) * this.fatigue[i]) * dt;
+      this.fatigue[i] += (load * load * 0.09 * this.fatigueSensitivity - (a < 0.15 ? 0.02 : 0.002) * this.fatigue[i]) * dt;
       this.fatigue[i] = Math.min(1, Math.max(0, this.fatigue[i]));
 
       if (Math.random() < 0.0004) this.artifact[i] = 120 + Math.random() * 160;
