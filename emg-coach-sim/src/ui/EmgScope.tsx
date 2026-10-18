@@ -2,14 +2,12 @@ import { useEffect, useRef } from 'react';
 import { MUSCLE_IDS, N_MUSCLES, muscleShort } from '../domain/muscles';
 import type { WorkoutEngine } from '../engine/WorkoutEngine';
 import { HIGH_ACT } from '../engine/risk';
-import { heatCss } from '../three/heat';
 
 /** Scrolling per-channel trace of processed EMG activation (last 5 s). */
 export function EmgScope({ engine }: { engine: WorkoutEngine }) {
   const ref = useRef<HTMLCanvasElement>(null);
   useEffect(() => {
     let raf = 0;
-    const colors = MUSCLE_IDS.map((_, i) => heatCss(0.15 + (i / N_MUSCLES) * 0.7));
     const draw = () => {
       const c = ref.current;
       if (c) {
@@ -31,7 +29,7 @@ export function EmgScope({ engine }: { engine: WorkoutEngine }) {
           const y0 = ch * rowH;
           g.fillStyle = ch % 2 ? 'rgba(255,255,255,0.02)' : 'rgba(255,255,255,0.045)';
           g.fillRect(0, y0, W, rowH);
-          g.strokeStyle = 'rgba(255,80,100,0.25)';
+          g.strokeStyle = 'rgba(230,106,50,0.42)';
           g.setLineDash([2, 3]);
           g.beginPath();
           const yHigh = y0 + rowH - HIGH_ACT * (rowH - 2);
@@ -39,7 +37,7 @@ export function EmgScope({ engine }: { engine: WorkoutEngine }) {
           g.lineTo(W, yHigh);
           g.stroke();
           g.setLineDash([]);
-          g.strokeStyle = colors[ch];
+          g.strokeStyle = '#FF8C42';
           g.lineWidth = 1.2;
           g.beginPath();
           for (let k = 0; k < len; k++) {

@@ -29,9 +29,22 @@ interface ArmRefs {
 }
 
 const SPHERE = new SphereGeometry(1, 28, 18);
+const MUSCLES = [0, 1, 2].map((longAxis) => {
+  const geometry = new SphereGeometry(1, 32, 24);
+  const positions = geometry.attributes.position;
+  const crossAxes = [0, 1, 2].filter((axis) => axis !== longAxis);
+  for (let i = 0; i < positions.count; i++) {
+    const along = positions.getComponent(i, longAxis);
+    const taper = 0.42 + 0.58 * Math.pow(Math.max(0, 1 - along * along), 0.35);
+    for (const axis of crossAxes) positions.setComponent(i, axis, positions.getComponent(i, axis) * taper);
+  }
+  positions.needsUpdate = true;
+  geometry.computeVertexNormals();
+  return geometry;
+});
 const DEG = Math.PI / 180;
-const skinMat = new MeshStandardMaterial({ color: '#3a4256', roughness: 0.75, metalness: 0.05 });
-const skinDark = new MeshStandardMaterial({ color: '#2a3042', roughness: 0.8 });
+const skinMat = new MeshStandardMaterial({ color: '#303030', roughness: 0.92, metalness: 0 });
+const skinDark = new MeshStandardMaterial({ color: '#222222', roughness: 0.94, metalness: 0 });
 const ironMat = new MeshStandardMaterial({ color: '#9aa3b5', roughness: 0.35, metalness: 0.8 });
 
 interface MuscleProps {
@@ -45,9 +58,10 @@ interface MuscleProps {
 }
 
 function Muscle({ id, mats, position, scale, rotation, onSelect, onHover }: MuscleProps) {
+  const longAxis = scale.indexOf(Math.max(...scale));
   return (
     <mesh
-      geometry={SPHERE}
+      geometry={MUSCLES[longAxis]}
       material={mats[id]}
       position={position}
       scale={scale}
@@ -126,7 +140,7 @@ function Body({ profile, getValues, getPose, selected, onSelect, onHover, dumbbe
   const w = d.width;
   const mf = d.muscle;
   const mats = useMemo(
-    () => Object.fromEntries(MUSCLE_IDS.map((m) => [m, new MeshStandardMaterial({ color: '#2b3550', roughness: 0.45, metalness: 0.1, emissive: new Color('#000000') })])) as Mats,
+    () => Object.fromEntries(MUSCLE_IDS.map((m) => [m, new MeshStandardMaterial({ color: '#2B2B2B', roughness: 0.9, metalness: 0, emissive: new Color('#000000') })])) as Mats,
     [],
   );
   const torso = useMemo(() => {
@@ -149,8 +163,8 @@ function Body({ profile, getValues, getPose, selected, onSelect, onHover, dumbbe
       const v = (shown.current[i] += ((vals[MUSCLE_INDEX[m]] ?? 0) - shown.current[i]) * k);
       const mat = mats[m];
       heatColor(v, mat.color);
-      mat.emissive.copy(heatColor(v, tmp)).multiplyScalar(0.08 + 0.55 * Math.min(1, v));
-      if (selected === m) mat.emissive.lerp(new Color('#ffffff'), 0.25 + 0.2 * pulse);
+      mat.emissive.copy(heatColor(v, tmp)).multiplyScalar(0.025 + 0.18 * Math.min(1, v));
+      if (selected === m) mat.emissive.lerp(new Color('#FFD9A0'), 0.12 + 0.08 * pulse);
     });
     const p = getPose?.() ?? NEUTRAL_POSE;
     for (const [side, r] of [[1, left.current], [-1, right.current]] as const) {
@@ -187,7 +201,7 @@ function Body({ profile, getValues, getPose, selected, onSelect, onHover, dumbbe
       </mesh>
       <mesh position={[0, 0.887, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <ringGeometry args={[0.48, 0.5, 64]} />
-        <meshBasicMaterial color="#3b82f6" transparent opacity={0.5} />
+        <meshBasicMaterial color="#C24C30" transparent opacity={0.55} />
       </mesh>
     </group>
   );
@@ -223,10 +237,10 @@ export function BodyCanvas(props: BodyCanvasProps) {
       >
         <color attach="background" args={['#0b0f1a']} />
         <fog attach="fog" args={['#0b0f1a', 3.5, 7]} />
-        <hemisphereLight args={['#bcd3ff', '#1a1f2e', 0.7]} />
-        <directionalLight position={[2, 3, 2.5]} intensity={1.6} />
-        <directionalLight position={[-2.5, 1.5, -2]} intensity={0.9} color="#7aa2ff" />
-        <pointLight position={[0, 0.6, 1.5]} intensity={0.6} color="#ffffff" />
+        <hemisphereLight args={['#FFD9A0', '#1b1715', 0.62]} />
+        <directionalLight position={[2, 3, 2.5]} intensity={1.25} color="#FFD9A0" />
+        <directionalLight position={[-2.5, 1.5, -2]} intensity={0.42} color="#FF8C42" />
+        <pointLight position={[0, 0.6, 1.5]} intensity={0.28} color="#FFD9A0" />
         <Body {...props} onHover={setHover} />
         <ViewSnap facing={props.facing} />
         <OrbitControls
