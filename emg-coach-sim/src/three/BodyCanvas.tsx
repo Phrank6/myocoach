@@ -43,8 +43,8 @@ const MUSCLES = [0, 1, 2].map((longAxis) => {
   return geometry;
 });
 const DEG = Math.PI / 180;
-const skinMat = new MeshStandardMaterial({ color: '#303030', roughness: 0.92, metalness: 0 });
-const skinDark = new MeshStandardMaterial({ color: '#222222', roughness: 0.94, metalness: 0 });
+const skinMat = new MeshStandardMaterial({ color: '#45413D', roughness: 0.96, metalness: 0 });
+const skinDark = new MeshStandardMaterial({ color: '#302C29', roughness: 0.96, metalness: 0 });
 const ironMat = new MeshStandardMaterial({ color: '#9aa3b5', roughness: 0.35, metalness: 0.8 });
 
 interface MuscleProps {
@@ -163,7 +163,7 @@ function Body({ profile, getValues, getPose, selected, onSelect, onHover, dumbbe
       const v = (shown.current[i] += ((vals[MUSCLE_INDEX[m]] ?? 0) - shown.current[i]) * k);
       const mat = mats[m];
       heatColor(v, mat.color);
-      mat.emissive.copy(heatColor(v, tmp)).multiplyScalar(0.025 + 0.18 * Math.min(1, v));
+      mat.emissive.copy(heatColor(v, tmp)).multiplyScalar(0.12 + 0.42 * Math.min(1, v));
       if (selected === m) mat.emissive.lerp(new Color('#FFD9A0'), 0.12 + 0.08 * pulse);
     });
     const p = getPose?.() ?? NEUTRAL_POSE;
@@ -197,7 +197,7 @@ function Body({ profile, getValues, getPose, selected, onSelect, onHover, dumbbe
 
       <mesh position={[0, 0.885, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <circleGeometry args={[0.5, 48]} />
-        <meshStandardMaterial color="#161b29" roughness={0.9} />
+        <meshStandardMaterial color="#080808" roughness={1} />
       </mesh>
       <mesh position={[0, 0.887, 0]} rotation={[-Math.PI / 2, 0, 0]}>
         <ringGeometry args={[0.48, 0.5, 64]} />
@@ -235,12 +235,12 @@ export function BodyCanvas(props: BodyCanvasProps) {
         onPointerMissed={() => props.onSelect?.(null)}
         gl={{ preserveDrawingBuffer: true, antialias: true }}
       >
-        <color attach="background" args={['#0b0f1a']} />
-        <fog attach="fog" args={['#0b0f1a', 3.5, 7]} />
-        <hemisphereLight args={['#FFD9A0', '#1b1715', 0.62]} />
-        <directionalLight position={[2, 3, 2.5]} intensity={1.25} color="#FFD9A0" />
-        <directionalLight position={[-2.5, 1.5, -2]} intensity={0.42} color="#FF8C42" />
-        <pointLight position={[0, 0.6, 1.5]} intensity={0.28} color="#FFD9A0" />
+        <color attach="background" args={['#000000']} />
+        <fog attach="fog" args={['#000000', 3.5, 7]} />
+        <hemisphereLight args={['#FFD9A0', '#1b1715', 0.9]} />
+        <directionalLight position={[2, 3, 2.5]} intensity={1.6} color="#FFD9A0" />
+        <directionalLight position={[-2.5, 1.5, -2]} intensity={0.7} color="#FF8C42" />
+        <pointLight position={[0, 0.6, 1.5]} intensity={0.48} color="#FFD9A0" />
         <Body {...props} onHover={setHover} />
         <ViewSnap facing={props.facing} />
         <OrbitControls
