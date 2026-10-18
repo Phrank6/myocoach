@@ -1,0 +1,3437 @@
+{
+ "version": "0.2.0",
+ "encoder": {
+  "max_categories": 40,
+  "spec": [
+   {
+    "col": "age",
+    "kind": "num",
+    "median": 47.0,
+    "mean": 46.47761904761905,
+    "std": 16.17475911493905
+   },
+   {
+    "col": "bmi",
+    "kind": "num",
+    "median": 25.1,
+    "mean": 25.337285714285716,
+    "std": 4.6870637843288785
+   },
+   {
+    "col": "body_shape_subgoal",
+    "kind": "cat",
+    "cats": [
+     "lean down",
+     "recomposition",
+     "lean gain"
+    ]
+   },
+   {
+    "col": "days_per_week",
+    "kind": "num",
+    "median": 3.0,
+    "mean": 3.508095238095238,
+    "std": 0.9558995715710439
+   },
+   {
+    "col": "emg_load_back",
+    "kind": "num",
+    "median": 0.08,
+    "mean": 0.0800557142857143,
+    "std": 0.03812627191588606
+   },
+   {
+    "col": "emg_load_chest",
+    "kind": "num",
+    "median": 0.081,
+    "mean": 0.08158095238095238,
+    "std": 0.039099928377082364
+   },
+   {
+    "col": "emg_load_core",
+    "kind": "num",
+    "median": 0.079,
+    "mean": 0.08054714285714286,
+    "std": 0.03850272923447637
+   },
+   {
+    "col": "emg_load_glutes",
+    "kind": "num",
+    "median": 0.079,
+    "mean": 0.08041142857142856,
+    "std": 0.03973784645418428
+   },
+   {
+    "col": "emg_load_hamstrings",
+    "kind": "num",
+    "median": 0.079,
+    "mean": 0.07913904761904762,
+    "std": 0.03856295655341521
+   },
+   {
+    "col": "emg_load_quads",
+    "kind": "num",
+    "median": 0.08,
+    "mean": 0.08083904761904762,
+    "std": 0.037901888369184365
+   },
+   {
+    "col": "emg_load_shoulders",
+    "kind": "num",
+    "median": 0.079,
+    "mean": 0.08028190476190475,
+    "std": 0.03895696717674487
+   },
+   {
+    "col": "emg_load_upper_trap",
+    "kind": "num",
+    "median": 0.078,
+    "mean": 0.07927571428571428,
+    "std": 0.038587941377169775
+   },
+   {
+    "col": "equipment",
+    "kind": "multi",
+    "cats": [
+     "none",
+     "gym",
+     "bands",
+     "dumbbells",
+     "kettlebell",
+     "pool"
+    ]
+   },
+   {
+    "col": "gait_asymmetry_pct",
+    "kind": "num",
+    "median": 5.0,
+    "mean": 5.395285714285714,
+    "std": 3.4704276756187675
+   },
+   {
+    "col": "gait_speed_mps",
+    "kind": "num",
+    "median": 1.29,
+    "mean": 1.2858714285714286,
+    "std": 0.1404067310924032
+   },
+   {
+    "col": "glute_to_hamstring_ratio",
+    "kind": "num",
+    "median": 0.91,
+    "mean": 0.9094714285714286,
+    "std": 0.2001779128743256
+   },
+   {
+    "col": "goal",
+    "kind": "cat",
+    "cats": [
+     "health",
+     "fit",
+     "strength",
+     "active",
+     "body shape"
+    ]
+   },
+   {
+    "col": "head_down_minutes",
+    "kind": "num",
+    "median": 121.0,
+    "mean": 120.39238095238095,
+    "std": 50.09848718415147
+   },
+   {
+    "col": "height_cm",
+    "kind": "num",
+    "median": 170.0,
+    "mean": 169.79761904761904,
+    "std": 9.462884592303567
+   },
+   {
+    "col": "hrv_ms",
+    "kind": "num",
+    "median": 52.5,
+    "mean": 52.75238095238095,
+    "std": 13.43271092901557
+   },
+   {
+    "col": "longest_sitting_bout_min",
+    "kind": "num",
+    "median": 89.0,
+    "mean": 89.1652380952381,
+    "std": 37.31777096378099
+   },
+   {
+    "col": "minutes_per_week",
+    "kind": "num",
+    "median": 180.0,
+    "mean": 180.78571428571428,
+    "std": 70.31224092922793
+   },
+   {
+    "col": "moderate_minutes_week",
+    "kind": "num",
+    "median": 104.45909090909092,
+    "mean": 112.16028787878787,
+    "std": 82.44119292264888
+   },
+   {
+    "col": "pain_areas",
+    "kind": "multi",
+    "cats": [
+     "knee",
+     "low back",
+     "shoulder",
+     "neck",
+     "wrist"
+    ]
+   },
+   {
+    "col": "phone_after_23h_minutes",
+    "kind": "num",
+    "median": 20.0,
+    "mean": 21.561904761904763,
+    "std": 17.12646173644683
+   },
+   {
+    "col": "phone_screen_hours",
+    "kind": "num",
+    "median": 4.06,
+    "mean": 4.030447619047619,
+    "std": 1.4667207640301505
+   },
+   {
+    "col": "priority_muscles",
+    "kind": "multi",
+    "cats": [
+     "quads",
+     "glutes",
+     "shoulders",
+     "biceps",
+     "chest",
+     "back"
+    ]
+   },
+   {
+    "col": "resting_hr",
+    "kind": "num",
+    "median": 64.1,
+    "mean": 64.1147142857143,
+    "std": 6.925137623819728
+   },
+   {
+    "col": "sex",
+    "kind": "cat",
+    "cats": [
+     "male",
+     "female"
+    ]
+   },
+   {
+    "col": "sitting_hours",
+    "kind": "num",
+    "median": 8.0,
+    "mean": 7.836885714285714,
+    "std": 1.8696512830664729
+   },
+   {
+    "col": "sleep_hours",
+    "kind": "num",
+    "median": 6.88,
+    "mean": 6.884785714285714,
+    "std": 0.7873827058744711
+   },
+   {
+    "col": "sleep_regularity_sd_h",
+    "kind": "num",
+    "median": 0.7,
+    "mean": 0.7075428571428573,
+    "std": 0.37800864259637107
+   },
+   {
+    "col": "steps",
+    "kind": "num",
+    "median": 6283.0,
+    "mean": 6422.2585714285715,
+    "std": 2747.557303236711
+   },
+   {
+    "col": "training_age_years",
+    "kind": "num",
+    "median": 0.6,
+    "mean": 1.2266190476190475,
+    "std": 1.3583747283037662
+   },
+   {
+    "col": "upper_trap_desk_tone",
+    "kind": "num",
+    "median": 4.05,
+    "mean": 4.078109523809524,
+    "std": 1.9045327879523333
+   },
+   {
+    "col": "weight_kg",
+    "kind": "num",
+    "median": 72.8,
+    "mean": 72.88533333333332,
+    "std": 13.670377224506918
+   }
+  ]
+ },
+ "items": [
+  {
+   "id": "bodyweight_squat",
+   "name": "Bodyweight Squat",
+   "category": "strength",
+   "pattern": "squat",
+   "muscles": [
+    "quads",
+    "glutes"
+   ],
+   "equipment": "none",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "sit_to_stand",
+   "name": "Sit-to-Stand",
+   "category": "strength",
+   "pattern": "squat",
+   "muscles": [
+    "quads",
+    "glutes"
+   ],
+   "equipment": "none",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "box_squat",
+   "name": "Box Squat",
+   "category": "strength",
+   "pattern": "squat",
+   "muscles": [
+    "quads",
+    "glutes"
+   ],
+   "equipment": "none",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "wall_sit",
+   "name": "Wall Sit",
+   "category": "strength",
+   "pattern": "squat",
+   "muscles": [
+    "quads"
+   ],
+   "equipment": "none",
+   "level": 1,
+   "contraindications": [
+    "knee"
+   ]
+  },
+  {
+   "id": "band_squat",
+   "name": "Banded Squat",
+   "category": "strength",
+   "pattern": "squat",
+   "muscles": [
+    "quads",
+    "glutes"
+   ],
+   "equipment": "bands",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "goblet_squat",
+   "name": "Goblet Squat",
+   "category": "strength",
+   "pattern": "squat",
+   "muscles": [
+    "quads",
+    "glutes",
+    "core"
+   ],
+   "equipment": "dumbbells",
+   "level": 2,
+   "contraindications": [
+    "knee"
+   ]
+  },
+  {
+   "id": "kettlebell_goblet_squat",
+   "name": "Kettlebell Goblet Squat",
+   "category": "strength",
+   "pattern": "squat",
+   "muscles": [
+    "quads",
+    "glutes",
+    "core"
+   ],
+   "equipment": "kettlebell",
+   "level": 2,
+   "contraindications": [
+    "knee"
+   ]
+  },
+  {
+   "id": "dumbbell_squat",
+   "name": "Dumbbell Squat",
+   "category": "strength",
+   "pattern": "squat",
+   "muscles": [
+    "quads",
+    "glutes"
+   ],
+   "equipment": "dumbbells",
+   "level": 2,
+   "contraindications": [
+    "knee"
+   ]
+  },
+  {
+   "id": "sumo_squat",
+   "name": "Dumbbell Sumo Squat",
+   "category": "strength",
+   "pattern": "squat",
+   "muscles": [
+    "quads",
+    "glutes",
+    "adductors"
+   ],
+   "equipment": "dumbbells",
+   "level": 2,
+   "contraindications": []
+  },
+  {
+   "id": "leg_press",
+   "name": "Leg Press",
+   "category": "strength",
+   "pattern": "squat",
+   "muscles": [
+    "quads",
+    "glutes"
+   ],
+   "equipment": "machine",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "hack_squat",
+   "name": "Hack Squat",
+   "category": "strength",
+   "pattern": "squat",
+   "muscles": [
+    "quads",
+    "glutes"
+   ],
+   "equipment": "machine",
+   "level": 2,
+   "contraindications": [
+    "knee"
+   ]
+  },
+  {
+   "id": "smith_machine_squat",
+   "name": "Smith Machine Squat",
+   "category": "strength",
+   "pattern": "squat",
+   "muscles": [
+    "quads",
+    "glutes"
+   ],
+   "equipment": "machine",
+   "level": 2,
+   "contraindications": [
+    "knee"
+   ]
+  },
+  {
+   "id": "barbell_back_squat",
+   "name": "Barbell Back Squat",
+   "category": "strength",
+   "pattern": "squat",
+   "muscles": [
+    "quads",
+    "glutes",
+    "back"
+   ],
+   "equipment": "barbell",
+   "level": 3,
+   "contraindications": [
+    "knee",
+    "low_back"
+   ]
+  },
+  {
+   "id": "barbell_front_squat",
+   "name": "Barbell Front Squat",
+   "category": "strength",
+   "pattern": "squat",
+   "muscles": [
+    "quads",
+    "glutes",
+    "core"
+   ],
+   "equipment": "barbell",
+   "level": 3,
+   "contraindications": [
+    "knee",
+    "wrist"
+   ]
+  },
+  {
+   "id": "glute_bridge",
+   "name": "Glute Bridge",
+   "category": "strength",
+   "pattern": "hinge",
+   "muscles": [
+    "glutes",
+    "hamstrings"
+   ],
+   "equipment": "none",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "single_leg_glute_bridge",
+   "name": "Single-Leg Glute Bridge",
+   "category": "strength",
+   "pattern": "hinge",
+   "muscles": [
+    "glutes",
+    "hamstrings"
+   ],
+   "equipment": "none",
+   "level": 2,
+   "contraindications": []
+  },
+  {
+   "id": "kettlebell_deadlift",
+   "name": "Kettlebell Deadlift",
+   "category": "strength",
+   "pattern": "hinge",
+   "muscles": [
+    "glutes",
+    "hamstrings",
+    "back"
+   ],
+   "equipment": "kettlebell",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "band_good_morning",
+   "name": "Band Good Morning",
+   "category": "strength",
+   "pattern": "hinge",
+   "muscles": [
+    "hamstrings",
+    "glutes",
+    "back"
+   ],
+   "equipment": "bands",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "cable_pull_through",
+   "name": "Cable Pull-Through",
+   "category": "strength",
+   "pattern": "hinge",
+   "muscles": [
+    "glutes",
+    "hamstrings"
+   ],
+   "equipment": "cable",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "back_extension",
+   "name": "Back Extension (45 degree)",
+   "category": "strength",
+   "pattern": "hinge",
+   "muscles": [
+    "back",
+    "glutes",
+    "hamstrings"
+   ],
+   "equipment": "machine",
+   "level": 1,
+   "contraindications": [
+    "low_back"
+   ]
+  },
+  {
+   "id": "dumbbell_hip_thrust",
+   "name": "Dumbbell Hip Thrust",
+   "category": "strength",
+   "pattern": "hinge",
+   "muscles": [
+    "glutes",
+    "hamstrings"
+   ],
+   "equipment": "dumbbells",
+   "level": 2,
+   "contraindications": []
+  },
+  {
+   "id": "barbell_hip_thrust",
+   "name": "Barbell Hip Thrust",
+   "category": "strength",
+   "pattern": "hinge",
+   "muscles": [
+    "glutes",
+    "hamstrings"
+   ],
+   "equipment": "barbell",
+   "level": 2,
+   "contraindications": []
+  },
+  {
+   "id": "dumbbell_romanian_deadlift",
+   "name": "Dumbbell Romanian Deadlift",
+   "category": "strength",
+   "pattern": "hinge",
+   "muscles": [
+    "hamstrings",
+    "glutes",
+    "back"
+   ],
+   "equipment": "dumbbells",
+   "level": 2,
+   "contraindications": [
+    "low_back"
+   ]
+  },
+  {
+   "id": "kettlebell_swing",
+   "name": "Kettlebell Swing",
+   "category": "strength",
+   "pattern": "hinge",
+   "muscles": [
+    "glutes",
+    "hamstrings",
+    "core"
+   ],
+   "equipment": "kettlebell",
+   "level": 2,
+   "contraindications": [
+    "low_back"
+   ]
+  },
+  {
+   "id": "trap_bar_deadlift",
+   "name": "Trap Bar Deadlift",
+   "category": "strength",
+   "pattern": "hinge",
+   "muscles": [
+    "glutes",
+    "quads",
+    "hamstrings"
+   ],
+   "equipment": "barbell",
+   "level": 2,
+   "contraindications": [
+    "low_back"
+   ]
+  },
+  {
+   "id": "barbell_romanian_deadlift",
+   "name": "Barbell Romanian Deadlift",
+   "category": "strength",
+   "pattern": "hinge",
+   "muscles": [
+    "hamstrings",
+    "glutes",
+    "back"
+   ],
+   "equipment": "barbell",
+   "level": 3,
+   "contraindications": [
+    "low_back"
+   ]
+  },
+  {
+   "id": "conventional_deadlift",
+   "name": "Conventional Deadlift",
+   "category": "strength",
+   "pattern": "hinge",
+   "muscles": [
+    "hamstrings",
+    "glutes",
+    "back"
+   ],
+   "equipment": "barbell",
+   "level": 3,
+   "contraindications": [
+    "low_back"
+   ]
+  },
+  {
+   "id": "sumo_deadlift",
+   "name": "Sumo Deadlift",
+   "category": "strength",
+   "pattern": "hinge",
+   "muscles": [
+    "glutes",
+    "hamstrings",
+    "adductors"
+   ],
+   "equipment": "barbell",
+   "level": 3,
+   "contraindications": [
+    "low_back"
+   ]
+  },
+  {
+   "id": "step_up",
+   "name": "Step-Up",
+   "category": "strength",
+   "pattern": "single_leg",
+   "muscles": [
+    "quads",
+    "glutes"
+   ],
+   "equipment": "none",
+   "level": 1,
+   "contraindications": [
+    "knee"
+   ]
+  },
+  {
+   "id": "reverse_lunge",
+   "name": "Reverse Lunge",
+   "category": "strength",
+   "pattern": "single_leg",
+   "muscles": [
+    "quads",
+    "glutes"
+   ],
+   "equipment": "none",
+   "level": 1,
+   "contraindications": [
+    "knee"
+   ]
+  },
+  {
+   "id": "split_squat",
+   "name": "Split Squat",
+   "category": "strength",
+   "pattern": "single_leg",
+   "muscles": [
+    "quads",
+    "glutes"
+   ],
+   "equipment": "none",
+   "level": 2,
+   "contraindications": [
+    "knee"
+   ]
+  },
+  {
+   "id": "forward_lunge",
+   "name": "Forward Lunge",
+   "category": "strength",
+   "pattern": "single_leg",
+   "muscles": [
+    "quads",
+    "glutes"
+   ],
+   "equipment": "none",
+   "level": 2,
+   "contraindications": [
+    "knee"
+   ]
+  },
+  {
+   "id": "lateral_lunge",
+   "name": "Lateral Lunge",
+   "category": "strength",
+   "pattern": "single_leg",
+   "muscles": [
+    "quads",
+    "glutes",
+    "adductors"
+   ],
+   "equipment": "none",
+   "level": 2,
+   "contraindications": [
+    "knee"
+   ]
+  },
+  {
+   "id": "curtsy_lunge",
+   "name": "Curtsy Lunge",
+   "category": "strength",
+   "pattern": "single_leg",
+   "muscles": [
+    "glutes",
+    "quads"
+   ],
+   "equipment": "none",
+   "level": 2,
+   "contraindications": [
+    "knee"
+   ]
+  },
+  {
+   "id": "dumbbell_step_up",
+   "name": "Dumbbell Step-Up",
+   "category": "strength",
+   "pattern": "single_leg",
+   "muscles": [
+    "quads",
+    "glutes"
+   ],
+   "equipment": "dumbbells",
+   "level": 2,
+   "contraindications": [
+    "knee"
+   ]
+  },
+  {
+   "id": "dumbbell_split_squat",
+   "name": "Dumbbell Split Squat",
+   "category": "strength",
+   "pattern": "single_leg",
+   "muscles": [
+    "quads",
+    "glutes"
+   ],
+   "equipment": "dumbbells",
+   "level": 2,
+   "contraindications": [
+    "knee"
+   ]
+  },
+  {
+   "id": "dumbbell_walking_lunge",
+   "name": "Dumbbell Walking Lunge",
+   "category": "strength",
+   "pattern": "single_leg",
+   "muscles": [
+    "quads",
+    "glutes"
+   ],
+   "equipment": "dumbbells",
+   "level": 2,
+   "contraindications": [
+    "knee"
+   ]
+  },
+  {
+   "id": "single_leg_romanian_deadlift",
+   "name": "Single-Leg Romanian Deadlift",
+   "category": "strength",
+   "pattern": "single_leg",
+   "muscles": [
+    "hamstrings",
+    "glutes"
+   ],
+   "equipment": "dumbbells",
+   "level": 2,
+   "contraindications": []
+  },
+  {
+   "id": "bulgarian_split_squat",
+   "name": "Bulgarian Split Squat",
+   "category": "strength",
+   "pattern": "single_leg",
+   "muscles": [
+    "quads",
+    "glutes"
+   ],
+   "equipment": "dumbbells",
+   "level": 3,
+   "contraindications": [
+    "knee"
+   ]
+  },
+  {
+   "id": "single_leg_box_squat",
+   "name": "Single-Leg Box Squat",
+   "category": "strength",
+   "pattern": "single_leg",
+   "muscles": [
+    "quads",
+    "glutes"
+   ],
+   "equipment": "none",
+   "level": 3,
+   "contraindications": [
+    "knee"
+   ]
+  },
+  {
+   "id": "band_lateral_walk",
+   "name": "Banded Lateral Walk",
+   "category": "strength",
+   "pattern": "leg_accessory",
+   "muscles": [
+    "glutes"
+   ],
+   "equipment": "bands",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "hip_abduction_machine",
+   "name": "Hip Abduction Machine",
+   "category": "strength",
+   "pattern": "leg_accessory",
+   "muscles": [
+    "glutes"
+   ],
+   "equipment": "machine",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "hip_adduction_machine",
+   "name": "Hip Adduction Machine",
+   "category": "strength",
+   "pattern": "leg_accessory",
+   "muscles": [
+    "adductors"
+   ],
+   "equipment": "machine",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "cable_glute_kickback",
+   "name": "Cable Glute Kickback",
+   "category": "strength",
+   "pattern": "leg_accessory",
+   "muscles": [
+    "glutes"
+   ],
+   "equipment": "cable",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "lying_leg_curl",
+   "name": "Lying Leg Curl",
+   "category": "strength",
+   "pattern": "leg_accessory",
+   "muscles": [
+    "hamstrings"
+   ],
+   "equipment": "machine",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "seated_leg_curl",
+   "name": "Seated Leg Curl",
+   "category": "strength",
+   "pattern": "leg_accessory",
+   "muscles": [
+    "hamstrings"
+   ],
+   "equipment": "machine",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "leg_extension",
+   "name": "Leg Extension",
+   "category": "strength",
+   "pattern": "leg_accessory",
+   "muscles": [
+    "quads"
+   ],
+   "equipment": "machine",
+   "level": 1,
+   "contraindications": [
+    "knee"
+   ]
+  },
+  {
+   "id": "stability_ball_leg_curl",
+   "name": "Stability Ball Leg Curl",
+   "category": "strength",
+   "pattern": "leg_accessory",
+   "muscles": [
+    "hamstrings",
+    "glutes"
+   ],
+   "equipment": "none",
+   "level": 2,
+   "contraindications": []
+  },
+  {
+   "id": "nordic_hamstring_curl",
+   "name": "Nordic Hamstring Curl",
+   "category": "strength",
+   "pattern": "leg_accessory",
+   "muscles": [
+    "hamstrings"
+   ],
+   "equipment": "none",
+   "level": 3,
+   "contraindications": [
+    "knee"
+   ]
+  },
+  {
+   "id": "wall_push_up",
+   "name": "Wall Push-Up",
+   "category": "strength",
+   "pattern": "push_h",
+   "muscles": [
+    "chest",
+    "triceps",
+    "shoulders"
+   ],
+   "equipment": "none",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "incline_push_up",
+   "name": "Incline Push-Up",
+   "category": "strength",
+   "pattern": "push_h",
+   "muscles": [
+    "chest",
+    "triceps",
+    "shoulders"
+   ],
+   "equipment": "none",
+   "level": 1,
+   "contraindications": [
+    "wrist"
+   ]
+  },
+  {
+   "id": "knee_push_up",
+   "name": "Knee Push-Up",
+   "category": "strength",
+   "pattern": "push_h",
+   "muscles": [
+    "chest",
+    "triceps",
+    "shoulders"
+   ],
+   "equipment": "none",
+   "level": 1,
+   "contraindications": [
+    "wrist"
+   ]
+  },
+  {
+   "id": "band_chest_press",
+   "name": "Band Chest Press",
+   "category": "strength",
+   "pattern": "push_h",
+   "muscles": [
+    "chest",
+    "triceps"
+   ],
+   "equipment": "bands",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "machine_chest_press",
+   "name": "Machine Chest Press",
+   "category": "strength",
+   "pattern": "push_h",
+   "muscles": [
+    "chest",
+    "triceps",
+    "shoulders"
+   ],
+   "equipment": "machine",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "dumbbell_floor_press",
+   "name": "Dumbbell Floor Press",
+   "category": "strength",
+   "pattern": "push_h",
+   "muscles": [
+    "chest",
+    "triceps"
+   ],
+   "equipment": "dumbbells",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "assisted_dip",
+   "name": "Assisted Dip",
+   "category": "strength",
+   "pattern": "push_h",
+   "muscles": [
+    "chest",
+    "triceps"
+   ],
+   "equipment": "machine",
+   "level": 1,
+   "contraindications": [
+    "shoulder"
+   ]
+  },
+  {
+   "id": "push_up",
+   "name": "Push-Up",
+   "category": "strength",
+   "pattern": "push_h",
+   "muscles": [
+    "chest",
+    "triceps",
+    "shoulders"
+   ],
+   "equipment": "none",
+   "level": 2,
+   "contraindications": [
+    "wrist"
+   ]
+  },
+  {
+   "id": "dumbbell_bench_press",
+   "name": "Dumbbell Bench Press",
+   "category": "strength",
+   "pattern": "push_h",
+   "muscles": [
+    "chest",
+    "triceps",
+    "shoulders"
+   ],
+   "equipment": "dumbbells",
+   "level": 2,
+   "contraindications": [
+    "shoulder"
+   ]
+  },
+  {
+   "id": "incline_dumbbell_press",
+   "name": "Incline Dumbbell Press",
+   "category": "strength",
+   "pattern": "push_h",
+   "muscles": [
+    "chest",
+    "shoulders",
+    "triceps"
+   ],
+   "equipment": "dumbbells",
+   "level": 2,
+   "contraindications": [
+    "shoulder"
+   ]
+  },
+  {
+   "id": "decline_push_up",
+   "name": "Decline Push-Up",
+   "category": "strength",
+   "pattern": "push_h",
+   "muscles": [
+    "chest",
+    "shoulders",
+    "triceps"
+   ],
+   "equipment": "none",
+   "level": 3,
+   "contraindications": [
+    "wrist",
+    "shoulder"
+   ]
+  },
+  {
+   "id": "barbell_bench_press",
+   "name": "Barbell Bench Press",
+   "category": "strength",
+   "pattern": "push_h",
+   "muscles": [
+    "chest",
+    "triceps",
+    "shoulders"
+   ],
+   "equipment": "barbell",
+   "level": 3,
+   "contraindications": [
+    "shoulder"
+   ]
+  },
+  {
+   "id": "incline_barbell_bench_press",
+   "name": "Incline Barbell Bench Press",
+   "category": "strength",
+   "pattern": "push_h",
+   "muscles": [
+    "chest",
+    "shoulders",
+    "triceps"
+   ],
+   "equipment": "barbell",
+   "level": 3,
+   "contraindications": [
+    "shoulder"
+   ]
+  },
+  {
+   "id": "parallel_bar_dip",
+   "name": "Parallel Bar Dip",
+   "category": "strength",
+   "pattern": "push_h",
+   "muscles": [
+    "chest",
+    "triceps",
+    "shoulders"
+   ],
+   "equipment": "machine",
+   "level": 3,
+   "contraindications": [
+    "shoulder"
+   ]
+  },
+  {
+   "id": "band_overhead_press",
+   "name": "Band Overhead Press",
+   "category": "strength",
+   "pattern": "push_v",
+   "muscles": [
+    "shoulders",
+    "triceps"
+   ],
+   "equipment": "bands",
+   "level": 1,
+   "contraindications": [
+    "shoulder"
+   ]
+  },
+  {
+   "id": "machine_shoulder_press",
+   "name": "Machine Shoulder Press",
+   "category": "strength",
+   "pattern": "push_v",
+   "muscles": [
+    "shoulders",
+    "triceps"
+   ],
+   "equipment": "machine",
+   "level": 1,
+   "contraindications": [
+    "shoulder"
+   ]
+  },
+  {
+   "id": "landmine_press",
+   "name": "Landmine Press",
+   "category": "strength",
+   "pattern": "push_v",
+   "muscles": [
+    "shoulders",
+    "chest",
+    "triceps"
+   ],
+   "equipment": "barbell",
+   "level": 2,
+   "contraindications": []
+  },
+  {
+   "id": "pike_push_up",
+   "name": "Pike Push-Up",
+   "category": "strength",
+   "pattern": "push_v",
+   "muscles": [
+    "shoulders",
+    "triceps"
+   ],
+   "equipment": "none",
+   "level": 2,
+   "contraindications": [
+    "shoulder",
+    "wrist"
+   ]
+  },
+  {
+   "id": "dumbbell_shoulder_press",
+   "name": "Dumbbell Shoulder Press",
+   "category": "strength",
+   "pattern": "push_v",
+   "muscles": [
+    "shoulders",
+    "triceps"
+   ],
+   "equipment": "dumbbells",
+   "level": 2,
+   "contraindications": [
+    "shoulder"
+   ]
+  },
+  {
+   "id": "arnold_press",
+   "name": "Arnold Press",
+   "category": "strength",
+   "pattern": "push_v",
+   "muscles": [
+    "shoulders",
+    "triceps"
+   ],
+   "equipment": "dumbbells",
+   "level": 2,
+   "contraindications": [
+    "shoulder"
+   ]
+  },
+  {
+   "id": "half_kneeling_dumbbell_press",
+   "name": "Half-Kneeling Single-Arm Press",
+   "category": "strength",
+   "pattern": "push_v",
+   "muscles": [
+    "shoulders",
+    "core"
+   ],
+   "equipment": "dumbbells",
+   "level": 2,
+   "contraindications": [
+    "shoulder"
+   ]
+  },
+  {
+   "id": "kettlebell_overhead_press",
+   "name": "Kettlebell Overhead Press",
+   "category": "strength",
+   "pattern": "push_v",
+   "muscles": [
+    "shoulders",
+    "triceps"
+   ],
+   "equipment": "kettlebell",
+   "level": 2,
+   "contraindications": [
+    "shoulder"
+   ]
+  },
+  {
+   "id": "barbell_overhead_press",
+   "name": "Barbell Overhead Press",
+   "category": "strength",
+   "pattern": "push_v",
+   "muscles": [
+    "shoulders",
+    "triceps",
+    "core"
+   ],
+   "equipment": "barbell",
+   "level": 3,
+   "contraindications": [
+    "shoulder",
+    "low_back"
+   ]
+  },
+  {
+   "id": "towel_row",
+   "name": "Door Towel Row",
+   "category": "strength",
+   "pattern": "pull_h",
+   "muscles": [
+    "back",
+    "biceps"
+   ],
+   "equipment": "none",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "band_row",
+   "name": "Band Seated Row",
+   "category": "strength",
+   "pattern": "pull_h",
+   "muscles": [
+    "back",
+    "biceps"
+   ],
+   "equipment": "bands",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "seated_cable_row",
+   "name": "Seated Cable Row",
+   "category": "strength",
+   "pattern": "pull_h",
+   "muscles": [
+    "back",
+    "biceps"
+   ],
+   "equipment": "cable",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "machine_row",
+   "name": "Machine Row",
+   "category": "strength",
+   "pattern": "pull_h",
+   "muscles": [
+    "back",
+    "biceps"
+   ],
+   "equipment": "machine",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "chest_supported_dumbbell_row",
+   "name": "Chest-Supported Dumbbell Row",
+   "category": "strength",
+   "pattern": "pull_h",
+   "muscles": [
+    "back",
+    "biceps"
+   ],
+   "equipment": "dumbbells",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "inverted_row",
+   "name": "Inverted Row",
+   "category": "strength",
+   "pattern": "pull_h",
+   "muscles": [
+    "back",
+    "biceps"
+   ],
+   "equipment": "none",
+   "level": 2,
+   "contraindications": []
+  },
+  {
+   "id": "single_arm_dumbbell_row",
+   "name": "Single-Arm Dumbbell Row",
+   "category": "strength",
+   "pattern": "pull_h",
+   "muscles": [
+    "back",
+    "biceps"
+   ],
+   "equipment": "dumbbells",
+   "level": 2,
+   "contraindications": []
+  },
+  {
+   "id": "kettlebell_row",
+   "name": "Kettlebell Row",
+   "category": "strength",
+   "pattern": "pull_h",
+   "muscles": [
+    "back",
+    "biceps"
+   ],
+   "equipment": "kettlebell",
+   "level": 2,
+   "contraindications": []
+  },
+  {
+   "id": "bent_over_barbell_row",
+   "name": "Bent-Over Barbell Row",
+   "category": "strength",
+   "pattern": "pull_h",
+   "muscles": [
+    "back",
+    "biceps"
+   ],
+   "equipment": "barbell",
+   "level": 3,
+   "contraindications": [
+    "low_back"
+   ]
+  },
+  {
+   "id": "t_bar_row",
+   "name": "T-Bar Row",
+   "category": "strength",
+   "pattern": "pull_h",
+   "muscles": [
+    "back",
+    "biceps"
+   ],
+   "equipment": "barbell",
+   "level": 3,
+   "contraindications": [
+    "low_back"
+   ]
+  },
+  {
+   "id": "renegade_row",
+   "name": "Renegade Row",
+   "category": "strength",
+   "pattern": "pull_h",
+   "muscles": [
+    "back",
+    "core"
+   ],
+   "equipment": "dumbbells",
+   "level": 3,
+   "contraindications": [
+    "wrist"
+   ]
+  },
+  {
+   "id": "band_lat_pulldown",
+   "name": "Band Lat Pulldown",
+   "category": "strength",
+   "pattern": "pull_v",
+   "muscles": [
+    "back",
+    "biceps"
+   ],
+   "equipment": "bands",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "lat_pulldown",
+   "name": "Lat Pulldown",
+   "category": "strength",
+   "pattern": "pull_v",
+   "muscles": [
+    "back",
+    "biceps"
+   ],
+   "equipment": "cable",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "straight_arm_pulldown",
+   "name": "Straight-Arm Cable Pulldown",
+   "category": "strength",
+   "pattern": "pull_v",
+   "muscles": [
+    "back"
+   ],
+   "equipment": "cable",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "assisted_pull_up",
+   "name": "Assisted Pull-Up",
+   "category": "strength",
+   "pattern": "pull_v",
+   "muscles": [
+    "back",
+    "biceps"
+   ],
+   "equipment": "machine",
+   "level": 1,
+   "contraindications": [
+    "shoulder"
+   ]
+  },
+  {
+   "id": "negative_pull_up",
+   "name": "Negative Pull-Up",
+   "category": "strength",
+   "pattern": "pull_v",
+   "muscles": [
+    "back",
+    "biceps"
+   ],
+   "equipment": "pull_up_bar",
+   "level": 2,
+   "contraindications": [
+    "shoulder"
+   ]
+  },
+  {
+   "id": "pull_up",
+   "name": "Pull-Up",
+   "category": "strength",
+   "pattern": "pull_v",
+   "muscles": [
+    "back",
+    "biceps"
+   ],
+   "equipment": "pull_up_bar",
+   "level": 3,
+   "contraindications": [
+    "shoulder"
+   ]
+  },
+  {
+   "id": "chin_up",
+   "name": "Chin-Up",
+   "category": "strength",
+   "pattern": "pull_v",
+   "muscles": [
+    "back",
+    "biceps"
+   ],
+   "equipment": "pull_up_bar",
+   "level": 3,
+   "contraindications": [
+    "shoulder"
+   ]
+  },
+  {
+   "id": "dumbbell_curl",
+   "name": "Dumbbell Biceps Curl",
+   "category": "strength",
+   "pattern": "upper_accessory",
+   "muscles": [
+    "biceps"
+   ],
+   "equipment": "dumbbells",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "hammer_curl",
+   "name": "Hammer Curl",
+   "category": "strength",
+   "pattern": "upper_accessory",
+   "muscles": [
+    "biceps",
+    "forearms"
+   ],
+   "equipment": "dumbbells",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "concentration_curl",
+   "name": "Concentration Curl",
+   "category": "strength",
+   "pattern": "upper_accessory",
+   "muscles": [
+    "biceps"
+   ],
+   "equipment": "dumbbells",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "cable_curl",
+   "name": "Cable Curl",
+   "category": "strength",
+   "pattern": "upper_accessory",
+   "muscles": [
+    "biceps"
+   ],
+   "equipment": "cable",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "band_curl",
+   "name": "Band Curl",
+   "category": "strength",
+   "pattern": "upper_accessory",
+   "muscles": [
+    "biceps"
+   ],
+   "equipment": "bands",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "preacher_curl_machine",
+   "name": "Machine Preacher Curl",
+   "category": "strength",
+   "pattern": "upper_accessory",
+   "muscles": [
+    "biceps"
+   ],
+   "equipment": "machine",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "barbell_curl",
+   "name": "Barbell Curl",
+   "category": "strength",
+   "pattern": "upper_accessory",
+   "muscles": [
+    "biceps"
+   ],
+   "equipment": "barbell",
+   "level": 2,
+   "contraindications": []
+  },
+  {
+   "id": "triceps_pushdown",
+   "name": "Cable Triceps Pushdown",
+   "category": "strength",
+   "pattern": "upper_accessory",
+   "muscles": [
+    "triceps"
+   ],
+   "equipment": "cable",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "band_triceps_extension",
+   "name": "Band Triceps Extension",
+   "category": "strength",
+   "pattern": "upper_accessory",
+   "muscles": [
+    "triceps"
+   ],
+   "equipment": "bands",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "overhead_triceps_extension",
+   "name": "Dumbbell Overhead Triceps Extension",
+   "category": "strength",
+   "pattern": "upper_accessory",
+   "muscles": [
+    "triceps"
+   ],
+   "equipment": "dumbbells",
+   "level": 1,
+   "contraindications": [
+    "shoulder"
+   ]
+  },
+  {
+   "id": "bench_dip",
+   "name": "Bench Dip",
+   "category": "strength",
+   "pattern": "upper_accessory",
+   "muscles": [
+    "triceps"
+   ],
+   "equipment": "none",
+   "level": 1,
+   "contraindications": [
+    "shoulder",
+    "wrist"
+   ]
+  },
+  {
+   "id": "close_grip_push_up",
+   "name": "Close-Grip Push-Up",
+   "category": "strength",
+   "pattern": "upper_accessory",
+   "muscles": [
+    "triceps",
+    "chest"
+   ],
+   "equipment": "none",
+   "level": 2,
+   "contraindications": [
+    "wrist"
+   ]
+  },
+  {
+   "id": "skull_crusher",
+   "name": "Lying Triceps Extension (Skull Crusher)",
+   "category": "strength",
+   "pattern": "upper_accessory",
+   "muscles": [
+    "triceps"
+   ],
+   "equipment": "barbell",
+   "level": 2,
+   "contraindications": [
+    "shoulder"
+   ]
+  },
+  {
+   "id": "dumbbell_lateral_raise",
+   "name": "Dumbbell Lateral Raise",
+   "category": "strength",
+   "pattern": "upper_accessory",
+   "muscles": [
+    "shoulders"
+   ],
+   "equipment": "dumbbells",
+   "level": 1,
+   "contraindications": [
+    "shoulder"
+   ]
+  },
+  {
+   "id": "cable_lateral_raise",
+   "name": "Cable Lateral Raise",
+   "category": "strength",
+   "pattern": "upper_accessory",
+   "muscles": [
+    "shoulders"
+   ],
+   "equipment": "cable",
+   "level": 1,
+   "contraindications": [
+    "shoulder"
+   ]
+  },
+  {
+   "id": "front_raise",
+   "name": "Dumbbell Front Raise",
+   "category": "strength",
+   "pattern": "upper_accessory",
+   "muscles": [
+    "shoulders"
+   ],
+   "equipment": "dumbbells",
+   "level": 1,
+   "contraindications": [
+    "shoulder"
+   ]
+  },
+  {
+   "id": "rear_delt_fly",
+   "name": "Bent-Over Rear Delt Fly",
+   "category": "strength",
+   "pattern": "upper_accessory",
+   "muscles": [
+    "shoulders",
+    "upper_back"
+   ],
+   "equipment": "dumbbells",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "reverse_pec_deck",
+   "name": "Reverse Pec Deck",
+   "category": "strength",
+   "pattern": "upper_accessory",
+   "muscles": [
+    "shoulders",
+    "upper_back"
+   ],
+   "equipment": "machine",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "face_pull",
+   "name": "Cable Face Pull",
+   "category": "strength",
+   "pattern": "upper_accessory",
+   "muscles": [
+    "upper_back",
+    "shoulders"
+   ],
+   "equipment": "cable",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "band_face_pull",
+   "name": "Band Face Pull",
+   "category": "strength",
+   "pattern": "upper_accessory",
+   "muscles": [
+    "upper_back",
+    "shoulders"
+   ],
+   "equipment": "bands",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "cable_chest_fly",
+   "name": "Cable Chest Fly",
+   "category": "strength",
+   "pattern": "upper_accessory",
+   "muscles": [
+    "chest"
+   ],
+   "equipment": "cable",
+   "level": 1,
+   "contraindications": [
+    "shoulder"
+   ]
+  },
+  {
+   "id": "pec_deck",
+   "name": "Pec Deck",
+   "category": "strength",
+   "pattern": "upper_accessory",
+   "muscles": [
+    "chest"
+   ],
+   "equipment": "machine",
+   "level": 1,
+   "contraindications": [
+    "shoulder"
+   ]
+  },
+  {
+   "id": "dumbbell_fly",
+   "name": "Dumbbell Fly",
+   "category": "strength",
+   "pattern": "upper_accessory",
+   "muscles": [
+    "chest"
+   ],
+   "equipment": "dumbbells",
+   "level": 2,
+   "contraindications": [
+    "shoulder"
+   ]
+  },
+  {
+   "id": "dumbbell_shrug",
+   "name": "Dumbbell Shrug",
+   "category": "strength",
+   "pattern": "upper_accessory",
+   "muscles": [
+    "traps"
+   ],
+   "equipment": "dumbbells",
+   "level": 1,
+   "contraindications": [
+    "neck"
+   ]
+  },
+  {
+   "id": "wrist_curl",
+   "name": "Dumbbell Wrist Curl",
+   "category": "strength",
+   "pattern": "upper_accessory",
+   "muscles": [
+    "forearms"
+   ],
+   "equipment": "dumbbells",
+   "level": 1,
+   "contraindications": [
+    "wrist"
+   ]
+  },
+  {
+   "id": "standing_calf_raise",
+   "name": "Standing Calf Raise",
+   "category": "strength",
+   "pattern": "calves",
+   "muscles": [
+    "calves"
+   ],
+   "equipment": "none",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "dumbbell_calf_raise",
+   "name": "Dumbbell Calf Raise",
+   "category": "strength",
+   "pattern": "calves",
+   "muscles": [
+    "calves"
+   ],
+   "equipment": "dumbbells",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "seated_calf_raise",
+   "name": "Seated Calf Raise",
+   "category": "strength",
+   "pattern": "calves",
+   "muscles": [
+    "calves"
+   ],
+   "equipment": "machine",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "single_leg_calf_raise",
+   "name": "Single-Leg Calf Raise",
+   "category": "strength",
+   "pattern": "calves",
+   "muscles": [
+    "calves"
+   ],
+   "equipment": "none",
+   "level": 2,
+   "contraindications": []
+  },
+  {
+   "id": "dead_bug",
+   "name": "Dead Bug",
+   "category": "strength",
+   "pattern": "core",
+   "muscles": [
+    "core"
+   ],
+   "equipment": "none",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "bird_dog",
+   "name": "Bird Dog",
+   "category": "strength",
+   "pattern": "core",
+   "muscles": [
+    "core",
+    "back"
+   ],
+   "equipment": "none",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "front_plank",
+   "name": "Front Plank",
+   "category": "strength",
+   "pattern": "core",
+   "muscles": [
+    "core"
+   ],
+   "equipment": "none",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "superman",
+   "name": "Superman Hold",
+   "category": "strength",
+   "pattern": "core",
+   "muscles": [
+    "back",
+    "glutes"
+   ],
+   "equipment": "none",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "band_pallof_press",
+   "name": "Band Pallof Press",
+   "category": "strength",
+   "pattern": "core",
+   "muscles": [
+    "core"
+   ],
+   "equipment": "bands",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "cable_pallof_press",
+   "name": "Cable Pallof Press",
+   "category": "strength",
+   "pattern": "core",
+   "muscles": [
+    "core"
+   ],
+   "equipment": "cable",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "crunch",
+   "name": "Crunch",
+   "category": "strength",
+   "pattern": "core",
+   "muscles": [
+    "core"
+   ],
+   "equipment": "none",
+   "level": 1,
+   "contraindications": [
+    "neck"
+   ]
+  },
+  {
+   "id": "side_plank",
+   "name": "Side Plank",
+   "category": "strength",
+   "pattern": "core",
+   "muscles": [
+    "core"
+   ],
+   "equipment": "none",
+   "level": 2,
+   "contraindications": [
+    "shoulder"
+   ]
+  },
+  {
+   "id": "reverse_crunch",
+   "name": "Reverse Crunch",
+   "category": "strength",
+   "pattern": "core",
+   "muscles": [
+    "core"
+   ],
+   "equipment": "none",
+   "level": 2,
+   "contraindications": []
+  },
+  {
+   "id": "bicycle_crunch",
+   "name": "Bicycle Crunch",
+   "category": "strength",
+   "pattern": "core",
+   "muscles": [
+    "core"
+   ],
+   "equipment": "none",
+   "level": 2,
+   "contraindications": [
+    "neck"
+   ]
+  },
+  {
+   "id": "mountain_climber",
+   "name": "Mountain Climber",
+   "category": "strength",
+   "pattern": "core",
+   "muscles": [
+    "core",
+    "shoulders"
+   ],
+   "equipment": "none",
+   "level": 2,
+   "contraindications": [
+    "wrist"
+   ]
+  },
+  {
+   "id": "russian_twist",
+   "name": "Russian Twist",
+   "category": "strength",
+   "pattern": "core",
+   "muscles": [
+    "core"
+   ],
+   "equipment": "none",
+   "level": 2,
+   "contraindications": [
+    "low_back"
+   ]
+  },
+  {
+   "id": "hollow_body_hold",
+   "name": "Hollow Body Hold",
+   "category": "strength",
+   "pattern": "core",
+   "muscles": [
+    "core"
+   ],
+   "equipment": "none",
+   "level": 2,
+   "contraindications": [
+    "low_back"
+   ]
+  },
+  {
+   "id": "cable_crunch",
+   "name": "Cable Crunch",
+   "category": "strength",
+   "pattern": "core",
+   "muscles": [
+    "core"
+   ],
+   "equipment": "cable",
+   "level": 2,
+   "contraindications": []
+  },
+  {
+   "id": "hanging_knee_raise",
+   "name": "Hanging Knee Raise",
+   "category": "strength",
+   "pattern": "core",
+   "muscles": [
+    "core"
+   ],
+   "equipment": "pull_up_bar",
+   "level": 2,
+   "contraindications": [
+    "shoulder"
+   ]
+  },
+  {
+   "id": "hanging_leg_raise",
+   "name": "Hanging Leg Raise",
+   "category": "strength",
+   "pattern": "core",
+   "muscles": [
+    "core"
+   ],
+   "equipment": "pull_up_bar",
+   "level": 3,
+   "contraindications": [
+    "shoulder"
+   ]
+  },
+  {
+   "id": "ab_wheel_rollout",
+   "name": "Ab Wheel Rollout",
+   "category": "strength",
+   "pattern": "core",
+   "muscles": [
+    "core"
+   ],
+   "equipment": "none",
+   "level": 3,
+   "contraindications": [
+    "low_back",
+    "shoulder"
+   ]
+  },
+  {
+   "id": "farmers_carry",
+   "name": "Farmer's Carry",
+   "category": "strength",
+   "pattern": "carry",
+   "muscles": [
+    "forearms",
+    "core",
+    "back"
+   ],
+   "equipment": "dumbbells",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "suitcase_carry",
+   "name": "Suitcase Carry",
+   "category": "strength",
+   "pattern": "carry",
+   "muscles": [
+    "core",
+    "forearms"
+   ],
+   "equipment": "dumbbells",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "kettlebell_rack_carry",
+   "name": "Kettlebell Rack Carry",
+   "category": "strength",
+   "pattern": "carry",
+   "muscles": [
+    "core",
+    "shoulders"
+   ],
+   "equipment": "kettlebell",
+   "level": 2,
+   "contraindications": []
+  },
+  {
+   "id": "overhead_carry",
+   "name": "Overhead Carry",
+   "category": "strength",
+   "pattern": "carry",
+   "muscles": [
+    "shoulders",
+    "core"
+   ],
+   "equipment": "dumbbells",
+   "level": 2,
+   "contraindications": [
+    "shoulder"
+   ]
+  },
+  {
+   "id": "brisk_walk",
+   "name": "Brisk Walk",
+   "category": "cardio",
+   "pattern": "cardio",
+   "muscles": [
+    "heart",
+    "legs"
+   ],
+   "equipment": "none",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "dance_cardio",
+   "name": "Dance Cardio",
+   "category": "cardio",
+   "pattern": "cardio",
+   "muscles": [
+    "heart",
+    "legs"
+   ],
+   "equipment": "none",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "incline_treadmill_walk",
+   "name": "Incline Treadmill Walk",
+   "category": "cardio",
+   "pattern": "cardio",
+   "muscles": [
+    "heart",
+    "legs"
+   ],
+   "equipment": "cardio_machine",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "stationary_bike",
+   "name": "Stationary Bike",
+   "category": "cardio",
+   "pattern": "cardio",
+   "muscles": [
+    "heart",
+    "legs"
+   ],
+   "equipment": "cardio_machine",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "elliptical",
+   "name": "Elliptical Trainer",
+   "category": "cardio",
+   "pattern": "cardio",
+   "muscles": [
+    "heart",
+    "legs"
+   ],
+   "equipment": "cardio_machine",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "water_aerobics",
+   "name": "Water Aerobics",
+   "category": "cardio",
+   "pattern": "cardio",
+   "muscles": [
+    "heart",
+    "full_body"
+   ],
+   "equipment": "pool",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "hiking",
+   "name": "Hiking",
+   "category": "cardio",
+   "pattern": "cardio",
+   "muscles": [
+    "heart",
+    "legs"
+   ],
+   "equipment": "none",
+   "level": 2,
+   "contraindications": [
+    "knee"
+   ]
+  },
+  {
+   "id": "jogging",
+   "name": "Jogging",
+   "category": "cardio",
+   "pattern": "cardio",
+   "muscles": [
+    "heart",
+    "legs"
+   ],
+   "equipment": "none",
+   "level": 2,
+   "contraindications": [
+    "knee"
+   ]
+  },
+  {
+   "id": "rowing_machine",
+   "name": "Rowing Machine",
+   "category": "cardio",
+   "pattern": "cardio",
+   "muscles": [
+    "heart",
+    "back",
+    "legs"
+   ],
+   "equipment": "cardio_machine",
+   "level": 2,
+   "contraindications": [
+    "low_back"
+   ]
+  },
+  {
+   "id": "stair_climber",
+   "name": "Stair Climber",
+   "category": "cardio",
+   "pattern": "cardio",
+   "muscles": [
+    "heart",
+    "legs"
+   ],
+   "equipment": "cardio_machine",
+   "level": 2,
+   "contraindications": [
+    "knee"
+   ]
+  },
+  {
+   "id": "swimming_laps",
+   "name": "Swimming Laps",
+   "category": "cardio",
+   "pattern": "cardio",
+   "muscles": [
+    "heart",
+    "full_body"
+   ],
+   "equipment": "pool",
+   "level": 2,
+   "contraindications": [
+    "shoulder"
+   ]
+  },
+  {
+   "id": "bike_intervals",
+   "name": "Bike Intervals",
+   "category": "cardio",
+   "pattern": "cardio",
+   "muscles": [
+    "heart",
+    "legs"
+   ],
+   "equipment": "cardio_machine",
+   "level": 2,
+   "contraindications": []
+  },
+  {
+   "id": "intervals_4x4",
+   "name": "4x4 Intervals (walk-run, bike or rower)",
+   "category": "cardio",
+   "pattern": "cardio",
+   "muscles": [
+    "heart",
+    "legs"
+   ],
+   "equipment": "none",
+   "level": 2,
+   "contraindications": [
+    "knee"
+   ]
+  },
+  {
+   "id": "jump_rope",
+   "name": "Jump Rope",
+   "category": "cardio",
+   "pattern": "cardio",
+   "muscles": [
+    "heart",
+    "calves"
+   ],
+   "equipment": "none",
+   "level": 2,
+   "contraindications": [
+    "knee"
+   ]
+  },
+  {
+   "id": "bodyweight_hiit_circuit",
+   "name": "Bodyweight HIIT Circuit",
+   "category": "cardio",
+   "pattern": "cardio",
+   "muscles": [
+    "heart",
+    "full_body"
+   ],
+   "equipment": "none",
+   "level": 2,
+   "contraindications": [
+    "knee",
+    "wrist"
+   ]
+  },
+  {
+   "id": "running_intervals",
+   "name": "Running Intervals",
+   "category": "cardio",
+   "pattern": "cardio",
+   "muscles": [
+    "heart",
+    "legs"
+   ],
+   "equipment": "none",
+   "level": 3,
+   "contraindications": [
+    "knee"
+   ]
+  },
+  {
+   "id": "jump_squat",
+   "name": "Jump Squat",
+   "category": "plyometric",
+   "pattern": "plyometric",
+   "muscles": [
+    "quads",
+    "glutes",
+    "calves"
+   ],
+   "equipment": "none",
+   "level": 2,
+   "contraindications": [
+    "knee"
+   ]
+  },
+  {
+   "id": "skater_jump",
+   "name": "Skater Jump",
+   "category": "plyometric",
+   "pattern": "plyometric",
+   "muscles": [
+    "glutes",
+    "quads"
+   ],
+   "equipment": "none",
+   "level": 2,
+   "contraindications": [
+    "knee"
+   ]
+  },
+  {
+   "id": "medicine_ball_slam",
+   "name": "Medicine Ball Slam",
+   "category": "plyometric",
+   "pattern": "plyometric",
+   "muscles": [
+    "core",
+    "shoulders",
+    "back"
+   ],
+   "equipment": "medicine_ball",
+   "level": 2,
+   "contraindications": [
+    "low_back"
+   ]
+  },
+  {
+   "id": "burpee",
+   "name": "Burpee",
+   "category": "plyometric",
+   "pattern": "plyometric",
+   "muscles": [
+    "full_body"
+   ],
+   "equipment": "none",
+   "level": 2,
+   "contraindications": [
+    "wrist",
+    "knee",
+    "low_back"
+   ]
+  },
+  {
+   "id": "box_jump",
+   "name": "Box Jump",
+   "category": "plyometric",
+   "pattern": "plyometric",
+   "muscles": [
+    "quads",
+    "glutes",
+    "calves"
+   ],
+   "equipment": "none",
+   "level": 2,
+   "contraindications": [
+    "knee"
+   ]
+  },
+  {
+   "id": "broad_jump",
+   "name": "Broad Jump",
+   "category": "plyometric",
+   "pattern": "plyometric",
+   "muscles": [
+    "glutes",
+    "quads"
+   ],
+   "equipment": "none",
+   "level": 3,
+   "contraindications": [
+    "knee"
+   ]
+  },
+  {
+   "id": "single_leg_stand",
+   "name": "Single-Leg Balance",
+   "category": "balance",
+   "pattern": "balance",
+   "muscles": [
+    "ankles",
+    "core"
+   ],
+   "equipment": "none",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "heel_to_toe_walk",
+   "name": "Heel-to-Toe Walk",
+   "category": "balance",
+   "pattern": "balance",
+   "muscles": [
+    "ankles",
+    "core"
+   ],
+   "equipment": "none",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "tai_chi",
+   "name": "Tai Chi Session",
+   "category": "balance",
+   "pattern": "balance_class",
+   "muscles": [
+    "full_body"
+   ],
+   "equipment": "none",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "single_leg_reach",
+   "name": "Single-Leg Reach",
+   "category": "balance",
+   "pattern": "balance",
+   "muscles": [
+    "glutes",
+    "ankles",
+    "core"
+   ],
+   "equipment": "none",
+   "level": 2,
+   "contraindications": [
+    "knee"
+   ]
+  },
+  {
+   "id": "half_kneeling_hip_flexor_stretch",
+   "name": "Half-Kneeling Hip-Flexor Stretch",
+   "category": "corrective",
+   "pattern": "corrective",
+   "muscles": [
+    "hip_flexors"
+   ],
+   "equipment": "none",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "chin_tuck",
+   "name": "Chin Tuck",
+   "category": "corrective",
+   "pattern": "corrective",
+   "muscles": [
+    "neck"
+   ],
+   "equipment": "none",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "band_pull_apart",
+   "name": "Band Pull-Apart",
+   "category": "corrective",
+   "pattern": "corrective",
+   "muscles": [
+    "upper_back",
+    "shoulders"
+   ],
+   "equipment": "bands",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "wall_angel",
+   "name": "Wall Angel",
+   "category": "corrective",
+   "pattern": "corrective",
+   "muscles": [
+    "upper_back",
+    "shoulders"
+   ],
+   "equipment": "none",
+   "level": 1,
+   "contraindications": [
+    "shoulder"
+   ]
+  },
+  {
+   "id": "prone_y_t_raise",
+   "name": "Prone Y-T Raise",
+   "category": "corrective",
+   "pattern": "corrective",
+   "muscles": [
+    "upper_back"
+   ],
+   "equipment": "none",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "thoracic_extension_chair",
+   "name": "Chair Thoracic Extension",
+   "category": "corrective",
+   "pattern": "corrective",
+   "muscles": [
+    "upper_back"
+   ],
+   "equipment": "none",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "clamshell",
+   "name": "Clamshell",
+   "category": "corrective",
+   "pattern": "corrective",
+   "muscles": [
+    "glutes"
+   ],
+   "equipment": "none",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "doorway_pec_stretch",
+   "name": "Doorway Pec Stretch",
+   "category": "corrective",
+   "pattern": "corrective",
+   "muscles": [
+    "chest"
+   ],
+   "equipment": "none",
+   "level": 1,
+   "contraindications": [
+    "shoulder"
+   ]
+  },
+  {
+   "id": "upper_trap_stretch",
+   "name": "Upper Trap Stretch",
+   "category": "corrective",
+   "pattern": "corrective",
+   "muscles": [
+    "neck"
+   ],
+   "equipment": "none",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "cat_cow",
+   "name": "Cat-Cow",
+   "category": "mobility",
+   "pattern": "mobility",
+   "muscles": [
+    "back"
+   ],
+   "equipment": "none",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "childs_pose",
+   "name": "Child's Pose",
+   "category": "mobility",
+   "pattern": "mobility",
+   "muscles": [
+    "back",
+    "hips"
+   ],
+   "equipment": "none",
+   "level": 1,
+   "contraindications": [
+    "knee"
+   ]
+  },
+  {
+   "id": "worlds_greatest_stretch",
+   "name": "World's Greatest Stretch",
+   "category": "mobility",
+   "pattern": "mobility",
+   "muscles": [
+    "hips",
+    "upper_back"
+   ],
+   "equipment": "none",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "standing_hamstring_stretch",
+   "name": "Standing Hamstring Stretch",
+   "category": "mobility",
+   "pattern": "mobility",
+   "muscles": [
+    "hamstrings"
+   ],
+   "equipment": "none",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "figure_four_stretch",
+   "name": "Figure-4 Glute Stretch",
+   "category": "mobility",
+   "pattern": "mobility",
+   "muscles": [
+    "glutes"
+   ],
+   "equipment": "none",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "open_book_rotation",
+   "name": "Open Book Rotation",
+   "category": "mobility",
+   "pattern": "mobility",
+   "muscles": [
+    "upper_back"
+   ],
+   "equipment": "none",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "hip_90_90",
+   "name": "90/90 Hip Switch",
+   "category": "mobility",
+   "pattern": "mobility",
+   "muscles": [
+    "hips"
+   ],
+   "equipment": "none",
+   "level": 1,
+   "contraindications": [
+    "knee"
+   ]
+  },
+  {
+   "id": "knee_to_wall_ankle_mobility",
+   "name": "Knee-to-Wall Ankle Mobility",
+   "category": "mobility",
+   "pattern": "mobility",
+   "muscles": [
+    "ankles"
+   ],
+   "equipment": "none",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "foam_roll_quads",
+   "name": "Foam Roll Quads and IT Band",
+   "category": "mobility",
+   "pattern": "mobility",
+   "muscles": [
+    "quads"
+   ],
+   "equipment": "none",
+   "level": 1,
+   "contraindications": []
+  },
+  {
+   "id": "beginner_yoga_flow",
+   "name": "Beginner Yoga Flow",
+   "category": "mobility",
+   "pattern": "mobility",
+   "muscles": [
+    "full_body"
+   ],
+   "equipment": "none",
+   "level": 1,
+   "contraindications": [
+    "wrist"
+   ]
+  }
+ ],
+ "meta_vocab": [
+  "cat:balance",
+  "cat:cardio",
+  "cat:corrective",
+  "cat:mobility",
+  "cat:plyometric",
+  "cat:strength",
+  "pat:balance",
+  "pat:balance_class",
+  "pat:calves",
+  "pat:cardio",
+  "pat:carry",
+  "pat:core",
+  "pat:corrective",
+  "pat:hinge",
+  "pat:leg_accessory",
+  "pat:mobility",
+  "pat:plyometric",
+  "pat:pull_h",
+  "pat:pull_v",
+  "pat:push_h",
+  "pat:push_v",
+  "pat:single_leg",
+  "pat:squat",
+  "pat:upper_accessory",
+  "eq:bands",
+  "eq:barbell",
+  "eq:cable",
+  "eq:cardio_machine",
+  "eq:dumbbells",
+  "eq:kettlebell",
+  "eq:machine",
+  "eq:medicine_ball",
+  "eq:none",
+  "eq:pool",
+  "eq:pull_up_bar",
+  "lvl:1",
+  "lvl:2",
+  "lvl:3",
+  "mus:adductors",
+  "mus:ankles",
+  "mus:back",
+  "mus:biceps",
+  "mus:calves",
+  "mus:chest",
+  "mus:core",
+  "mus:forearms",
+  "mus:full_body",
+  "mus:glutes",
+  "mus:hamstrings",
+  "mus:heart",
+  "mus:hip_flexors",
+  "mus:hips",
+  "mus:legs",
+  "mus:neck",
+  "mus:quads",
+  "mus:shoulders",
+  "mus:traps",
+  "mus:triceps",
+  "mus:upper_back",
+  "contra:knee",
+  "contra:low_back",
+  "contra:neck",
+  "contra:shoulder",
+  "contra:wrist"
+ ],
+ "info": {
+  "trained_on": "data/demo_dataset.csv",
+  "rows": 3000,
+  "label_col": "exercises",
+  "unmatched_names": {},
+  "test_metrics": {
+   "model": {
+    "precision@5": 0.8804,
+    "recall@10": 0.5623,
+    "ndcg@10": 0.8115,
+    "hit@5": 0.9978
+   },
+   "popularity_baseline": {
+    "precision@5": 0.6067,
+    "recall@10": 0.3146,
+    "ndcg@10": 0.5056,
+    "hit@5": 0.9156
+   }
+  },
+  "hyperparameters": {
+   "hidden": 128,
+   "dim": 48,
+   "lr": 0.003,
+   "epochs": 60,
+   "batch_size": 128,
+   "l2": 0.0001,
+   "dropout": 0.1
+  }
+ },
+ "history": [
+  {
+   "epoch": 1,
+   "train_loss": 1.16333,
+   "val_precision@5": 0.5582,
+   "val_recall@10": 0.3196,
+   "val_ndcg@10": 0.5026,
+   "val_hit@5": 0.9667
+  },
+  {
+   "epoch": 2,
+   "train_loss": 0.80586,
+   "val_precision@5": 0.6431,
+   "val_recall@10": 0.3722,
+   "val_ndcg@10": 0.5734,
+   "val_hit@5": 0.9733
+  },
+  {
+   "epoch": 3,
+   "train_loss": 0.68391,
+   "val_precision@5": 0.6702,
+   "val_recall@10": 0.4115,
+   "val_ndcg@10": 0.6206,
+   "val_hit@5": 0.9778
+  },
+  {
+   "epoch": 4,
+   "train_loss": 0.59069,
+   "val_precision@5": 0.7107,
+   "val_recall@10": 0.444,
+   "val_ndcg@10": 0.6657,
+   "val_hit@5": 0.9822
+  },
+  {
+   "epoch": 5,
+   "train_loss": 0.52854,
+   "val_precision@5": 0.7556,
+   "val_recall@10": 0.4629,
+   "val_ndcg@10": 0.6924,
+   "val_hit@5": 0.9911
+  },
+  {
+   "epoch": 6,
+   "train_loss": 0.49002,
+   "val_precision@5": 0.7716,
+   "val_recall@10": 0.4807,
+   "val_ndcg@10": 0.7144,
+   "val_hit@5": 0.9933
+  },
+  {
+   "epoch": 7,
+   "train_loss": 0.46519,
+   "val_precision@5": 0.7822,
+   "val_recall@10": 0.4847,
+   "val_ndcg@10": 0.721,
+   "val_hit@5": 0.9911
+  },
+  {
+   "epoch": 8,
+   "train_loss": 0.446,
+   "val_precision@5": 0.8013,
+   "val_recall@10": 0.493,
+   "val_ndcg@10": 0.7341,
+   "val_hit@5": 0.9956
+  },
+  {
+   "epoch": 9,
+   "train_loss": 0.434,
+   "val_precision@5": 0.8071,
+   "val_recall@10": 0.5025,
+   "val_ndcg@10": 0.7454,
+   "val_hit@5": 0.9933
+  },
+  {
+   "epoch": 10,
+   "train_loss": 0.42104,
+   "val_precision@5": 0.8213,
+   "val_recall@10": 0.5045,
+   "val_ndcg@10": 0.7497,
+   "val_hit@5": 0.9978
+  },
+  {
+   "epoch": 11,
+   "train_loss": 0.4129,
+   "val_precision@5": 0.8262,
+   "val_recall@10": 0.5194,
+   "val_ndcg@10": 0.7645,
+   "val_hit@5": 0.9956
+  },
+  {
+   "epoch": 12,
+   "train_loss": 0.40048,
+   "val_precision@5": 0.828,
+   "val_recall@10": 0.5194,
+   "val_ndcg@10": 0.7666,
+   "val_hit@5": 0.9978
+  },
+  {
+   "epoch": 13,
+   "train_loss": 0.39267,
+   "val_precision@5": 0.8276,
+   "val_recall@10": 0.5236,
+   "val_ndcg@10": 0.7691,
+   "val_hit@5": 0.9956
+  },
+  {
+   "epoch": 14,
+   "train_loss": 0.3864,
+   "val_precision@5": 0.8364,
+   "val_recall@10": 0.5275,
+   "val_ndcg@10": 0.7757,
+   "val_hit@5": 0.9956
+  },
+  {
+   "epoch": 15,
+   "train_loss": 0.38119,
+   "val_precision@5": 0.8444,
+   "val_recall@10": 0.5281,
+   "val_ndcg@10": 0.776,
+   "val_hit@5": 0.9933
+  },
+  {
+   "epoch": 16,
+   "train_loss": 0.37585,
+   "val_precision@5": 0.8453,
+   "val_recall@10": 0.5315,
+   "val_ndcg@10": 0.7813,
+   "val_hit@5": 0.9978
+  },
+  {
+   "epoch": 17,
+   "train_loss": 0.36972,
+   "val_precision@5": 0.8476,
+   "val_recall@10": 0.5317,
+   "val_ndcg@10": 0.7819,
+   "val_hit@5": 0.9933
+  },
+  {
+   "epoch": 18,
+   "train_loss": 0.3633,
+   "val_precision@5": 0.8449,
+   "val_recall@10": 0.536,
+   "val_ndcg@10": 0.7843,
+   "val_hit@5": 0.9978
+  },
+  {
+   "epoch": 19,
+   "train_loss": 0.3606,
+   "val_precision@5": 0.8476,
+   "val_recall@10": 0.5363,
+   "val_ndcg@10": 0.7851,
+   "val_hit@5": 0.9978
+  },
+  {
+   "epoch": 20,
+   "train_loss": 0.35649,
+   "val_precision@5": 0.8538,
+   "val_recall@10": 0.5398,
+   "val_ndcg@10": 0.7892,
+   "val_hit@5": 0.9956
+  },
+  {
+   "epoch": 21,
+   "train_loss": 0.35529,
+   "val_precision@5": 0.8604,
+   "val_recall@10": 0.5405,
+   "val_ndcg@10": 0.7924,
+   "val_hit@5": 0.9956
+  },
+  {
+   "epoch": 22,
+   "train_loss": 0.35038,
+   "val_precision@5": 0.8551,
+   "val_recall@10": 0.5427,
+   "val_ndcg@10": 0.7933,
+   "val_hit@5": 0.9956
+  },
+  {
+   "epoch": 23,
+   "train_loss": 0.34728,
+   "val_precision@5": 0.8613,
+   "val_recall@10": 0.5442,
+   "val_ndcg@10": 0.7958,
+   "val_hit@5": 0.9978
+  },
+  {
+   "epoch": 24,
+   "train_loss": 0.34279,
+   "val_precision@5": 0.8591,
+   "val_recall@10": 0.5425,
+   "val_ndcg@10": 0.7953,
+   "val_hit@5": 0.9978
+  },
+  {
+   "epoch": 25,
+   "train_loss": 0.33999,
+   "val_precision@5": 0.8649,
+   "val_recall@10": 0.5444,
+   "val_ndcg@10": 0.7966,
+   "val_hit@5": 0.9978
+  },
+  {
+   "epoch": 26,
+   "train_loss": 0.33818,
+   "val_precision@5": 0.8591,
+   "val_recall@10": 0.543,
+   "val_ndcg@10": 0.7942,
+   "val_hit@5": 0.9956
+  },
+  {
+   "epoch": 27,
+   "train_loss": 0.33638,
+   "val_precision@5": 0.8591,
+   "val_recall@10": 0.5478,
+   "val_ndcg@10": 0.7985,
+   "val_hit@5": 0.9978
+  },
+  {
+   "epoch": 28,
+   "train_loss": 0.33367,
+   "val_precision@5": 0.8653,
+   "val_recall@10": 0.5497,
+   "val_ndcg@10": 0.8007,
+   "val_hit@5": 0.9956
+  },
+  {
+   "epoch": 29,
+   "train_loss": 0.32969,
+   "val_precision@5": 0.8618,
+   "val_recall@10": 0.5505,
+   "val_ndcg@10": 0.802,
+   "val_hit@5": 0.9956
+  },
+  {
+   "epoch": 30,
+   "train_loss": 0.32889,
+   "val_precision@5": 0.8711,
+   "val_recall@10": 0.5459,
+   "val_ndcg@10": 0.7995,
+   "val_hit@5": 0.9978
+  },
+  {
+   "epoch": 31,
+   "train_loss": 0.32628,
+   "val_precision@5": 0.8684,
+   "val_recall@10": 0.5573,
+   "val_ndcg@10": 0.8088,
+   "val_hit@5": 0.9956
+  },
+  {
+   "epoch": 32,
+   "train_loss": 0.32776,
+   "val_precision@5": 0.8693,
+   "val_recall@10": 0.5512,
+   "val_ndcg@10": 0.8032,
+   "val_hit@5": 0.9956
+  },
+  {
+   "epoch": 33,
+   "train_loss": 0.32355,
+   "val_precision@5": 0.8644,
+   "val_recall@10": 0.5521,
+   "val_ndcg@10": 0.8026,
+   "val_hit@5": 0.9978
+  },
+  {
+   "epoch": 34,
+   "train_loss": 0.32146,
+   "val_precision@5": 0.8702,
+   "val_recall@10": 0.5543,
+   "val_ndcg@10": 0.8062,
+   "val_hit@5": 0.9956
+  },
+  {
+   "epoch": 35,
+   "train_loss": 0.31954,
+   "val_precision@5": 0.8707,
+   "val_recall@10": 0.5513,
+   "val_ndcg@10": 0.8029,
+   "val_hit@5": 1.0
+  },
+  {
+   "epoch": 36,
+   "train_loss": 0.31966,
+   "val_precision@5": 0.8658,
+   "val_recall@10": 0.5536,
+   "val_ndcg@10": 0.8026,
+   "val_hit@5": 0.9956
+  },
+  {
+   "epoch": 37,
+   "train_loss": 0.31661,
+   "val_precision@5": 0.8711,
+   "val_recall@10": 0.5562,
+   "val_ndcg@10": 0.8075,
+   "val_hit@5": 0.9978
+  },
+  {
+   "epoch": 38,
+   "train_loss": 0.31551,
+   "val_precision@5": 0.8724,
+   "val_recall@10": 0.5521,
+   "val_ndcg@10": 0.805,
+   "val_hit@5": 0.9978
+  },
+  {
+   "epoch": 39,
+   "train_loss": 0.31492,
+   "val_precision@5": 0.872,
+   "val_recall@10": 0.559,
+   "val_ndcg@10": 0.8102,
+   "val_hit@5": 0.9978
+  },
+  {
+   "epoch": 40,
+   "train_loss": 0.31205,
+   "val_precision@5": 0.8716,
+   "val_recall@10": 0.5565,
+   "val_ndcg@10": 0.8076,
+   "val_hit@5": 0.9978
+  },
+  {
+   "epoch": 41,
+   "train_loss": 0.31099,
+   "val_precision@5": 0.8676,
+   "val_recall@10": 0.5574,
+   "val_ndcg@10": 0.8082,
+   "val_hit@5": 0.9956
+  },
+  {
+   "epoch": 42,
+   "train_loss": 0.30955,
+   "val_precision@5": 0.8733,
+   "val_recall@10": 0.5587,
+   "val_ndcg@10": 0.8116,
+   "val_hit@5": 0.9978
+  },
+  {
+   "epoch": 43,
+   "train_loss": 0.30848,
+   "val_precision@5": 0.8738,
+   "val_recall@10": 0.5549,
+   "val_ndcg@10": 0.8068,
+   "val_hit@5": 0.9978
+  },
+  {
+   "epoch": 44,
+   "train_loss": 0.3071,
+   "val_precision@5": 0.8778,
+   "val_recall@10": 0.5595,
+   "val_ndcg@10": 0.8108,
+   "val_hit@5": 1.0
+  },
+  {
+   "epoch": 45,
+   "train_loss": 0.30495,
+   "val_precision@5": 0.8711,
+   "val_recall@10": 0.559,
+   "val_ndcg@10": 0.8085,
+   "val_hit@5": 0.9978
+  },
+  {
+   "epoch": 46,
+   "train_loss": 0.30441,
+   "val_precision@5": 0.8729,
+   "val_recall@10": 0.5617,
+   "val_ndcg@10": 0.8129,
+   "val_hit@5": 0.9978
+  },
+  {
+   "epoch": 47,
+   "train_loss": 0.30547,
+   "val_precision@5": 0.8738,
+   "val_recall@10": 0.5607,
+   "val_ndcg@10": 0.812,
+   "val_hit@5": 0.9978
+  },
+  {
+   "epoch": 48,
+   "train_loss": 0.30187,
+   "val_precision@5": 0.8729,
+   "val_recall@10": 0.5622,
+   "val_ndcg@10": 0.8143,
+   "val_hit@5": 0.9956
+  },
+  {
+   "epoch": 49,
+   "train_loss": 0.30116,
+   "val_precision@5": 0.8689,
+   "val_recall@10": 0.565,
+   "val_ndcg@10": 0.8157,
+   "val_hit@5": 0.9933
+  },
+  {
+   "epoch": 50,
+   "train_loss": 0.30022,
+   "val_precision@5": 0.8711,
+   "val_recall@10": 0.5606,
+   "val_ndcg@10": 0.8114,
+   "val_hit@5": 0.9978
+  },
+  {
+   "epoch": 51,
+   "train_loss": 0.29981,
+   "val_precision@5": 0.8729,
+   "val_recall@10": 0.5623,
+   "val_ndcg@10": 0.8136,
+   "val_hit@5": 1.0
+  },
+  {
+   "epoch": 52,
+   "train_loss": 0.29875,
+   "val_precision@5": 0.8747,
+   "val_recall@10": 0.5622,
+   "val_ndcg@10": 0.8131,
+   "val_hit@5": 0.9978
+  },
+  {
+   "epoch": 53,
+   "train_loss": 0.29765,
+   "val_precision@5": 0.8738,
+   "val_recall@10": 0.5618,
+   "val_ndcg@10": 0.8133,
+   "val_hit@5": 0.9978
+  },
+  {
+   "epoch": 54,
+   "train_loss": 0.29665,
+   "val_precision@5": 0.8769,
+   "val_recall@10": 0.5648,
+   "val_ndcg@10": 0.8166,
+   "val_hit@5": 0.9978
+  },
+  {
+   "epoch": 55,
+   "train_loss": 0.29727,
+   "val_precision@5": 0.8791,
+   "val_recall@10": 0.5592,
+   "val_ndcg@10": 0.8118,
+   "val_hit@5": 0.9956
+  },
+  {
+   "epoch": 56,
+   "train_loss": 0.29479,
+   "val_precision@5": 0.8747,
+   "val_recall@10": 0.5617,
+   "val_ndcg@10": 0.8133,
+   "val_hit@5": 0.9978
+  },
+  {
+   "epoch": 57,
+   "train_loss": 0.29545,
+   "val_precision@5": 0.8778,
+   "val_recall@10": 0.5642,
+   "val_ndcg@10": 0.8164,
+   "val_hit@5": 0.9956
+  },
+  {
+   "epoch": 58,
+   "train_loss": 0.2948,
+   "val_precision@5": 0.8756,
+   "val_recall@10": 0.5637,
+   "val_ndcg@10": 0.8155,
+   "val_hit@5": 0.9978
+  },
+  {
+   "epoch": 59,
+   "train_loss": 0.29266,
+   "val_precision@5": 0.8769,
+   "val_recall@10": 0.5675,
+   "val_ndcg@10": 0.8182,
+   "val_hit@5": 0.9956
+  },
+  {
+   "epoch": 60,
+   "train_loss": 0.29233,
+   "val_precision@5": 0.88,
+   "val_recall@10": 0.5626,
+   "val_ndcg@10": 0.8153,
+   "val_hit@5": 0.9978
+  }
+ ]
+}

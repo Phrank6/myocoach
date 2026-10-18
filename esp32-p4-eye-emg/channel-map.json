@@ -1,0 +1,301 @@
+{
+  "schema_version": "1.0",
+  "status": "proposed_logical_mapping_not_hardware_pin_assignment",
+  "laterality": "Wearer's anatomical left and right",
+  "channel_count": 28,
+  "measurement_contact_count": 56,
+  "reference": {
+    "id": "REF",
+    "included_in_channel_count": false,
+    "location_concept": "C7",
+    "note": "Reference/bias topology and contact count depend on acquisition hardware; not a muscle channel."
+  },
+  "notes": [
+    "Region IDs 01–14 in illustrations are not integer channel IDs.",
+    "One differential channel uses two measurement contacts; these contacts are not separate muscle channels.",
+    "Electrode illustrations are regional concepts, not calibrated placement or sewing templates.",
+    "No GPIO, ADC input, or physical connector assignments are implied."
+  ],
+  "channels": [
+    {
+      "channel_id": "CH01",
+      "channel_index": 0,
+      "region_id": "01",
+      "site_id": "01L",
+      "side": "left",
+      "abbreviation": "AD",
+      "muscle": "Anterior deltoid",
+      "measurement_contacts": 2
+    },
+    {
+      "channel_id": "CH02",
+      "channel_index": 1,
+      "region_id": "01",
+      "site_id": "01R",
+      "side": "right",
+      "abbreviation": "AD",
+      "muscle": "Anterior deltoid",
+      "measurement_contacts": 2
+    },
+    {
+      "channel_id": "CH03",
+      "channel_index": 2,
+      "region_id": "02",
+      "site_id": "02L",
+      "side": "left",
+      "abbreviation": "MD",
+      "muscle": "Middle deltoid",
+      "measurement_contacts": 2
+    },
+    {
+      "channel_id": "CH04",
+      "channel_index": 3,
+      "region_id": "02",
+      "site_id": "02R",
+      "side": "right",
+      "abbreviation": "MD",
+      "muscle": "Middle deltoid",
+      "measurement_contacts": 2
+    },
+    {
+      "channel_id": "CH05",
+      "channel_index": 4,
+      "region_id": "03",
+      "site_id": "03L",
+      "side": "left",
+      "abbreviation": "PD",
+      "muscle": "Posterior deltoid",
+      "measurement_contacts": 2
+    },
+    {
+      "channel_id": "CH06",
+      "channel_index": 5,
+      "region_id": "03",
+      "site_id": "03R",
+      "side": "right",
+      "abbreviation": "PD",
+      "muscle": "Posterior deltoid",
+      "measurement_contacts": 2
+    },
+    {
+      "channel_id": "CH07",
+      "channel_index": 6,
+      "region_id": "04",
+      "site_id": "04L",
+      "side": "left",
+      "abbreviation": "BB",
+      "muscle": "Biceps brachii",
+      "measurement_contacts": 2
+    },
+    {
+      "channel_id": "CH08",
+      "channel_index": 7,
+      "region_id": "04",
+      "site_id": "04R",
+      "side": "right",
+      "abbreviation": "BB",
+      "muscle": "Biceps brachii",
+      "measurement_contacts": 2
+    },
+    {
+      "channel_id": "CH09",
+      "channel_index": 8,
+      "region_id": "05",
+      "site_id": "05L",
+      "side": "left",
+      "abbreviation": "TB",
+      "muscle": "Triceps brachii — long head",
+      "measurement_contacts": 2
+    },
+    {
+      "channel_id": "CH10",
+      "channel_index": 9,
+      "region_id": "05",
+      "site_id": "05R",
+      "side": "right",
+      "abbreviation": "TB",
+      "muscle": "Triceps brachii — long head",
+      "measurement_contacts": 2
+    },
+    {
+      "channel_id": "CH11",
+      "channel_index": 10,
+      "region_id": "06",
+      "site_id": "06L",
+      "side": "left",
+      "abbreviation": "PM",
+      "muscle": "Pectoralis major — clavicular region",
+      "measurement_contacts": 2
+    },
+    {
+      "channel_id": "CH12",
+      "channel_index": 11,
+      "region_id": "06",
+      "site_id": "06R",
+      "side": "right",
+      "abbreviation": "PM",
+      "muscle": "Pectoralis major — clavicular region",
+      "measurement_contacts": 2
+    },
+    {
+      "channel_id": "CH13",
+      "channel_index": 12,
+      "region_id": "07",
+      "site_id": "07L",
+      "side": "left",
+      "abbreviation": "UT",
+      "muscle": "Upper trapezius",
+      "measurement_contacts": 2
+    },
+    {
+      "channel_id": "CH14",
+      "channel_index": 13,
+      "region_id": "07",
+      "site_id": "07R",
+      "side": "right",
+      "abbreviation": "UT",
+      "muscle": "Upper trapezius",
+      "measurement_contacts": 2
+    },
+    {
+      "channel_id": "CH15",
+      "channel_index": 14,
+      "region_id": "08",
+      "site_id": "08L",
+      "side": "left",
+      "abbreviation": "MT",
+      "muscle": "Middle trapezius",
+      "measurement_contacts": 2
+    },
+    {
+      "channel_id": "CH16",
+      "channel_index": 15,
+      "region_id": "08",
+      "site_id": "08R",
+      "side": "right",
+      "abbreviation": "MT",
+      "muscle": "Middle trapezius",
+      "measurement_contacts": 2
+    },
+    {
+      "channel_id": "CH17",
+      "channel_index": 16,
+      "region_id": "09",
+      "site_id": "09L",
+      "side": "left",
+      "abbreviation": "LT",
+      "muscle": "Lower trapezius",
+      "measurement_contacts": 2
+    },
+    {
+      "channel_id": "CH18",
+      "channel_index": 17,
+      "region_id": "09",
+      "site_id": "09R",
+      "side": "right",
+      "abbreviation": "LT",
+      "muscle": "Lower trapezius",
+      "measurement_contacts": 2
+    },
+    {
+      "channel_id": "CH19",
+      "channel_index": 18,
+      "region_id": "10",
+      "site_id": "10L",
+      "side": "left",
+      "abbreviation": "LD",
+      "muscle": "Latissimus dorsi",
+      "measurement_contacts": 2
+    },
+    {
+      "channel_id": "CH20",
+      "channel_index": 19,
+      "region_id": "10",
+      "site_id": "10R",
+      "side": "right",
+      "abbreviation": "LD",
+      "muscle": "Latissimus dorsi",
+      "measurement_contacts": 2
+    },
+    {
+      "channel_id": "CH21",
+      "channel_index": 20,
+      "region_id": "11",
+      "site_id": "11L",
+      "side": "left",
+      "abbreviation": "SA",
+      "muscle": "Serratus anterior",
+      "measurement_contacts": 2
+    },
+    {
+      "channel_id": "CH22",
+      "channel_index": 21,
+      "region_id": "11",
+      "site_id": "11R",
+      "side": "right",
+      "abbreviation": "SA",
+      "muscle": "Serratus anterior",
+      "measurement_contacts": 2
+    },
+    {
+      "channel_id": "CH23",
+      "channel_index": 22,
+      "region_id": "12",
+      "site_id": "12L",
+      "side": "left",
+      "abbreviation": "RA",
+      "muscle": "Rectus abdominis",
+      "measurement_contacts": 2
+    },
+    {
+      "channel_id": "CH24",
+      "channel_index": 23,
+      "region_id": "12",
+      "site_id": "12R",
+      "side": "right",
+      "abbreviation": "RA",
+      "muscle": "Rectus abdominis",
+      "measurement_contacts": 2
+    },
+    {
+      "channel_id": "CH25",
+      "channel_index": 24,
+      "region_id": "13",
+      "site_id": "13L",
+      "side": "left",
+      "abbreviation": "EO",
+      "muscle": "External oblique",
+      "measurement_contacts": 2
+    },
+    {
+      "channel_id": "CH26",
+      "channel_index": 25,
+      "region_id": "13",
+      "site_id": "13R",
+      "side": "right",
+      "abbreviation": "EO",
+      "muscle": "External oblique",
+      "measurement_contacts": 2
+    },
+    {
+      "channel_id": "CH27",
+      "channel_index": 26,
+      "region_id": "14",
+      "site_id": "14L",
+      "side": "left",
+      "abbreviation": "ES",
+      "muscle": "Lumbar erector spinae",
+      "measurement_contacts": 2
+    },
+    {
+      "channel_id": "CH28",
+      "channel_index": 27,
+      "region_id": "14",
+      "site_id": "14R",
+      "side": "right",
+      "abbreviation": "ES",
+      "muscle": "Lumbar erector spinae",
+      "measurement_contacts": 2
+    }
+  ]
+}

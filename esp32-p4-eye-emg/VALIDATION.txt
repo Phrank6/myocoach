@@ -1,0 +1,52 @@
+Validation performed on 2026-10-18
+
+Toolchain
+  Arduino CLI 1.3.1
+  Espressif Arduino-ESP32 3.3.5
+  Installed ESP-IDF libraries: idf-release_v5.5-9bb7aa84-v2
+  Installed ESP-Hosted host headers: 2.8.0
+
+Actual compilation: PASS
+  EMG_Simulator, P4 revision >=3: 818650 bytes flash; 42316 bytes static RAM.
+  EMG_Real, MyoWare backend, P4 revision >=3: 826510 bytes flash; 42732 bytes static RAM.
+  EMG_Real, ADS1299 backend, P4 revision >=3: 820186 bytes flash; 42916 bytes static RAM.
+  EMG_Real, MyoWare backend, P4 revision <3: 826096 bytes flash; 42732 bytes static RAM.
+  Heap allocations, FreeRTOS task stacks and radio buffers are additional to static RAM.
+
+FQBN for the first three builds:
+  esp32:esp32:esp32p4:ChipVariant=postv3,FlashSize=16M,PartitionScheme=app3M_fat9M_16MB,USBMode=hwcdc,CDCOnBoot=cdc,PSRAM=enabled
+For the fourth build replace ChipVariant=postv3 with ChipVariant=prev3.
+For the ADS backend, either change EMG_BACKEND in Config.h to 1, or use:
+  --build-property compiler.cpp.extra_flags=-DEMG_BACKEND=1
+Do not replace build.extra_flags: that would remove the board's USB/other defines.
+
+Portable DSP/parser tests: PASS
+  clang++ -std=c++17 -Wall -Wextra -Werror -fsanitize=address,undefined
+  100 Hz sine RMS and twofold amplitude scaling
+  Mean absolute value and peak amplitude
+  Rejection of DC and invariance to a DC offset
+  50 Hz and 60 Hz notch attenuation
+  Startup warmup, gap invalidation and clipping invalidation
+  Rejection of NaN, infinity, out-of-range data and malformed CSV
+  Channel IDs and uint32 limits
+  Overlength/non-ASCII command discard and recovery at the next newline
+  No sanitizer failures in these tests.
+
+Desktop client test: PASS
+  Python mock transport, 4000 samples in 63 DATA packets
+  Fragmented RX writes (20-byte maximum) and fragmented TX notifications
+  ACK-driven input flow control, monotonic sample indices, final GET response
+  This is a mock test, not an actual BLE connection.
+
+Not performed
+  No physical board was connected, flashed or read during this validation.
+  No C6 firmware was changed or tested with these sketches.
+  No BLE pairing/connection/MTU/throughput test with a real phone or computer.
+  No oscilloscope verification of 2 kHz timing, ADC voltage range or analog noise.
+  No ADS1299 electrical, synchronous sampling or patient-bias validation.
+  No electrode/skin-contact test, human recording, clinical or safety validation.
+  No IMU driver is included or tested.
+
+Deployment depends on a compatible C6 ESP-Hosted BLE firmware, matching board wiring,
+correct P4 chip-revision setting and appropriate external EMG acquisition hardware.
+Compilation and software tests do not establish medical validity or hardware reliability.

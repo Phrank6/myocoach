@@ -1,0 +1,186 @@
+id,name,category,pattern,muscles,equipment,level,contraindications
+bodyweight_squat,Bodyweight Squat,strength,squat,quads;glutes,none,1,
+sit_to_stand,Sit-to-Stand,strength,squat,quads;glutes,none,1,
+box_squat,Box Squat,strength,squat,quads;glutes,none,1,
+wall_sit,Wall Sit,strength,squat,quads,none,1,knee
+band_squat,Banded Squat,strength,squat,quads;glutes,bands,1,
+goblet_squat,Goblet Squat,strength,squat,quads;glutes;core,dumbbells,2,knee
+kettlebell_goblet_squat,Kettlebell Goblet Squat,strength,squat,quads;glutes;core,kettlebell,2,knee
+dumbbell_squat,Dumbbell Squat,strength,squat,quads;glutes,dumbbells,2,knee
+sumo_squat,Dumbbell Sumo Squat,strength,squat,quads;glutes;adductors,dumbbells,2,
+leg_press,Leg Press,strength,squat,quads;glutes,machine,1,
+hack_squat,Hack Squat,strength,squat,quads;glutes,machine,2,knee
+smith_machine_squat,Smith Machine Squat,strength,squat,quads;glutes,machine,2,knee
+barbell_back_squat,Barbell Back Squat,strength,squat,quads;glutes;back,barbell,3,knee;low_back
+barbell_front_squat,Barbell Front Squat,strength,squat,quads;glutes;core,barbell,3,knee;wrist
+glute_bridge,Glute Bridge,strength,hinge,glutes;hamstrings,none,1,
+single_leg_glute_bridge,Single-Leg Glute Bridge,strength,hinge,glutes;hamstrings,none,2,
+kettlebell_deadlift,Kettlebell Deadlift,strength,hinge,glutes;hamstrings;back,kettlebell,1,
+band_good_morning,Band Good Morning,strength,hinge,hamstrings;glutes;back,bands,1,
+cable_pull_through,Cable Pull-Through,strength,hinge,glutes;hamstrings,cable,1,
+back_extension,Back Extension (45 degree),strength,hinge,back;glutes;hamstrings,machine,1,low_back
+dumbbell_hip_thrust,Dumbbell Hip Thrust,strength,hinge,glutes;hamstrings,dumbbells,2,
+barbell_hip_thrust,Barbell Hip Thrust,strength,hinge,glutes;hamstrings,barbell,2,
+dumbbell_romanian_deadlift,Dumbbell Romanian Deadlift,strength,hinge,hamstrings;glutes;back,dumbbells,2,low_back
+kettlebell_swing,Kettlebell Swing,strength,hinge,glutes;hamstrings;core,kettlebell,2,low_back
+trap_bar_deadlift,Trap Bar Deadlift,strength,hinge,glutes;quads;hamstrings,barbell,2,low_back
+barbell_romanian_deadlift,Barbell Romanian Deadlift,strength,hinge,hamstrings;glutes;back,barbell,3,low_back
+conventional_deadlift,Conventional Deadlift,strength,hinge,hamstrings;glutes;back,barbell,3,low_back
+sumo_deadlift,Sumo Deadlift,strength,hinge,glutes;hamstrings;adductors,barbell,3,low_back
+step_up,Step-Up,strength,single_leg,quads;glutes,none,1,knee
+reverse_lunge,Reverse Lunge,strength,single_leg,quads;glutes,none,1,knee
+split_squat,Split Squat,strength,single_leg,quads;glutes,none,2,knee
+forward_lunge,Forward Lunge,strength,single_leg,quads;glutes,none,2,knee
+lateral_lunge,Lateral Lunge,strength,single_leg,quads;glutes;adductors,none,2,knee
+curtsy_lunge,Curtsy Lunge,strength,single_leg,glutes;quads,none,2,knee
+dumbbell_step_up,Dumbbell Step-Up,strength,single_leg,quads;glutes,dumbbells,2,knee
+dumbbell_split_squat,Dumbbell Split Squat,strength,single_leg,quads;glutes,dumbbells,2,knee
+dumbbell_walking_lunge,Dumbbell Walking Lunge,strength,single_leg,quads;glutes,dumbbells,2,knee
+single_leg_romanian_deadlift,Single-Leg Romanian Deadlift,strength,single_leg,hamstrings;glutes,dumbbells,2,
+bulgarian_split_squat,Bulgarian Split Squat,strength,single_leg,quads;glutes,dumbbells,3,knee
+single_leg_box_squat,Single-Leg Box Squat,strength,single_leg,quads;glutes,none,3,knee
+band_lateral_walk,Banded Lateral Walk,strength,leg_accessory,glutes,bands,1,
+hip_abduction_machine,Hip Abduction Machine,strength,leg_accessory,glutes,machine,1,
+hip_adduction_machine,Hip Adduction Machine,strength,leg_accessory,adductors,machine,1,
+cable_glute_kickback,Cable Glute Kickback,strength,leg_accessory,glutes,cable,1,
+lying_leg_curl,Lying Leg Curl,strength,leg_accessory,hamstrings,machine,1,
+seated_leg_curl,Seated Leg Curl,strength,leg_accessory,hamstrings,machine,1,
+leg_extension,Leg Extension,strength,leg_accessory,quads,machine,1,knee
+stability_ball_leg_curl,Stability Ball Leg Curl,strength,leg_accessory,hamstrings;glutes,none,2,
+nordic_hamstring_curl,Nordic Hamstring Curl,strength,leg_accessory,hamstrings,none,3,knee
+wall_push_up,Wall Push-Up,strength,push_h,chest;triceps;shoulders,none,1,
+incline_push_up,Incline Push-Up,strength,push_h,chest;triceps;shoulders,none,1,wrist
+knee_push_up,Knee Push-Up,strength,push_h,chest;triceps;shoulders,none,1,wrist
+band_chest_press,Band Chest Press,strength,push_h,chest;triceps,bands,1,
+machine_chest_press,Machine Chest Press,strength,push_h,chest;triceps;shoulders,machine,1,
+dumbbell_floor_press,Dumbbell Floor Press,strength,push_h,chest;triceps,dumbbells,1,
+assisted_dip,Assisted Dip,strength,push_h,chest;triceps,machine,1,shoulder
+push_up,Push-Up,strength,push_h,chest;triceps;shoulders,none,2,wrist
+dumbbell_bench_press,Dumbbell Bench Press,strength,push_h,chest;triceps;shoulders,dumbbells,2,shoulder
+incline_dumbbell_press,Incline Dumbbell Press,strength,push_h,chest;shoulders;triceps,dumbbells,2,shoulder
+decline_push_up,Decline Push-Up,strength,push_h,chest;shoulders;triceps,none,3,wrist;shoulder
+barbell_bench_press,Barbell Bench Press,strength,push_h,chest;triceps;shoulders,barbell,3,shoulder
+incline_barbell_bench_press,Incline Barbell Bench Press,strength,push_h,chest;shoulders;triceps,barbell,3,shoulder
+parallel_bar_dip,Parallel Bar Dip,strength,push_h,chest;triceps;shoulders,machine,3,shoulder
+band_overhead_press,Band Overhead Press,strength,push_v,shoulders;triceps,bands,1,shoulder
+machine_shoulder_press,Machine Shoulder Press,strength,push_v,shoulders;triceps,machine,1,shoulder
+landmine_press,Landmine Press,strength,push_v,shoulders;chest;triceps,barbell,2,
+pike_push_up,Pike Push-Up,strength,push_v,shoulders;triceps,none,2,shoulder;wrist
+dumbbell_shoulder_press,Dumbbell Shoulder Press,strength,push_v,shoulders;triceps,dumbbells,2,shoulder
+arnold_press,Arnold Press,strength,push_v,shoulders;triceps,dumbbells,2,shoulder
+half_kneeling_dumbbell_press,Half-Kneeling Single-Arm Press,strength,push_v,shoulders;core,dumbbells,2,shoulder
+kettlebell_overhead_press,Kettlebell Overhead Press,strength,push_v,shoulders;triceps,kettlebell,2,shoulder
+barbell_overhead_press,Barbell Overhead Press,strength,push_v,shoulders;triceps;core,barbell,3,shoulder;low_back
+towel_row,Door Towel Row,strength,pull_h,back;biceps,none,1,
+band_row,Band Seated Row,strength,pull_h,back;biceps,bands,1,
+seated_cable_row,Seated Cable Row,strength,pull_h,back;biceps,cable,1,
+machine_row,Machine Row,strength,pull_h,back;biceps,machine,1,
+chest_supported_dumbbell_row,Chest-Supported Dumbbell Row,strength,pull_h,back;biceps,dumbbells,1,
+inverted_row,Inverted Row,strength,pull_h,back;biceps,none,2,
+single_arm_dumbbell_row,Single-Arm Dumbbell Row,strength,pull_h,back;biceps,dumbbells,2,
+kettlebell_row,Kettlebell Row,strength,pull_h,back;biceps,kettlebell,2,
+bent_over_barbell_row,Bent-Over Barbell Row,strength,pull_h,back;biceps,barbell,3,low_back
+t_bar_row,T-Bar Row,strength,pull_h,back;biceps,barbell,3,low_back
+renegade_row,Renegade Row,strength,pull_h,back;core,dumbbells,3,wrist
+band_lat_pulldown,Band Lat Pulldown,strength,pull_v,back;biceps,bands,1,
+lat_pulldown,Lat Pulldown,strength,pull_v,back;biceps,cable,1,
+straight_arm_pulldown,Straight-Arm Cable Pulldown,strength,pull_v,back,cable,1,
+assisted_pull_up,Assisted Pull-Up,strength,pull_v,back;biceps,machine,1,shoulder
+negative_pull_up,Negative Pull-Up,strength,pull_v,back;biceps,pull_up_bar,2,shoulder
+pull_up,Pull-Up,strength,pull_v,back;biceps,pull_up_bar,3,shoulder
+chin_up,Chin-Up,strength,pull_v,back;biceps,pull_up_bar,3,shoulder
+dumbbell_curl,Dumbbell Biceps Curl,strength,upper_accessory,biceps,dumbbells,1,
+hammer_curl,Hammer Curl,strength,upper_accessory,biceps;forearms,dumbbells,1,
+concentration_curl,Concentration Curl,strength,upper_accessory,biceps,dumbbells,1,
+cable_curl,Cable Curl,strength,upper_accessory,biceps,cable,1,
+band_curl,Band Curl,strength,upper_accessory,biceps,bands,1,
+preacher_curl_machine,Machine Preacher Curl,strength,upper_accessory,biceps,machine,1,
+barbell_curl,Barbell Curl,strength,upper_accessory,biceps,barbell,2,
+triceps_pushdown,Cable Triceps Pushdown,strength,upper_accessory,triceps,cable,1,
+band_triceps_extension,Band Triceps Extension,strength,upper_accessory,triceps,bands,1,
+overhead_triceps_extension,Dumbbell Overhead Triceps Extension,strength,upper_accessory,triceps,dumbbells,1,shoulder
+bench_dip,Bench Dip,strength,upper_accessory,triceps,none,1,shoulder;wrist
+close_grip_push_up,Close-Grip Push-Up,strength,upper_accessory,triceps;chest,none,2,wrist
+skull_crusher,Lying Triceps Extension (Skull Crusher),strength,upper_accessory,triceps,barbell,2,shoulder
+dumbbell_lateral_raise,Dumbbell Lateral Raise,strength,upper_accessory,shoulders,dumbbells,1,shoulder
+cable_lateral_raise,Cable Lateral Raise,strength,upper_accessory,shoulders,cable,1,shoulder
+front_raise,Dumbbell Front Raise,strength,upper_accessory,shoulders,dumbbells,1,shoulder
+rear_delt_fly,Bent-Over Rear Delt Fly,strength,upper_accessory,shoulders;upper_back,dumbbells,1,
+reverse_pec_deck,Reverse Pec Deck,strength,upper_accessory,shoulders;upper_back,machine,1,
+face_pull,Cable Face Pull,strength,upper_accessory,upper_back;shoulders,cable,1,
+band_face_pull,Band Face Pull,strength,upper_accessory,upper_back;shoulders,bands,1,
+cable_chest_fly,Cable Chest Fly,strength,upper_accessory,chest,cable,1,shoulder
+pec_deck,Pec Deck,strength,upper_accessory,chest,machine,1,shoulder
+dumbbell_fly,Dumbbell Fly,strength,upper_accessory,chest,dumbbells,2,shoulder
+dumbbell_shrug,Dumbbell Shrug,strength,upper_accessory,traps,dumbbells,1,neck
+wrist_curl,Dumbbell Wrist Curl,strength,upper_accessory,forearms,dumbbells,1,wrist
+standing_calf_raise,Standing Calf Raise,strength,calves,calves,none,1,
+dumbbell_calf_raise,Dumbbell Calf Raise,strength,calves,calves,dumbbells,1,
+seated_calf_raise,Seated Calf Raise,strength,calves,calves,machine,1,
+single_leg_calf_raise,Single-Leg Calf Raise,strength,calves,calves,none,2,
+dead_bug,Dead Bug,strength,core,core,none,1,
+bird_dog,Bird Dog,strength,core,core;back,none,1,
+front_plank,Front Plank,strength,core,core,none,1,
+superman,Superman Hold,strength,core,back;glutes,none,1,
+band_pallof_press,Band Pallof Press,strength,core,core,bands,1,
+cable_pallof_press,Cable Pallof Press,strength,core,core,cable,1,
+crunch,Crunch,strength,core,core,none,1,neck
+side_plank,Side Plank,strength,core,core,none,2,shoulder
+reverse_crunch,Reverse Crunch,strength,core,core,none,2,
+bicycle_crunch,Bicycle Crunch,strength,core,core,none,2,neck
+mountain_climber,Mountain Climber,strength,core,core;shoulders,none,2,wrist
+russian_twist,Russian Twist,strength,core,core,none,2,low_back
+hollow_body_hold,Hollow Body Hold,strength,core,core,none,2,low_back
+cable_crunch,Cable Crunch,strength,core,core,cable,2,
+hanging_knee_raise,Hanging Knee Raise,strength,core,core,pull_up_bar,2,shoulder
+hanging_leg_raise,Hanging Leg Raise,strength,core,core,pull_up_bar,3,shoulder
+ab_wheel_rollout,Ab Wheel Rollout,strength,core,core,none,3,low_back;shoulder
+farmers_carry,Farmer's Carry,strength,carry,forearms;core;back,dumbbells,1,
+suitcase_carry,Suitcase Carry,strength,carry,core;forearms,dumbbells,1,
+kettlebell_rack_carry,Kettlebell Rack Carry,strength,carry,core;shoulders,kettlebell,2,
+overhead_carry,Overhead Carry,strength,carry,shoulders;core,dumbbells,2,shoulder
+brisk_walk,Brisk Walk,cardio,cardio,heart;legs,none,1,
+dance_cardio,Dance Cardio,cardio,cardio,heart;legs,none,1,
+incline_treadmill_walk,Incline Treadmill Walk,cardio,cardio,heart;legs,cardio_machine,1,
+stationary_bike,Stationary Bike,cardio,cardio,heart;legs,cardio_machine,1,
+elliptical,Elliptical Trainer,cardio,cardio,heart;legs,cardio_machine,1,
+water_aerobics,Water Aerobics,cardio,cardio,heart;full_body,pool,1,
+hiking,Hiking,cardio,cardio,heart;legs,none,2,knee
+jogging,Jogging,cardio,cardio,heart;legs,none,2,knee
+rowing_machine,Rowing Machine,cardio,cardio,heart;back;legs,cardio_machine,2,low_back
+stair_climber,Stair Climber,cardio,cardio,heart;legs,cardio_machine,2,knee
+swimming_laps,Swimming Laps,cardio,cardio,heart;full_body,pool,2,shoulder
+bike_intervals,Bike Intervals,cardio,cardio,heart;legs,cardio_machine,2,
+intervals_4x4,"4x4 Intervals (walk-run, bike or rower)",cardio,cardio,heart;legs,none,2,knee
+jump_rope,Jump Rope,cardio,cardio,heart;calves,none,2,knee
+bodyweight_hiit_circuit,Bodyweight HIIT Circuit,cardio,cardio,heart;full_body,none,2,knee;wrist
+running_intervals,Running Intervals,cardio,cardio,heart;legs,none,3,knee
+jump_squat,Jump Squat,plyometric,plyometric,quads;glutes;calves,none,2,knee
+skater_jump,Skater Jump,plyometric,plyometric,glutes;quads,none,2,knee
+medicine_ball_slam,Medicine Ball Slam,plyometric,plyometric,core;shoulders;back,medicine_ball,2,low_back
+burpee,Burpee,plyometric,plyometric,full_body,none,2,wrist;knee;low_back
+box_jump,Box Jump,plyometric,plyometric,quads;glutes;calves,none,2,knee
+broad_jump,Broad Jump,plyometric,plyometric,glutes;quads,none,3,knee
+single_leg_stand,Single-Leg Balance,balance,balance,ankles;core,none,1,
+heel_to_toe_walk,Heel-to-Toe Walk,balance,balance,ankles;core,none,1,
+tai_chi,Tai Chi Session,balance,balance_class,full_body,none,1,
+single_leg_reach,Single-Leg Reach,balance,balance,glutes;ankles;core,none,2,knee
+half_kneeling_hip_flexor_stretch,Half-Kneeling Hip-Flexor Stretch,corrective,corrective,hip_flexors,none,1,
+chin_tuck,Chin Tuck,corrective,corrective,neck,none,1,
+band_pull_apart,Band Pull-Apart,corrective,corrective,upper_back;shoulders,bands,1,
+wall_angel,Wall Angel,corrective,corrective,upper_back;shoulders,none,1,shoulder
+prone_y_t_raise,Prone Y-T Raise,corrective,corrective,upper_back,none,1,
+thoracic_extension_chair,Chair Thoracic Extension,corrective,corrective,upper_back,none,1,
+clamshell,Clamshell,corrective,corrective,glutes,none,1,
+doorway_pec_stretch,Doorway Pec Stretch,corrective,corrective,chest,none,1,shoulder
+upper_trap_stretch,Upper Trap Stretch,corrective,corrective,neck,none,1,
+cat_cow,Cat-Cow,mobility,mobility,back,none,1,
+childs_pose,Child's Pose,mobility,mobility,back;hips,none,1,knee
+worlds_greatest_stretch,World's Greatest Stretch,mobility,mobility,hips;upper_back,none,1,
+standing_hamstring_stretch,Standing Hamstring Stretch,mobility,mobility,hamstrings,none,1,
+figure_four_stretch,Figure-4 Glute Stretch,mobility,mobility,glutes,none,1,
+open_book_rotation,Open Book Rotation,mobility,mobility,upper_back,none,1,
+hip_90_90,90/90 Hip Switch,mobility,mobility,hips,none,1,knee
+knee_to_wall_ankle_mobility,Knee-to-Wall Ankle Mobility,mobility,mobility,ankles,none,1,
+foam_roll_quads,Foam Roll Quads and IT Band,mobility,mobility,quads,none,1,
+beginner_yoga_flow,Beginner Yoga Flow,mobility,mobility,full_body,none,1,wrist

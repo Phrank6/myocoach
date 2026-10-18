@@ -1,0 +1,4 @@
+numpy>=1.22
+# optional, only to read Excel or Parquet datasets:
+# pandas
+# openpyxl

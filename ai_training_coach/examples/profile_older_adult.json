@@ -1,0 +1,339 @@
+{
+ "profile": {
+  "name": "Pat (62, wants to stay independent)",
+  "age": 62,
+  "sex": "male",
+  "height_cm": 174,
+  "weight_kg": 82,
+  "goal": "health",
+  "training_age_years": 0,
+  "days_per_week": 3,
+  "minutes_per_week": 150,
+  "max_minutes_per_session": 40,
+  "equipment": [
+   "none",
+   "bands"
+  ],
+  "pain_areas": [
+   "knee"
+  ]
+ },
+ "signals": [
+  {
+   "date": "2026-10-01",
+   "sleep_hours": 6.2,
+   "sleep_midpoint_h": 2.11,
+   "hrv_rmssd_ms": 34.35,
+   "resting_hr": 65.33,
+   "steps": 5104,
+   "sitting_hours": 7.56,
+   "longest_sitting_bout_min": 85.02,
+   "phone_screen_hours": 2.67,
+   "head_down_minutes": 89.98,
+   "phone_after_23h_minutes": 0,
+   "gait_speed_mps": 0.91,
+   "gait_asymmetry_pct": 12.21,
+   "emg_muscle_load": {
+    "quads": 0.08,
+    "glutes": 0.04,
+    "upper_trap": 0.04
+   },
+   "emg_glute_to_hamstring_ratio": 0.93,
+   "upper_trap_desk_tone": 2.82
+  },
+  {
+   "date": "2026-10-02",
+   "sleep_hours": 7.06,
+   "sleep_midpoint_h": 2.11,
+   "hrv_rmssd_ms": 35.75,
+   "resting_hr": 67.01,
+   "steps": 5607,
+   "sitting_hours": 7.09,
+   "longest_sitting_bout_min": 101.59,
+   "phone_screen_hours": 1.92,
+   "head_down_minutes": 56.75,
+   "phone_after_23h_minutes": 0,
+   "gait_speed_mps": 1.02,
+   "gait_asymmetry_pct": 13.12,
+   "emg_muscle_load": {
+    "quads": 0.13,
+    "glutes": 0.06,
+    "upper_trap": 0.07
+   },
+   "emg_glute_to_hamstring_ratio": 0.95,
+   "upper_trap_desk_tone": 3.24
+  },
+  {
+   "date": "2026-10-03",
+   "sleep_hours": 7.13,
+   "sleep_midpoint_h": 2.93,
+   "hrv_rmssd_ms": 28.41,
+   "resting_hr": 66.05,
+   "steps": 5228,
+   "sitting_hours": 5.99,
+   "longest_sitting_bout_min": 99.91,
+   "phone_screen_hours": 2.21,
+   "head_down_minutes": 84.72,
+   "phone_after_23h_minutes": 1.51,
+   "gait_speed_mps": 1.03,
+   "gait_asymmetry_pct": 11.0,
+   "emg_muscle_load": {
+    "quads": 0.09,
+    "glutes": 0.02,
+    "upper_trap": 0.01
+   },
+   "emg_glute_to_hamstring_ratio": 0.83,
+   "upper_trap_desk_tone": 3.51
+  },
+  {
+   "date": "2026-10-04",
+   "sleep_hours": 6.88,
+   "sleep_midpoint_h": 2.79,
+   "hrv_rmssd_ms": 28.44,
+   "resting_hr": 70.09,
+   "steps": 6472,
+   "sitting_hours": 6.98,
+   "longest_sitting_bout_min": 95.89,
+   "phone_screen_hours": 1.73,
+   "head_down_minutes": 27.57,
+   "phone_after_23h_minutes": 6.75,
+   "gait_speed_mps": 1.04,
+   "gait_asymmetry_pct": 10.99,
+   "emg_muscle_load": {
+    "quads": 0.11,
+    "glutes": 0.07,
+    "upper_trap": -0.03
+   },
+   "emg_glute_to_hamstring_ratio": 0.91,
+   "upper_trap_desk_tone": 3.11
+  },
+  {
+   "date": "2026-10-05",
+   "sleep_hours": 6.66,
+   "sleep_midpoint_h": 3.2,
+   "hrv_rmssd_ms": 33.82,
+   "resting_hr": 67.48,
+   "steps": 5095,
+   "sitting_hours": 7.19,
+   "longest_sitting_bout_min": 92.32,
+   "phone_screen_hours": 1.35,
+   "head_down_minutes": 87.6,
+   "phone_after_23h_minutes": 10.28,
+   "gait_speed_mps": 1.02,
+   "gait_asymmetry_pct": 9.36,
+   "emg_muscle_load": {
+    "quads": 0.18,
+    "glutes": 0.09,
+    "upper_trap": 0.05
+   },
+   "emg_glute_to_hamstring_ratio": 0.85,
+   "upper_trap_desk_tone": 2.31
+  },
+  {
+   "date": "2026-10-06",
+   "sleep_hours": 7.25,
+   "sleep_midpoint_h": 2.04,
+   "hrv_rmssd_ms": 27.79,
+   "resting_hr": 70.18,
+   "steps": 3391,
+   "sitting_hours": 9.1,
+   "longest_sitting_bout_min": 123.5,
+   "phone_screen_hours": 1.38,
+   "head_down_minutes": 31.73,
+   "phone_after_23h_minutes": 0,
+   "gait_speed_mps": 0.93,
+   "gait_asymmetry_pct": 10.6,
+   "emg_muscle_load": {
+    "quads": 0.04,
+    "glutes": 0.05,
+    "upper_trap": 0.09
+   },
+   "emg_glute_to_hamstring_ratio": 0.84,
+   "upper_trap_desk_tone": 2.78
+  },
+  {
+   "date": "2026-10-07",
+   "sleep_hours": 6.11,
+   "sleep_midpoint_h": 2.82,
+   "hrv_rmssd_ms": 26.65,
+   "resting_hr": 71.88,
+   "steps": 5448,
+   "sitting_hours": 7.2,
+   "longest_sitting_bout_min": 108.25,
+   "phone_screen_hours": 1.75,
+   "head_down_minutes": 33.21,
+   "phone_after_23h_minutes": 3.02,
+   "gait_speed_mps": 0.97,
+   "gait_asymmetry_pct": 11.25,
+   "emg_muscle_load": {
+    "quads": 0.13,
+    "glutes": 0.04,
+    "upper_trap": 0.05
+   },
+   "emg_glute_to_hamstring_ratio": 0.99,
+   "upper_trap_desk_tone": 2.11
+  },
+  {
+   "date": "2026-10-08",
+   "sleep_hours": 8.04,
+   "sleep_midpoint_h": 2.38,
+   "hrv_rmssd_ms": 23.4,
+   "resting_hr": 72.85,
+   "steps": 5386,
+   "sitting_hours": 8.6,
+   "longest_sitting_bout_min": 112.26,
+   "phone_screen_hours": 1.16,
+   "head_down_minutes": 62.42,
+   "phone_after_23h_minutes": 0,
+   "gait_speed_mps": 0.91,
+   "gait_asymmetry_pct": 8.34,
+   "emg_muscle_load": {
+    "quads": 0.12,
+    "glutes": 0.06,
+    "upper_trap": 0.05
+   },
+   "emg_glute_to_hamstring_ratio": 0.88,
+   "upper_trap_desk_tone": 2.36
+  },
+  {
+   "date": "2026-10-09",
+   "sleep_hours": 6.41,
+   "sleep_midpoint_h": 2.22,
+   "hrv_rmssd_ms": 21.8,
+   "resting_hr": 67.59,
+   "steps": 5172,
+   "sitting_hours": 6.78,
+   "longest_sitting_bout_min": 96.52,
+   "phone_screen_hours": 1.62,
+   "head_down_minutes": 59.91,
+   "phone_after_23h_minutes": 5.07,
+   "gait_speed_mps": 0.99,
+   "gait_asymmetry_pct": 11.71,
+   "emg_muscle_load": {
+    "quads": 0.07,
+    "glutes": 0.04,
+    "upper_trap": 0.05
+   },
+   "emg_glute_to_hamstring_ratio": 0.93,
+   "upper_trap_desk_tone": 1.72
+  },
+  {
+   "date": "2026-10-10",
+   "sleep_hours": 7.1,
+   "sleep_midpoint_h": 3.1,
+   "hrv_rmssd_ms": 26.93,
+   "resting_hr": 67.81,
+   "steps": 5740,
+   "sitting_hours": 7.7,
+   "longest_sitting_bout_min": 110.12,
+   "phone_screen_hours": 2.04,
+   "head_down_minutes": 63.05,
+   "phone_after_23h_minutes": 0,
+   "gait_speed_mps": 0.97,
+   "gait_asymmetry_pct": 12.88,
+   "emg_muscle_load": {
+    "quads": 0.11,
+    "glutes": 0.05,
+    "upper_trap": 0.03
+   },
+   "emg_glute_to_hamstring_ratio": 0.94,
+   "upper_trap_desk_tone": 2.32
+  },
+  {
+   "date": "2026-10-11",
+   "sleep_hours": 7.55,
+   "sleep_midpoint_h": 2.03,
+   "hrv_rmssd_ms": 21.65,
+   "resting_hr": 68.41,
+   "steps": 5356,
+   "sitting_hours": 7.74,
+   "longest_sitting_bout_min": 115.94,
+   "phone_screen_hours": 1.79,
+   "head_down_minutes": 68.86,
+   "phone_after_23h_minutes": 0,
+   "gait_speed_mps": 1.04,
+   "gait_asymmetry_pct": 11.95,
+   "emg_muscle_load": {
+    "quads": 0.14,
+    "glutes": 0.05,
+    "upper_trap": 0.02
+   },
+   "emg_glute_to_hamstring_ratio": 0.88,
+   "upper_trap_desk_tone": 3.4
+  },
+  {
+   "date": "2026-10-12",
+   "sleep_hours": 6.99,
+   "sleep_midpoint_h": 2.56,
+   "hrv_rmssd_ms": 19.84,
+   "resting_hr": 68.36,
+   "steps": 4369,
+   "sitting_hours": 6.63,
+   "longest_sitting_bout_min": 97.68,
+   "phone_screen_hours": 1.07,
+   "head_down_minutes": 73.97,
+   "phone_after_23h_minutes": 8.52,
+   "gait_speed_mps": 0.98,
+   "gait_asymmetry_pct": 9.51,
+   "emg_muscle_load": {
+    "quads": 0.09,
+    "glutes": 0.05,
+    "upper_trap": -0.03
+   },
+   "emg_glute_to_hamstring_ratio": 0.91,
+   "upper_trap_desk_tone": 3.53
+  },
+  {
+   "date": "2026-10-13",
+   "sleep_hours": 6.81,
+   "sleep_midpoint_h": 2.25,
+   "hrv_rmssd_ms": 29.09,
+   "resting_hr": 68.7,
+   "steps": 6512,
+   "sitting_hours": 7.51,
+   "longest_sitting_bout_min": 89.65,
+   "phone_screen_hours": 1.77,
+   "head_down_minutes": 63.64,
+   "phone_after_23h_minutes": 15.56,
+   "gait_speed_mps": 0.96,
+   "gait_asymmetry_pct": 9.42,
+   "emg_muscle_load": {
+    "quads": 0.09,
+    "glutes": 0.01,
+    "upper_trap": 0.05
+   },
+   "emg_glute_to_hamstring_ratio": 0.83,
+   "upper_trap_desk_tone": 2.01
+  },
+  {
+   "date": "2026-10-14",
+   "sleep_hours": 5.81,
+   "sleep_midpoint_h": 1.94,
+   "hrv_rmssd_ms": 31.41,
+   "resting_hr": 65.38,
+   "steps": 3100,
+   "sitting_hours": 7.64,
+   "longest_sitting_bout_min": 94.88,
+   "phone_screen_hours": 2.22,
+   "head_down_minutes": 74.81,
+   "phone_after_23h_minutes": 0,
+   "gait_speed_mps": 0.92,
+   "gait_asymmetry_pct": 10.81,
+   "emg_muscle_load": {
+    "quads": 0.14,
+    "glutes": 0.04,
+    "upper_trap": -0.0
+   },
+   "emg_glute_to_hamstring_ratio": 0.96,
+   "upper_trap_desk_tone": 2.67
+  }
+ ],
+ "checkins": [
+  {
+   "week": 0,
+   "metrics": {
+    "sit_to_stand_30s": 11
+   }
+  }
+ ]
+}
